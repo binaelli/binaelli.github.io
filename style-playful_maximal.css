@@ -1,0 +1,86 @@
+/* PLAYFUL + MAXIMAL + HANDMADE */
+
+body {
+  margin: 0;
+  padding: 30px;
+  font-family: 'Comic Sans MS', 'Courier New', cursive, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #2d1e2f;
+  background-color: #fffcf3;
+  background-image: repeating-linear-gradient(45deg, #fff1e6, #fff1e6 20px, #ffefd5 20px, #ffefd5 40px);
+}
+
+/* Paragraph Styling */
+p {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #fff8e1;
+  border: 3px dashed #f7a1c4;
+  border-radius: 10px;
+  box-sizing: border-box;
+  max-width: 760px;
+  box-shadow: 3px 3px #f0c, -2px -2px #ffcc00;
+  transform: rotate(-0.3deg);
+}
+
+p:hover {
+  background-color: #ffe4f0;
+  border-color: #d26ac2;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5 {
+  margin-top: 40px;
+  margin-bottom: 12px;
+  font-family: 'Marker Felt', 'Comic Sans MS', sans-serif;
+  background-color: #ffe8b8;
+  padding: 8px 16px;
+  border-left: 6px solid #ff69b4;
+  border-bottom: 3px dotted #ff3366;
+  transform: rotate(0.5deg);
+  box-shadow: 2px 2px #ffa;
+}
+
+h1 { font-size: 2.5em; color: #d32f2f; }
+h2 { font-size: 2.1em; color: #7b1fa2; }
+h3 { font-size: 1.75em; color: #388e3c; }
+h4 { font-size: 1.4em; color: #1976d2; }
+h5 { font-size: 1.2em; color: #ff6f00; }
+
+/* Image Styling */
+img {
+  display: block;
+  margin: 24px auto;
+  max-width: 100%;
+  height: auto;
+  border: 5px groove #ff90b3;
+  padding: 10px;
+  background-color: #fff;
+  box-sizing: border-box;
+  box-shadow: 6px 6px #ffc0cb, -4px -4px #ffd700;
+  transform: rotate(-1deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+img:hover {
+  transform: rotate(1.5deg) scale(1.03);
+  box-shadow: 8px 8px #f0f, -6px -6px #ffb347;
+}
+
+/* Section Styling */
+section {
+  padding: 20px 10px;
+  border-bottom: 4px dotted #ddd;
+  background-color: #fffef7;
+  box-sizing: border-box;
+}
+
+/* Nested Sections – like tools list */
+section > section {
+  margin-left: 30px;
+  padding-left: 20px;
+  border-left: 4px dashed #ff6f61;
+  background-color: #fff0f5;
+  border-radius: 12
+}
