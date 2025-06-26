@@ -1,0 +1,103 @@
+/* Kuromi theme (dark purple, edgy) */
+.kuromi-theme {
+  --bg-color: #f3e5f5; /* lavender */
+  --accent-color: #880e4f; /* deep pink */
+  --text-color: #4a0072; /* purple */
+  --border-color: #ba68c8; /* purple-pink */
+}
+
+/* My Melody theme (light pink, sweet) */
+.mymelody-theme {
+  --bg-color: #fff0f6; /* baby pink */
+  --accent-color: #e46992; /* soft pink */
+  --text-color: #880e4f; /* pinky purple */
+  --border-color: #f48fb1; /* blush pink */
+}
+
+/* Use CSS variables throughout */
+select,
+input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  background-color: #fff;
+  margin-bottom: 10px;
+  width: 250px;
+  cursor: pointer;
+}
+
+h1 {
+  color: var(--accent-color);
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.intro {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-align: center;
+  padding: 30px;
+}
+
+/* Dropdown and input label */
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+/* Character image */
+#character-image {
+  width: 300px;
+  border-radius: 20px;
+  margin-top: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease;
+}
+#character-image:hover {
+  transform: scale(1.05);
+}
+
+/* Caption text */
+.caption {
+  font-style: italic;
+  color: #6a1b9a;
+  margin-top: 12px;
+  font-size: 1.2rem;
+}
+
+/* Fade effect */
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Cursor styling */
+select,
+input[type="text"] {
+  cursor: pointer;
+}
+
+.caption {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+.caption.hidden {
+  opacity: 0;
+}
