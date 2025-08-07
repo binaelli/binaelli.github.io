@@ -58,11 +58,13 @@ html, body {
 .choices {
   display: none;
   position: absolute;
-  bottom: 40px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  flex-direction: row;
   gap: 20px;
-  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .choices button {
