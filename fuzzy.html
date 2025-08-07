@@ -4,97 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fuzzy Transition</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html, body {
-      height: 100%;
-      font-family: 'Helvetica Neue', sans-serif;
-      color: white;
-      overflow: hidden;
-    }
-
-    .background {
-      background-image: url('fuzzy.png');
-      background-size: cover;
-      background-position: center;
-      height: 100vh;
-      width: 100vw;
-      position: relative;
-    }
-
-    .bubble {
-      position: absolute;
-      max-width: 500px;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 20px;
-      border-radius: 20px;
-      backdrop-filter: blur(4px);
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
-    .bubble1 { top: 10%; left: 5%; }
-    .bubble2 { top: 40%; right: 5%; }
-    .bubble3 { bottom: 10%; left: 10%; }
-
-    .continue-btn {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 14px 32px;
-      font-size: 16px;
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      border-radius: 30px;
-      color: white;
-      cursor: pointer;
-      backdrop-filter: blur(6px);
-    }
-
-    .continue-btn:hover {
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    .choices {
-      display: none;
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      gap: 20px;
-      display: flex;
-    }
-
-    .choices button {
-      padding: 12px 24px;
-      font-size: 14px;
-      border-radius: 20px;
-      background: rgba(0,0,0,0.4);
-      color: white;
-      border: 1px solid white;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="fuzzy.css" />
 </head>
 <body>
   <div class="background">
+    <!-- Static Info Bubbles -->
     <div class="bubble bubble1">
       The environment is sculpted from synthetic fiber masses resembling piled insulation, teased wool, or extruded foam. These materials feel fabricated yet soft, bridging industrial construction with bodily softness. They cling to the architecture not as finishings but as fuzzy intrusions occupying space like a cloud or fungus colonizing a rigid frame. <br><br>
       <em>The material speaks of excess, blur, and buildup. A counter to clean rational lines.</em>
     </div>
+
     <div class="bubble bubble2">
       The surfaces range from flossy to dense almost like dryer lint, cotton candy, or matte fleece. Their texture is non-reflective absorbing light rather than bouncing it creating an almost velvety field of spatial quietness. Some areas read as slightly crispy or fibrous like spun plastic hinting at fragility. <br><br>
       <em>Texture here is ambiguous. It looks soft but massive, inviting but unreadable like touching something through memory.</em>
     </div>
+
     <div class="bubble bubble3">
       The lighting is hazy and emotional with subtle pinks, lavenders, aquas, and warm white tones bleeding into each other. There's a cinematic calm. A quality of stillness before a dream unfolds. The space feels unmoored from time like a memory that exists in the body rather than the brain. <br><br>
       <em>The ambiance doesn’t direct. It envelops. There’s no clarity here. Only immersion.</em>
     </div>
 
+    <!-- CONTINUE Button in Center -->
     <button class="continue-btn" onclick="revealChoices()">CONTINUE</button>
 
+    <!-- Destination Options -->
     <div class="choices" id="choiceButtons">
       <button onclick="location.href='fabric.html'">GO TO FABRIC</button>
       <button onclick="location.href='mesh.html'">GO TO MESH</button>
