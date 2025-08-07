@@ -8,8 +8,8 @@ html, body {
   width: 100%;
   height: 100%;
   font-family: 'Helvetica Neue', sans-serif;
-  background: black;
   color: white;
+  background: black;
   overflow: hidden;
 }
 
@@ -27,7 +27,18 @@ video {
   display: block;
 }
 
-/* Info Graphic Bubbles */
+/* Fabric Background (shown after video) */
+.fabric-background {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('fabric.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Info Bubble Styles */
 .bubble {
   position: absolute;
   max-width: 500px;
@@ -43,7 +54,6 @@ video {
 .bubble2 { top: 40%; right: 5%; }
 .bubble3 { bottom: 10%; left: 10%; }
 
-/* Continue Button */
 .continue-btn {
   position: absolute;
   top: 50%;
@@ -64,7 +74,7 @@ video {
   background: rgba(255, 255, 255, 0.35);
 }
 
-/* Choice Buttons */
+/* Next Choice Buttons */
 .choices {
   position: absolute;
   bottom: 40px;
