@@ -7,39 +7,61 @@
   <link rel="stylesheet" href="fabric.css" />
 </head>
 <body>
+  <!-- Video Section -->
   <div class="video-container" id="videoSection">
-    <video autoplay muted loop playsinline preload="auto">
+    <video id="transitionVideo" autoplay muted playsinline preload="auto">
       <source src="fuzzy-fabric.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
-    <button class="continue-btn" onclick="showBubbles()">CONTINUE</button>
   </div>
 
-  <!-- Fabric Info Bubbles (hidden initially) -->
-  <div class="bubble bubble1 hidden">
-    The fabric world is soft yet structured with suspended textiles, draped meshes, and hanging veils that carve space through gesture not walls. Surfaces fold, ripple, and move in reaction to presence.  
-    <br><br><em>The material is responsive, lightweight, performative. A choreography of air and thread.</em>
+  <!-- Info Bubbles & Continue (initially hidden) -->
+  <div class="info-graphics hidden" id="infoGraphics">
+    <div class="bubble bubble1">
+      The fabric world is soft yet structured with suspended textiles, draped meshes, and hanging veils that carve space through gesture not walls. Surfaces fold, ripple, and move in reaction to presence.  
+      <br><br><em>The material is responsive, lightweight, performative. A choreography of air and thread.</em>
+    </div>
+
+    <div class="bubble bubble2">
+      Texture ranges from gossamer to grainy. Some fabric is translucent like skin or fog, others woven tight like burlap or mesh. The hand feels both exposure and resistance.  
+      <br><br><em>These textures slow your movement. They make you aware of friction and breath.</em>
+    </div>
+
+    <div class="bubble bubble3">
+      The ambiance is quietly theatrical. A soft spotlight filters through fabric folds. Shadows shift as you move. There is silence but tension, like waiting for a performance to begin.  
+      <br><br><em>Space becomes a stage. Your movement becomes a part of the scene.</em>
+    </div>
+
+    <button class="continue-btn" onclick="revealOptions()">CONTINUE</button>
   </div>
 
-  <div class="bubble bubble2 hidden">
-    Texture ranges from gossamer to grainy. Some fabric is translucent like skin or fog, others woven tight like burlap or mesh. The hand feels both exposure and resistance.  
-    <br><br><em>These textures slow your movement. They make you aware of friction and breath.</em>
-  </div>
+  <!-- Back + Next Options (hidden initially) -->
+  <a href="index.html" class="back-btn hidden" id="backBtn">← BACK</a>
 
-  <div class="bubble bubble3 hidden">
-    The ambiance is quietly theatrical. A soft spotlight filters through fabric folds. Shadows shift as you move. There is silence but tension, like waiting for a performance to begin.  
-    <br><br><em>Space becomes a stage. Your movement becomes a part of the scene.</em>
+  <div class="choices hidden" id="choiceButtons">
+    <button onclick="location.href='mesh.html'">GO TO MESH</button>
+    <button onclick="location.href='ceiling.html'">GO TO CEILING</button>
   </div>
 
   <script>
-    function showBubbles() {
-      // Hide video and button
+    const video = document.getElementById('transitionVideo');
+    const infoSection = document.getElementById('infoGraphics');
+    const backBtn = document.getElementById('backBtn');
+    const choiceButtons = document.getElementById('choiceButtons');
+
+    video.addEventListener('ended', () => {
+      // Hide video, show info
       document.getElementById('videoSection').style.display = 'none';
-      
-      // Reveal bubbles
-      document.querySelectorAll('.bubble').forEach(el => {
-        el.classList.remove('hidden');
-      });
+      infoSection.classList.remove('hidden');
+    });
+
+    function revealOptions() {
+      // Hide info graphics and continue button
+      infoSection.style.display = 'none';
+
+      // Show next options and back button
+      choiceButtons.classList.remove('hidden');
+      backBtn.classList.remove('hidden');
     }
   </script>
 </body>
