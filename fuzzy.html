@@ -27,7 +27,7 @@
     <!-- CONTINUE Button in Center -->
     <button class="continue-btn" onclick="revealChoices()">CONTINUE</button>
 
-    <!-- Destination Options -->
+    <!-- Destination Options (Hidden Until Click) -->
     <div class="choices" id="choiceButtons">
       <button onclick="location.href='fabric.html'">GO TO FABRIC</button>
       <button onclick="location.href='mesh.html'">GO TO MESH</button>
@@ -37,4 +37,8 @@
   <script>
     function revealChoices() {
       document.querySelectorAll('.bubble, .continue-btn').forEach(el => el.style.display = 'none');
-      document.getEle
+      document.getElementById('choiceButtons').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
