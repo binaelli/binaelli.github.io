@@ -5,47 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fabric Transition</title>
   <link rel="stylesheet" href="fabric.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <div class="video-container" id="videoSection">
-    <video id="transitionVideo" autoplay muted playsinline preload="auto">
+  <div class="video-screen">
+    <video id="transitionVideo" autoplay muted playsinline onended="showFabricInfo()">
       <source src="fuzzy-fabric.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
-    <a href="index.html" class="back-btn">← BACK</a>
-    <button id="skipBtn" class="skip-btn" onclick="skipVideo()">SKIP</button>
+    <button class="skip-btn" onclick="skipVideo('fabric.html')">SKIP</button>
   </div>
 
-  <div class="fabric-background hidden" id="fabricSection">
+  <div class="background" id="fabricInfo" style="display: none;">
     <a href="index.html" class="back-btn">← BACK</a>
 
-    <div class="bubble bubble1">
-      The fabric world is soft yet structured with suspended textiles, draped meshes, and hanging veils that carve space through gesture not walls. <br><br>
-      <em>The material is responsive, lightweight, performative. A choreography of air and thread.</em>
-    </div>
-    <div class="bubble bubble2">
-      Texture ranges from gossamer to grainy. Some fabric is translucent like skin or fog, others woven tight like burlap or mesh. <br><br>
-      <em>These textures slow your movement. They make you aware of friction and breath.</em>
-    </div>
-    <div class="bubble bubble3">
-      The ambiance is quietly theatrical. A soft spotlight filters through fabric folds. Shadows shift as you move. <br><br>
-      <em>Space becomes a stage. Your movement becomes a part of the scene.</em>
+    <div class="bubble" onclick="toggleBubble(this)">
+      <div class="term">Material</div>
+      <div class="full-text">
+        Material description for fabric goes here.
+      </div>
     </div>
 
-    <button class="continue-btn" onclick="revealOptions()">CONTINUE</button>
+    <div class="bubble" onclick="toggleBubble(this)">
+      <div class="term">Texture</div>
+      <div class="full-text">
+        Texture description for fabric goes here.
+      </div>
+    </div>
 
-    <div class="choices hidden" id="choiceButtons">
+    <div class="bubble" onclick="toggleBubble(this)">
+      <div class="term">Ambience</div>
+      <div class="full-text">
+        Ambience description for fabric goes here.
+      </div>
+    </div>
+
+    <button class="continue-btn" onclick="revealChoices()">CONTINUE</button>
+
+    <div class="choices" id="choiceButtons">
       <button onclick="location.href='mesh.html'">GO TO MESH</button>
       <button onclick="location.href='ceiling.html'">GO TO CEILING</button>
     </div>
   </div>
-
-  <script src="script.js"></script>
-  <script>
-    function skipVideo() {
-      document.getElementById('videoSection').style.display = 'none';
-      document.getElementById('fabricSection').classList.remove('hidden');
-    }
-  </script>
 </body>
 </html>
