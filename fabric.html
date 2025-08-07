@@ -3,21 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fabric Transition Video</title>
+  <title>Fabric Transition</title>
   <link rel="stylesheet" href="fabric.css" />
 </head>
 <body>
-  <div class="video-container">
-    <video
-      autoplay
-      muted
-      playsinline
-      loop
-      preload="auto"
-    >
+  <div class="video-container" id="videoSection">
+    <video autoplay muted loop playsinline preload="auto">
       <source src="fuzzy-fabric.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
+    <button class="continue-btn" onclick="showBubbles()">CONTINUE</button>
   </div>
+
+  <!-- Fabric Info Bubbles (hidden initially) -->
+  <div class="bubble bubble1 hidden">
+    The fabric world is soft yet structured with suspended textiles, draped meshes, and hanging veils that carve space through gesture not walls. Surfaces fold, ripple, and move in reaction to presence.  
+    <br><br><em>The material is responsive, lightweight, performative. A choreography of air and thread.</em>
+  </div>
+
+  <div class="bubble bubble2 hidden">
+    Texture ranges from gossamer to grainy. Some fabric is translucent like skin or fog, others woven tight like burlap or mesh. The hand feels both exposure and resistance.  
+    <br><br><em>These textures slow your movement. They make you aware of friction and breath.</em>
+  </div>
+
+  <div class="bubble bubble3 hidden">
+    The ambiance is quietly theatrical. A soft spotlight filters through fabric folds. Shadows shift as you move. There is silence but tension, like waiting for a performance to begin.  
+    <br><br><em>Space becomes a stage. Your movement becomes a part of the scene.</em>
+  </div>
+
+  <script>
+    function showBubbles() {
+      // Hide video and button
+      document.getElementById('videoSection').style.display = 'none';
+      
+      // Reveal bubbles
+      document.querySelectorAll('.bubble').forEach(el => {
+        el.classList.remove('hidden');
+      });
+    }
+  </script>
 </body>
 </html>
