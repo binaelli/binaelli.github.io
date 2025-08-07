@@ -2,25 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fabric Transition</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    .background {
-      background-image: url('fabric.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 100vh;
-      width: 100vw;
-    }
-  </style>
+  <link rel="stylesheet" href="fabric.css" />
 </head>
 <body>
-  <div class="background"></div>
+  <div class="video-container">
+    <video autoplay muted loop playsinline>
+      <source src="fuzzy-fabric.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
 </body>
 </html>
