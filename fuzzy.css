@@ -6,7 +6,9 @@
 
 html, body {
   height: 100%;
+  width: 100%;
   font-family: 'Helvetica Neue', sans-serif;
+  background: black;
   color: white;
   overflow: hidden;
 }
@@ -15,6 +17,7 @@ html, body {
   background-image: url('fuzzy.png');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   height: 100vh;
   width: 100vw;
   position: relative;
@@ -22,16 +25,16 @@ html, body {
 
 .bubble {
   position: absolute;
-  max-width: 500px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 20px;
+  max-width: 90vw;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 1em;
   border-radius: 20px;
   backdrop-filter: blur(4px);
-  font-size: 16px;
+  font-size: clamp(14px, 2.5vw, 18px);
   line-height: 1.5;
 }
 
-.bubble1 { top: 10%; left: 5%; }
+.bubble1 { top: 8%; left: 5%; }
 .bubble2 { top: 40%; right: 5%; }
 .bubble3 { bottom: 10%; left: 10%; }
 
@@ -40,9 +43,9 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 14px 32px;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.2);
+  padding: 0.8em 2em;
+  font-size: clamp(14px, 2.8vw, 18px);
+  background: rgba(255, 255, 255, 0.25);
   border: none;
   border-radius: 30px;
   color: white;
@@ -52,27 +55,30 @@ html, body {
 }
 
 .continue-btn:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .choices {
-  display: none;
   position: absolute;
-  top: 50%;
+  bottom: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  flex-direction: row;
-  gap: 20px;
-  justify-content: center;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 16px;
 }
 
 .choices button {
-  padding: 12px 24px;
-  font-size: 14px;
+  padding: 0.8em 2em;
+  font-size: clamp(14px, 2.5vw, 16px);
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0,0,0,0.4);
   color: white;
   border: 1px solid white;
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }

@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="fabric.css" />
 </head>
 <body>
-  <!-- VIDEO SECTION -->
   <div class="video-container" id="videoSection">
     <video id="transitionVideo" autoplay muted playsinline preload="auto">
       <source src="fuzzy-fabric.mp4" type="video/mp4" />
@@ -15,25 +14,21 @@
     </video>
   </div>
 
-  <!-- FABRIC BACKGROUND WITH INFO BUBBLES -->
   <div class="fabric-background hidden" id="fabricSection">
     <div class="bubble bubble1">
-      The fabric world is soft yet structured with suspended textiles, draped meshes, and hanging veils that carve space through gesture not walls. Surfaces fold, ripple, and move in reaction to presence.  
-      <br><br><em>The material is responsive, lightweight, performative. A choreography of air and thread.</em>
+      The fabric world is soft yet structured with suspended textiles, draped meshes, and hanging veils that carve space through gesture not walls. <br><br>
+      <em>The material is responsive, lightweight, performative. A choreography of air and thread.</em>
     </div>
-
     <div class="bubble bubble2">
-      Texture ranges from gossamer to grainy. Some fabric is translucent like skin or fog, others woven tight like burlap or mesh. The hand feels both exposure and resistance.  
-      <br><br><em>These textures slow your movement. They make you aware of friction and breath.</em>
+      Texture ranges from gossamer to grainy. Some fabric is translucent like skin or fog, others woven tight like burlap or mesh. <br><br>
+      <em>These textures slow your movement. They make you aware of friction and breath.</em>
     </div>
-
     <div class="bubble bubble3">
-      The ambiance is quietly theatrical. A soft spotlight filters through fabric folds. Shadows shift as you move. There is silence but tension, like waiting for a performance to begin.  
-      <br><br><em>Space becomes a stage. Your movement becomes a part of the scene.</em>
+      The ambiance is quietly theatrical. A soft spotlight filters through fabric folds. Shadows shift as you move. <br><br>
+      <em>Space becomes a stage. Your movement becomes a part of the scene.</em>
     </div>
 
     <button class="continue-btn" onclick="revealOptions()">CONTINUE</button>
-
     <a href="index.html" class="back-btn hidden" id="backBtn">← BACK</a>
 
     <div class="choices hidden" id="choiceButtons">
@@ -50,21 +45,16 @@
     const choiceButtons = document.getElementById('choiceButtons');
 
     video.addEventListener('ended', () => {
-      // Hide video, show fabric background section
       videoSection.style.display = 'none';
       fabricSection.classList.remove('hidden');
     });
 
     function revealOptions() {
-      // Hide bubbles and continue button
-      document.querySelectorAll('.bubble, .continue-btn').forEach(el => {
-        el.style.display = 'none';
-      });
-
-      // Show choices and back button
+      document.querySelectorAll('.bubble, .continue-btn').forEach(el => el.style.display = 'none');
       choiceButtons.classList.remove('hidden');
       backBtn.classList.remove('hidden');
     }
   </script>
+  <script src="script.js"></script>
 </body>
 </html>

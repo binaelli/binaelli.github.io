@@ -1,17 +1,18 @@
-/* Reset & base styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body, html {
+html, body {
   height: 100%;
+  width: 100%;
   font-family: 'Helvetica Neue', sans-serif;
   color: white;
+  background: black;
+  overflow: hidden;
 }
 
-/* Full background */
 .background {
   background-image: url('fuzzy.png');
   background-size: cover;
@@ -22,60 +23,61 @@ body, html {
   position: relative;
 }
 
-/* Center Explore button */
 .explore-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 16px 36px;
-  font-size: 18px;
+  padding: 1em 2em;
+  font-size: clamp(16px, 4vw, 20px);
   background: rgba(255, 255, 255, 0.25);
   border: none;
   border-radius: 30px;
   color: white;
-  backdrop-filter: blur(6px);
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  text-align: center;
+  backdrop-filter: blur(6px);
+  transition: background 0.3s ease;
 }
 
 .explore-btn:hover {
   background: rgba(255, 255, 255, 0.4);
 }
 
-/* Footer bar */
 .footer-bar {
   position: absolute;
   bottom: 0;
   width: 100%;
   background: linear-gradient(to right, rgba(255, 120, 120, 0.3), rgba(100, 100, 255, 0.3));
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 20px 30px;
+  justify-content: center;
+  padding: 1em;
   backdrop-filter: blur(8px);
 }
 
 .footer-bar .left h1 {
-  font-size: 20px;
+  font-size: clamp(18px, 4vw, 22px);
   color: #f38d92;
 }
 
 .footer-bar .left p {
-  font-size: 14px;
+  font-size: clamp(12px, 2.5vw, 14px);
   color: #ddd;
+}
+
+.footer-bar .right {
+  margin-top: 0.5em;
 }
 
 .footer-bar .right button {
   background: transparent;
   border: 1px solid #aaa;
   color: #eee;
-  margin-left: 10px;
-  padding: 6px 14px;
+  margin: 0 5px;
+  padding: 0.5em 1em;
   border-radius: 12px;
-  font-size: 12px;
+  font-size: clamp(12px, 2vw, 14px);
   cursor: pointer;
   transition: background 0.2s ease;
 }

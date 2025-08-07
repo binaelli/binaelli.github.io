@@ -8,27 +8,21 @@
 </head>
 <body>
   <div class="background">
-    <!-- Static Info Bubbles -->
     <div class="bubble bubble1">
-      The environment is sculpted from synthetic fiber masses resembling piled insulation, teased wool, or extruded foam. These materials feel fabricated yet soft, bridging industrial construction with bodily softness. They cling to the architecture not as finishings but as fuzzy intrusions occupying space like a cloud or fungus colonizing a rigid frame. <br><br>
+      The environment is sculpted from synthetic fiber masses resembling piled insulation, teased wool, or extruded foam. These materials feel fabricated yet soft, bridging industrial construction with bodily softness. <br><br>
       <em>The material speaks of excess, blur, and buildup. A counter to clean rational lines.</em>
     </div>
-
     <div class="bubble bubble2">
-      The surfaces range from flossy to dense almost like dryer lint, cotton candy, or matte fleece. Their texture is non-reflective absorbing light rather than bouncing it creating an almost velvety field of spatial quietness. Some areas read as slightly crispy or fibrous like spun plastic hinting at fragility. <br><br>
+      The surfaces range from flossy to dense almost like dryer lint, cotton candy, or matte fleece. Their texture is non-reflective absorbing light rather than bouncing it. <br><br>
       <em>Texture here is ambiguous. It looks soft but massive, inviting but unreadable like touching something through memory.</em>
     </div>
-
     <div class="bubble bubble3">
-      The lighting is hazy and emotional with subtle pinks, lavenders, aquas, and warm white tones bleeding into each other. There's a cinematic calm. A quality of stillness before a dream unfolds. The space feels unmoored from time like a memory that exists in the body rather than the brain. <br><br>
+      The lighting is hazy and emotional with subtle pinks, lavenders, aquas, and warm white tones bleeding into each other. <br><br>
       <em>The ambiance doesn’t direct. It envelops. There’s no clarity here. Only immersion.</em>
     </div>
-
-    <!-- CONTINUE Button in Center -->
     <button class="continue-btn" onclick="revealChoices()">CONTINUE</button>
 
-    <!-- Destination Options (Hidden Until Click) -->
-    <div class="choices" id="choiceButtons">
+    <div class="choices hidden" id="choiceButtons">
       <button onclick="location.href='fabric.html'">GO TO FABRIC</button>
       <button onclick="location.href='mesh.html'">GO TO MESH</button>
     </div>
@@ -37,8 +31,9 @@
   <script>
     function revealChoices() {
       document.querySelectorAll('.bubble, .continue-btn').forEach(el => el.style.display = 'none');
-      document.getElementById('choiceButtons').style.display = 'flex';
+      document.getElementById('choiceButtons').classList.remove('hidden');
     }
   </script>
+  <script src="script.js"></script>
 </body>
 </html>
