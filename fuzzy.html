@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fuzzy Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuzzy Transition</title>
   <style>
     * {
       margin: 0;
@@ -11,41 +11,108 @@
       box-sizing: border-box;
     }
 
-    html, body {
+    body, html {
       height: 100%;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: white;
       overflow: hidden;
-      background-color: black;
     }
 
-    video {
+    .background {
+      background-image: url('fuzzy.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
+    .bubble {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
+      max-width: 500px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      font-size: 16px;
+      line-height: 1.5;
     }
 
-    .overlay-text {
+    .bubble1 { top: 10%; left: 5%; }
+    .bubble2 { top: 40%; right: 5%; }
+    .bubble3 { bottom: 10%; left: 10%; }
+
+    .continue-btn {
       position: absolute;
       bottom: 40px;
-      left: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 32px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 30px;
       color: white;
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 24px;
-      z-index: 2;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: all 0.3s ease;
+    }
+
+    .continue-btn:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .choices {
+      display: none;
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      gap: 20px;
+    }
+
+    .choices button {
+      padding: 12px 24px;
+      font-size: 14px;
+      border-radius: 20px;
+      background: rgba(0,0,0,0.4);
+      color: white;
+      border: 1px solid white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <video autoplay muted loop playsinline>
-    <source src="your-video.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <div class="background">
+    <div class="bubble bubble1">
+      The environment is sculpted from synthetic fiber masses resembling piled insulation, teased wool, or extruded foam. These materials feel fabricated yet soft, bridging industrial construction with bodily softness. They cling to the architecture not as finishings but as fuzzy intrusions occupying space like a cloud or fungus colonizing a rigid frame. <br><br>
+      <em>The material speaks of excess, blur, and buildup. A counter to clean rational lines.</em>
+    </div>
 
-  <div class="overlay-text">
-    Welcome to the fuzzy space
+    <div class="bubble bubble2">
+      The surfaces range from flossy to dense almost like dryer lint, cotton candy, or matte fleece. Their texture is non-reflective absorbing light rather than bouncing it creating an almost velvety field of spatial quietness. Some areas read as slightly crispy or fibrous like spun plastic hinting at fragility. <br><br>
+      <em>Texture here is ambiguous. It looks soft but massive, inviting but unreadable like touching something through memory.</em>
+    </div>
+
+    <div class="bubble bubble3">
+      The lighting is hazy and emotional with subtle pinks, lavenders, aquas, and warm white tones bleeding into each other. There's a cinematic calm. A quality of stillness before a dream unfolds. The space feels unmoored from time like a memory that exists in the body rather than the brain. <br><br>
+      <em>The ambiance doesn’t direct. It envelops. There’s no clarity here. Only immersion.</em>
+    </div>
+
+    <button class="continue-btn" onclick="revealChoices()">CONTINUE</button>
+
+    <div class="choices" id="choiceButtons">
+      <button onclick="location.href='fabric.html'">GO TO FABRIC</button>
+      <button onclick="location.href='mesh.html'">GO TO MESH</button>
+    </div>
   </div>
+
+  <script>
+    function revealChoices() {
+      document.querySelectorAll('.bubble, .continue-btn').forEach(el => el.style.display = 'none');
+      document.getElementById('choiceButtons').style.display = 'flex';
+    }
+  </script>
 </body>
 </html>
