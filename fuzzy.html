@@ -8,18 +8,23 @@
 </head>
 <body>
   <div class="background">
+    <a href="index.html" class="back-btn">← BACK</a>
+
     <div class="bubble bubble1">
-      The environment is sculpted from synthetic fiber masses resembling piled insulation, teased wool, or extruded foam. These materials feel fabricated yet soft, bridging industrial construction with bodily softness. <br><br>
+      The environment is sculpted from synthetic fiber masses resembling piled insulation, teased wool, or extruded foam. These materials feel fabricated yet soft, bridging industrial construction with bodily softness. They cling to the architecture not as finishings but as fuzzy intrusions occupying space like a cloud or fungus colonizing a rigid frame. <br><br>
       <em>The material speaks of excess, blur, and buildup. A counter to clean rational lines.</em>
     </div>
+
     <div class="bubble bubble2">
-      The surfaces range from flossy to dense almost like dryer lint, cotton candy, or matte fleece. Their texture is non-reflective absorbing light rather than bouncing it. <br><br>
+      The surfaces range from flossy to dense almost like dryer lint, cotton candy, or matte fleece. Their texture is non-reflective absorbing light rather than bouncing it creating an almost velvety field of spatial quietness. Some areas read as slightly crispy or fibrous like spun plastic hinting at fragility. <br><br>
       <em>Texture here is ambiguous. It looks soft but massive, inviting but unreadable like touching something through memory.</em>
     </div>
+
     <div class="bubble bubble3">
-      The lighting is hazy and emotional with subtle pinks, lavenders, aquas, and warm white tones bleeding into each other. <br><br>
+      The lighting is hazy and emotional with subtle pinks, lavenders, aquas, and warm white tones bleeding into each other. There's a cinematic calm. A quality of stillness before a dream unfolds. The space feels unmoored from time like a memory that exists in the body rather than the brain. <br><br>
       <em>The ambiance doesn’t direct. It envelops. There’s no clarity here. Only immersion.</em>
     </div>
+
     <button class="continue-btn" onclick="revealChoices()">CONTINUE</button>
 
     <div class="choices hidden" id="choiceButtons">
@@ -28,12 +33,6 @@
     </div>
   </div>
 
-  <script>
-    function revealChoices() {
-      document.querySelectorAll('.bubble, .continue-btn').forEach(el => el.style.display = 'none');
-      document.getElementById('choiceButtons').classList.remove('hidden');
-    }
-  </script>
   <script src="script.js"></script>
 </body>
 </html>
