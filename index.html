@@ -5,12 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sabrina Ellison</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: white;
+    }
+
+    .background {
+      background-image: url('fuzzy.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      position: relative;
+    }
+
+    .explore-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 16px 36px;
+      font-size: 18px;
+      background: rgba(255, 255, 255, 0.25);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .explore-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .footer-bar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(to right, rgba(255, 120, 120, 0.3), rgba(100, 100, 255, 0.3));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      backdrop-filter: blur(8px);
+    }
+
+    .footer-bar .left h1 {
+      font-size: 20px;
+      color: #f38d92;
+    }
+
+    .footer-bar .left p {
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .footer-bar .right button {
+      background: transparent;
+      border: 1px solid #aaa;
+      color: #eee;
+      margin-left: 10px;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .footer-bar .right button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  </style>
 </head>
 <body>
-  <div class="background" id="background">
-    <button class="explore-btn" onclick="location.href='fuzzy.html'">EXPLORE</button>
+  <div class="background">
+    <!-- EXPLORE BUTTON -->
+    <a href="fuzzy.html" class="explore-btn">EXPLORE</a>
 
-    <footer class="footer-bar" id="footerBar">
+    <!-- FOOTER BAR -->
+    <footer class="footer-bar">
       <div class="left">
         <h1>Sabrina Ellison</h1>
         <p>Visual Research & Spatial Strategy | SCI-Arc</p>
@@ -21,7 +106,5 @@
       </div>
     </footer>
   </div>
-
-  <script src="script.js"></script>
 </body>
 </html>
