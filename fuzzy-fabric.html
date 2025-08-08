@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fuzzy → Fabric Transition</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: black;
+    }
+
+    .video-container {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: black;
+      overflow: hidden;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .skip-button, .back-button {
+      position: fixed;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      text-decoration: none;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .skip-button:hover, .back-button:hover { background: rgba(0, 0, 0, 0.8); }
+
+    .skip-button { bottom: 2rem; right: 2rem; }
+    .back-button { top: 2rem; left: 2rem; }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">← Back</a>
+
+  <div class="video-container">
+    <video autoplay muted playsinline>
+      <source src="fuzzy-fabric.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <button class="skip-button" onclick="skipVideo()">Skip</button>
+
+  <script>
+    const nextPage = 'fabric.html';
+    const video = document.querySelector('video');
+
+    function skipVideo() {
+      window.location.href = nextPage;
+    }
+
+    video.addEventListener('ended', skipVideo);
+  </script>
+</body>
+</html>

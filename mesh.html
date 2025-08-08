@@ -2,38 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mesh Sensory Layer</title>
   <link rel="stylesheet" href="mesh.css" />
-  <script src="bubbles.js" defer></script>
 </head>
 <body>
+  <a href="index.html" class="back-button">← Back</a>
 
-<section class="infographic-section">
-  <div class="section-header">
-    <h2>Mesh Sensory Layer</h2>
-    <p>
-      This condition distorts depth through semi-transparent mesh. Light, 
-      shadow, and projection weave together to make space feel unstable. 
-      Click a bubble to learn how perception changes here.
-    </p>
-  </div>
+  <!-- Screen 1: Bubbles -->
+  <section class="screen screen-bubbles show" aria-label="Mesh Sensory Layer">
+    <div class="bg"></div>
+    <div class="overlay"></div>
 
-  <div class="bubble-container">
-    <div class="bubble" onclick="toggleBubble(this)">
-      Material
-      <span class="bubble-text">Metallic mesh panels catch and scatter light in unexpected ways.</span>
-    </div>
-    <div class="bubble" onclick="toggleBubble(this)">
-      Texture
-      <span class="bubble-text">Fine and coarse mesh patterns alternate, shifting tactile and visual focus.</span>
-    </div>
-    <div class="bubble" onclick="toggleBubble(this)">
-      Ambience
-      <span class="bubble-text">Projected patterns ripple across the mesh, making surfaces appear to move.</span>
-    </div>
-  </div>
-</section>
+    <div class="inner">
+      <header class="section-header">
+        <h1>Mesh Sensory Layer</h1>
+        <p>
+          Semi-transparent mesh bends depth and vision. Projection and daylight weave shadows
+          so surfaces feel in flux.
+        </p>
+      </header>
 
+      <div class="bubble-container">
+        <button class="bubble" type="button"><span class="bubble-label">Material</span><span class="bubble-text">Metal/polymer meshes diffract light at different densities.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Texture</span><span class="bubble-text">Fine/coarse grids create moiré as you move.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Layered shadows keep edges unstable.</span></button>
+      </div>
+
+      <button class="continue-btn" type="button">Continue</button>
+    </div>
+  </section>
+
+  <!-- Screen 2: Choices -->
+  <section class="screen screen-choices" aria-label="Where will you wander next?">
+    <!-- Left: Fuzzy -->
+    <div class="choice" data-target="mesh-fuzzy.html" aria-label="Return to the Fuzzy space" role="link" tabindex="0">
+      <div class="choice-bg fuzzy"></div>
+      <div class="choice-glow"></div>
+      <div class="choice-content">
+        <p class="choice-prompt">Where will you wander next?</p>
+        <h2 class="choice-title">Return to the Fuzzy space</h2>
+      </div>
+    </div>
+
+    <!-- Right: Wooden Ceiling -->
+    <div class="choice" data-target="mesh-ceiling.html" aria-label="Look up at the Wooden Ceiling" role="link" tabindex="0">
+      <div class="choice-bg ceiling"></div>
+      <div class="choice-glow"></div>
+      <div class="choice-content">
+        <p class="choice-prompt">Or…</p>
+        <h2 class="choice-title">Look up at the Wooden Ceiling</h2>
+      </div>
+    </div>
+  </section>
+
+  <div class="screen-fade" aria-hidden="true"></div>
+
+  <script>
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
+    });
+    document.querySelector('.continue-btn').addEventListener('click', () => {
+      document.querySelector('.screen-bubbles').classList.remove('show');
+      document.querySelector('.screen-choices').classList.add('show');
+    });
+    const fadeEl = document.querySelector('.screen-fade');
+    function go(url){ fadeEl.classList.add('in'); setTimeout(()=>location.href=url,300); }
+    document.querySelectorAll('.choice').forEach(c=>{
+      c.addEventListener('click',()=>go(c.dataset.target));
+      c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });
+    });
+  </script>
 </body>
 </html>

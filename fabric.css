@@ -1,55 +1,6 @@
-/* Reuse fuzzy.css and just change background */
-.background {
-  background-image: url('fabric.png');
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  width: 100vw;
-  position: relative;
-  padding: 20px;
-}
+@import url('fuzzy.css'); /* reuse layout rules; override images below */
 
-.video-screen {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  position: relative;
-  background: black;
-}
-
-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.skip-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.25);
-  border: none;
-  border-radius: 20px;
-  padding: 10px 16px;
-  color: white;
-  cursor: pointer;
-  backdrop-filter: blur(6px);
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 1rem;
-  padding: 0 1rem;
-}
-
-.section-header h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.section-header p {
-  font-size: 1rem;
-  color: #444;
-  max-width: 600px;
-  margin: 0 auto;
-}
+/* Fabric-specific backgrounds */
+.screen-bubbles .bg { background: center/cover no-repeat url('fabric.png'); }
+.choice-bg.mesh    { background-image: url('mesh.png'); }
+.choice-bg.ceiling { background-image: url('ceiling.png'); }

@@ -2,38 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fabric Sensory Layer</title>
   <link rel="stylesheet" href="fabric.css" />
-  <script src="bubbles.js" defer></script>
 </head>
 <body>
+  <a href="index.html" class="back-button">← Back</a>
 
-<section class="infographic-section">
-  <div class="section-header">
-    <h2>Fabric Sensory Layer</h2>
-    <p>
-      In this condition, suspended fabrics control light, shadow, and airflow. 
-      The layering and movement of cloth create changing perceptions of space. 
-      Click a bubble to see how the materials shift your senses.
-    </p>
-  </div>
+  <!-- Screen 1: Bubbles -->
+  <section class="screen screen-bubbles show" aria-label="Fabric Sensory Layer">
+    <div class="bg"></div>
+    <div class="overlay"></div>
 
-  <div class="bubble-container">
-    <div class="bubble" onclick="toggleBubble(this)">
-      Material
-      <span class="bubble-text">Lightweight mesh and heavy drapes shape openness and privacy.</span>
-    </div>
-    <div class="bubble" onclick="toggleBubble(this)">
-      Texture
-      <span class="bubble-text">Fabric weaves range from sheer to opaque, altering touch and sight.</span>
-    </div>
-    <div class="bubble" onclick="toggleBubble(this)">
-      Ambience
-      <span class="bubble-text">Filtered daylight shifts throughout the day, changing the mood.</span>
-    </div>
-  </div>
-</section>
+    <div class="inner">
+      <header class="section-header">
+        <h1>Fabric Sensory Layer</h1>
+        <p>
+          Suspended fabrics steer light, airflow, and privacy. Layers billow and settle,
+          creating slow shifts in mood and orientation as you pass through.
+        </p>
+      </header>
 
+      <div class="bubble-container">
+        <button class="bubble" type="button"><span class="bubble-label">Material</span><span class="bubble-text">Sheers, meshes, and heavy drapes tune openness and sound.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Texture</span><span class="bubble-text">From smooth to ribbed to pleated—touch and light scatter differently.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Filtered daylight shifts color temperature across the room.</span></button>
+      </div>
+
+      <button class="continue-btn" type="button">Continue</button>
+    </div>
+  </section>
+
+  <!-- Screen 2: Choices -->
+  <section class="screen screen-choices" aria-label="Where will you wander next?">
+    <!-- Left: Mesh -->
+    <div class="choice" data-target="fabric-mesh.html" aria-label="Move through the Mesh environment" role="link" tabindex="0">
+      <div class="choice-bg mesh"></div>
+      <div class="choice-glow"></div>
+      <div class="choice-content">
+        <p class="choice-prompt">Where will you wander next?</p>
+        <h2 class="choice-title">Move through the Mesh environment</h2>
+      </div>
+    </div>
+
+    <!-- Right: Wooden Ceiling -->
+    <div class="choice" data-target="fabric-ceiling.html" aria-label="Look up at the Wooden Ceiling" role="link" tabindex="0">
+      <div class="choice-bg ceiling"></div>
+      <div class="choice-glow"></div>
+      <div class="choice-content">
+        <p class="choice-prompt">Or…</p>
+        <h2 class="choice-title">Look up at the Wooden Ceiling</h2>
+      </div>
+    </div>
+  </section>
+
+  <div class="screen-fade" aria-hidden="true"></div>
+
+  <script>
+    // bubbles open/close
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('.bubble');
+      if (!b) return;
+      b.classList.toggle('active');
+    });
+
+    // continue
+    document.querySelector('.continue-btn').addEventListener('click', () => {
+      document.querySelector('.screen-bubbles').classList.remove('show');
+      document.querySelector('.screen-choices').classList.add('show');
+    });
+
+    // choices
+    const fadeEl = document.querySelector('.screen-fade');
+    function go(url){ fadeEl.classList.add('in'); setTimeout(()=>location.href=url,300); }
+    document.querySelectorAll('.choice').forEach(c=>{
+      c.addEventListener('click',()=>go(c.dataset.target));
+      c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });
+    });
+  </script>
 </body>
 </html>

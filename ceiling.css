@@ -1,0 +1,6 @@
+@import url('fuzzy.css'); /* inherit layout/behavior */
+
+/* Wooden Ceiling-specific backgrounds */
+.screen-bubbles .bg { background: center/cover no-repeat url('ceiling.png'); }
+.choice-bg.fabric  { background-image: url('fabric.png'); }
+.choice-bg.mesh    { background-image: url('mesh.png'); }

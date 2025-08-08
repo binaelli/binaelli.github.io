@@ -2,20 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ceiling Transition</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    .background {
-      background-image: url('ceiling.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 100vh;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wooden Ceiling Layer</title>
+  <link rel="stylesheet" href="ceiling.css" />
 </head>
 <body>
-  <div class="background"></div>
+  <a href="index.html" class="back-button">← Back</a>
+
+  <!-- Screen 1: Bubbles -->
+  <section class="screen screen-bubbles show" aria-label="Wooden Ceiling Layer">
+    <div class="bg"></div>
+    <div class="overlay"></div>
+
+    <div class="inner">
+      <header class="section-header">
+        <h1>Wooden Ceiling Layer</h1>
+        <p>
+          Warm timber overhead reframes orientation. Grain, joints, and depth cue movement and
+          soften echo.
+        </p>
+      </header>
+
+      <div class="bubble-container">
+        <button class="bubble" type="button"><span class="bubble-label">Material</span><span class="bubble-text">Laminated wood ribs and panels introduce warmth and acoustic control.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Texture</span><span class="bubble-text">Grain patterns and joints create rhythmic visual cues.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Soft reflections and reduced reverb make the space feel grounded.</span></button>
+      </div>
+
+      <button class="continue-btn" type="button">Continue</button>
+    </div>
+  </section>
+
+  <!-- Screen 2: Choices -->
+  <section class="screen screen-choices" aria-label="Where will you wander next?">
+    <!-- Left: Fabric -->
+    <div class="choice" data-target="ceiling-fabric.html" aria-label="Step into the Fabric space" role="link" tabindex="0">
+      <div class="choice-bg fabric"></div>
+      <div class="choice-glow"></div>
+      <div class="choice-content">
+        <p class="choice-prompt">Where will you wander next?</p>
+        <h2 class="choice-title">Step into the Fabric space</h2>
+      </div>
+    </div>
+
+    <!-- Right: Mesh -->
+    <div class="choice" data-target="ceiling-mesh.html" aria-label="Move through the Mesh environment" role="link" tabindex="0">
+      <div class="choice-bg mesh"></div>
+      <div class="choice-glow"></div>
+      <div class="choice-content">
+        <p class="choice-prompt">Or…</p>
+        <h2 class="choice-title">Move through the Mesh environment</h2>
+      </div>
+    </div>
+  </section>
+
+  <div class="screen-fade" aria-hidden="true"></div>
+
+  <script>
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
+    });
+    document.querySelector('.continue-btn').addEventListener('click', () => {
+      document.querySelector('.screen-bubbles').classList.remove('show');
+      document.querySelector('.screen-choices').classList.add('show');
+    });
+    const fadeEl = document.querySelector('.screen-fade');
+    function go(url){ fadeEl.classList.add('in'); setTimeout(()=>location.href=url,300); }
+    document.querySelectorAll('.choice').forEach(c=>{
+      c.addEventListener('click',()=>go(c.dataset.target));
+      c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });
+    });
+  </script>
 </body>
 </html>
