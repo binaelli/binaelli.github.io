@@ -4,17 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wooden Ceiling Layer</title>
-  <link rel="stylesheet" href="ceiling.css?v=9" />
+  <link rel="stylesheet" href="ceiling.css?v=10" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
 
+  <!-- Screen 1: Bubbles -->
   <section class="screen screen-bubbles show" aria-label="Wooden Ceiling Layer">
-    <div class="bg"></div><div class="overlay"></div>
+    <div class="bg"></div>
+    <div class="overlay"></div>
+
     <div class="inner">
       <header class="section-header">
         <h1>Wooden Ceiling Layer</h1>
-        <p>Warm timber overhead reframes orientation. Grain, joints, and depth cue movement and soften echo.</p>
+        <p>
+          Warm timber overhead reframes orientation. Grain, joints, and depth cue movement
+          and soften echo.
+        </p>
       </header>
 
       <div class="bubble-container">
@@ -27,22 +33,27 @@
     </div>
   </section>
 
+  <!-- Screen 2: Choices -->
   <section class="screen screen-choices" aria-label="Where will you wander next?">
-    <div class="choices-header" aria-hidden="true">
-      <h2 class="choices-question">Where will you wander next?</h2>
-    </div>
+    <div class="choice-question">Where will you wander next?</div>
 
+    <!-- Left half → Fabric -->
     <div class="choice" data-target="ceiling-fabric.html" tabindex="0" role="link" aria-label="Step into the Fabric space">
-      <div class="choice-bg fabric"></div><div class="choice-glow"></div>
-      <div class="choice-content"><h3 class="choice-title">Step into the Fabric space</h3></div>
+      <div class="choice-bg fabric"></div>
+      <div class="choice-content">
+        <h3 class="choice-text">Step into the Fabric space</h3>
+      </div>
     </div>
 
+    <!-- Right half → Mesh -->
     <div class="choice" data-target="ceiling-mesh.html" tabindex="0" role="link" aria-label="Move through the Mesh environment">
-      <div class="choice-bg mesh"></div><div class="choice-glow"></div>
-      <div class="choice-content"><h3 class="choice-title">Move through the Mesh environment</h3></div>
+      <div class="choice-bg mesh"></div>
+      <div class="choice-content">
+        <h3 class="choice-text">Move through the Mesh environment</h3>
+      </div>
     </div>
 
-    <div class="choices-or" aria-hidden="true">OR</div>
+    <div class="choice-or" aria-hidden="true">OR</div>
   </section>
 
   <div class="screen-fade" aria-hidden="true"></div>
@@ -51,10 +62,16 @@
     document.addEventListener('click', e => { const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active'); });
     const bubbles = document.querySelector('.screen-bubbles');
     const choices = document.querySelector('.screen-choices');
-    document.querySelector('.continue-btn').addEventListener('click', () => { bubbles.classList.remove('show'); choices.classList.add('show'); window.scrollTo(0,0); });
+    document.querySelector('.continue-btn').addEventListener('click', () => {
+      bubbles.classList.remove('show'); choices.classList.add('show'); window.scrollTo(0,0);
+    });
 
-    const fade=document.querySelector('.screen-fade'); const go=u=>{ fade.classList.add('in'); setTimeout(()=>location.href=u,300); };
-    document.querySelectorAll('.choice').forEach(c=>{ c.addEventListener('click',()=>go(c.dataset.target)); c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} }); });
+    const fade=document.querySelector('.screen-fade');
+    const go=u=>{ fade.classList.add('in'); setTimeout(()=>location.href=u,300); };
+    document.querySelectorAll('.choice').forEach(c=>{
+      c.addEventListener('click',()=>go(c.dataset.target));
+      c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });
+    });
   </script>
 </body>
 </html>

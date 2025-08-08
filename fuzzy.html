@@ -4,25 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fuzzy Sensory Layer</title>
-  <link rel="stylesheet" href="fuzzy.css?v=9" />
+  <link rel="stylesheet" href="fuzzy.css?v=10" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
 
   <!-- Screen 1: Bubbles -->
   <section class="screen screen-bubbles show" aria-label="Fuzzy Sensory Layer">
-    <div class="bg"></div><div class="overlay"></div>
+    <div class="bg"></div>
+    <div class="overlay"></div>
 
     <div class="inner">
       <header class="section-header">
         <h1>Fuzzy Sensory Layer</h1>
-        <p>This condition wraps the body in warmth and softness. Fuzzy forms blur edges, dampen sound, and create a sense of tactile enclosure. Tap a bubble to learn more.</p>
+        <p>
+          This condition wraps the body in warmth and softness. Fuzzy forms blur edges,
+          dampen sound, and create a sense of tactile enclosure. Tap a bubble to learn more.
+        </p>
       </header>
 
       <div class="bubble-container">
-        <button class="bubble" type="button" aria-expanded="false"><span class="bubble-label">Material</span><span class="bubble-text">Dense, fuzzy textiles absorb sound and soften hard surfaces.</span></button>
-        <button class="bubble" type="button" aria-expanded="false"><span class="bubble-label">Texture</span><span class="bubble-text">Varied pile heights create a sense of touchable depth.</span></button>
-        <button class="bubble" type="button" aria-expanded="false"><span class="bubble-label">Ambience</span><span class="bubble-text">Muted acoustics and diffused light produce a cocoon-like calm.</span></button>
+        <button class="bubble" type="button" aria-expanded="false">
+          <span class="bubble-label">Material</span>
+          <span class="bubble-text">Dense, fuzzy textiles absorb sound and soften hard surfaces.</span>
+        </button>
+
+        <button class="bubble" type="button" aria-expanded="false">
+          <span class="bubble-label">Texture</span>
+          <span class="bubble-text">Varied pile heights create a sense of touchable depth.</span>
+        </button>
+
+        <button class="bubble" type="button" aria-expanded="false">
+          <span class="bubble-label">Ambience</span>
+          <span class="bubble-text">Muted acoustics and diffused light produce a cocoon-like calm.</span>
+        </button>
       </div>
 
       <button class="continue-btn" type="button">Continue</button>
@@ -31,50 +46,63 @@
 
   <!-- Screen 2: Choices -->
   <section class="screen screen-choices" aria-label="Where will you wander next?">
-    <div class="choices-header" aria-hidden="true">
-      <h2 class="choices-question">Where will you wander next?</h2>
-    </div>
+    <div class="choice-question">Where will you wander next?</div>
 
-    <!-- Left → Fabric -->
+    <!-- Left half → Fabric -->
     <div class="choice" data-target="fuzzy-fabric.html" tabindex="0" role="link" aria-label="Step into the Fabric space">
-      <div class="choice-bg fabric"></div><div class="choice-glow"></div>
-      <div class="choice-content"><h3 class="choice-title">Step into the Fabric space</h3></div>
+      <div class="choice-bg fabric"></div>
+      <div class="choice-content">
+        <h3 class="choice-text">Step into the Fabric space</h3>
+      </div>
     </div>
 
-    <!-- Right → Mesh -->
+    <!-- Right half → Mesh -->
     <div class="choice" data-target="fuzzy-mesh.html" tabindex="0" role="link" aria-label="Move through the Mesh environment">
-      <div class="choice-bg mesh"></div><div class="choice-glow"></div>
-      <div class="choice-content"><h3 class="choice-title">Move through the Mesh environment</h3></div>
+      <div class="choice-bg mesh"></div>
+      <div class="choice-content">
+        <h3 class="choice-text">Move through the Mesh environment</h3>
+      </div>
     </div>
 
-    <!-- Centered to viewport -->
-    <div class="choices-or" aria-hidden="true">OR</div>
+    <!-- Perfectly centered to the viewport -->
+    <div class="choice-or" aria-hidden="true">OR</div>
   </section>
 
   <div class="screen-fade" aria-hidden="true"></div>
 
   <script>
-    // bubbles
+    // Bubble expand/collapse (one open at a time)
     document.addEventListener('click', (e) => {
-      const b = e.target.closest('.bubble'); if (!b) return;
-      const open = b.classList.contains('active');
-      document.querySelectorAll('.bubble.active').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-expanded','false'); });
-      if (!open) { b.classList.add('active'); b.setAttribute('aria-expanded','true'); }
+      const b = e.target.closest('.bubble');
+      if (!b) return;
+      const wasOpen = b.classList.contains('active');
+      document.querySelectorAll('.bubble.active').forEach(x => {
+        x.classList.remove('active');
+        x.setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        b.classList.add('active');
+        b.setAttribute('aria-expanded', 'true');
+      }
     });
 
-    // continue
+    // Go from bubbles → choices
     const bubbles = document.querySelector('.screen-bubbles');
     const choices = document.querySelector('.screen-choices');
     document.querySelector('.continue-btn').addEventListener('click', () => {
-      bubbles.classList.remove('show'); choices.classList.add('show'); window.scrollTo(0,0);
+      bubbles.classList.remove('show');
+      choices.classList.add('show');
+      window.scrollTo(0, 0);
     });
 
-    // nav
+    // Fade + navigate on choice
     const fade = document.querySelector('.screen-fade');
-    const go = url => { fade.classList.add('in'); setTimeout(()=>location.href=url,300); };
-    document.querySelectorAll('.choice').forEach(c=>{
-      c.addEventListener('click', ()=>go(c.dataset.target));
-      c.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });
+    const go = (url) => { fade.classList.add('in'); setTimeout(() => location.href = url, 300); };
+    document.querySelectorAll('.choice').forEach(c => {
+      c.addEventListener('click', () => go(c.dataset.target));
+      c.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(c.dataset.target); }
+      });
     });
   </script>
 </body>
