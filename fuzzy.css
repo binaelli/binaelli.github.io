@@ -1,3 +1,7 @@
+/* =========================
+   FUZZY — FULL STYLESHEET
+   ========================= */
+
 /* Base + safe insets */
 *,
 *::before,
@@ -11,9 +15,10 @@ html, body {
   background: #fff;
 }
 
+/* Back button (always safely inset) */
 .back-button {
   position: fixed;
-  top: 2rem; left: 2rem;         /* safe inset */
+  top: 2rem; left: 2rem;
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
   padding: .5rem .85rem;
@@ -32,20 +37,20 @@ html, body {
 /* ---------- Screen 1: Bubbles ---------- */
 .screen-bubbles .bg {
   position: absolute; inset: 0;
-  background: center/cover no-repeat url('fuzzy.png');
+  background: center/cover no-repeat url('fuzzy.png'); /* this page's image */
 }
 .screen-bubbles .overlay {
   position: absolute; inset: 0;
   background: rgba(255,255,255,.55);
 }
 .screen-bubbles .inner {
-  position: relative; z-index: 1;
-  min-height: 100vh;
-  padding: 2rem 1rem 7.5rem;      /* extra bottom space for Continue, safely inset */
+  position: relative; z-index: 1; min-height: 100vh;
+  padding: 2rem 1rem 7.5rem;   /* room for Continue button */
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 1.25rem;
 }
 
+/* Header */
 .section-header { text-align: center; padding: 0 1rem; }
 .section-header h1 {
   margin: 0 0 .5rem 0;
@@ -70,64 +75,3 @@ html, body {
 }
 .bubble:hover, .bubble:focus-visible { transform: translateY(-1px); background: #ffd3e8; outline: none; }
 .bubble-label { display: block; }
-.bubble-text { display: none; margin-top: .55rem; font-size: clamp(.9rem, 2.4vw, .95rem); color: #374151; line-height: 1.4; }
-.bubble.active { border-radius: 20px; text-align: left; max-width: 100%; padding: 1rem; background: #ffddee; }
-.bubble.active .bubble-text { display: block; }
-
-/* Continue button (bottom-center, safe inset) */
-.continue-btn {
-  position: fixed; left: 50%; bottom: 2rem; transform: translateX(-50%);
-  background: #111827; color: #fff; border: none; cursor: pointer;
-  padding: .7rem 1.1rem; border-radius: 999px; font-weight: 800;
-  font-size: clamp(.95rem, 2.6vw, 1rem);
-  z-index: 10; transition: background .25s ease, transform .15s ease;
-}
-.continue-btn:hover { background: #0b1220; }
-.continue-btn:active { transform: translateX(-50%) translateY(1px); }
-
-/* ---------- Screen 2: Choices ---------- */
-.screen-choices {
-  display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh;
-}
-
-.choice {
-  position: relative; overflow: hidden; cursor: pointer; isolation: isolate;
-  display: flex; align-items: center; justify-content: center; padding: 2rem;
-  text-align: center; transform: translateZ(0);
-}
-
-/* Destination previews */
-.choice-bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; }
-.choice-bg.fabric { background-image: url('fabric.png'); }
-.choice-bg.mesh   { background-image: url('mesh.png'); }
-
-/* Light-up overlay + zoom */
-.choice-glow { position: absolute; inset: 0; background: rgba(255,255,255,0); z-index: 1; transition: background .2s ease; }
-.choice:hover .choice-glow, .choice:focus-visible .choice-glow { background: rgba(255,255,255,.18); }
-
-.choice { transition: transform .25s ease; }
-.choice:hover, .choice:focus-visible { transform: scale(1.02); }
-
-/* Centered text content with safe insets */
-.choice-content {
-  position: relative; z-index: 2; color: #fff; text-shadow: 0 2px 16px rgba(0,0,0,.4);
-  max-width: min(80%, 720px); padding: 0 1rem;
-}
-.choice-prompt { margin: 0 0 .35rem 0; font-weight: 700; letter-spacing: .3px; font-size: clamp(.9rem, 2.6vw, 1rem); }
-.choice-title  { margin: 0; font-size: clamp(1.2rem, 4.5vw, 1.8rem); line-height: 1.2; font-weight: 900; transition: transform .2s ease; }
-.choice:hover .choice-title, .choice:focus-visible .choice-title { transform: scale(1.03); }
-
-/* Mobile: stack halves */
-@media (max-width: 800px) {
-  .screen-choices { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
-}
-
-/* Page fade overlay for navigation */
-.screen-fade { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 30; transition: opacity .28s ease; }
-.screen-fade.in { opacity: 1; pointer-events: auto; }
-
-/* Extra mobile edge safety */
-@media (max-width: 480px) {
-  .back-button { top: 1rem; left: 1rem; }
-  .continue-btn { bottom: 1rem; }
-}
