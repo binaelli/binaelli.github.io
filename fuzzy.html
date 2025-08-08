@@ -3,41 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fuzzy</title>
+  <title>Fuzzy Sensory Layer</title>
   <link rel="stylesheet" href="fuzzy.css" />
-  <script defer src="script.js"></script>
+  <script src="bubbles.js" defer></script>
 </head>
 <body>
-  <div class="background">
-    <a href="index.html" class="back-btn">← BACK</a>
 
+<section class="infographic-section">
+  <div class="section-header">
+    <h2>Fuzzy Sensory Layer</h2>
+    <p>
+      This condition wraps the body in warmth and softness. Fuzzy forms blur 
+      edges, dampen sound, and create a sense of tactile enclosure. Click a 
+      bubble to explore the layers that shape this space.
+    </p>
+  </div>
+
+  <div class="bubble-container">
     <div class="bubble" onclick="toggleBubble(this)">
-      <div class="term">Material</div>
-      <div class="full-text">
-        The environment is sculpted from synthetic fiber masses resembling piled insulation, teased wool, or extruded foam. These materials feel fabricated yet soft, bridging industrial construction with bodily softness. They cling to the architecture not as finishings but as fuzzy intrusions occupying space like a cloud or fungus colonizing a rigid frame. <br><br><em>The material speaks of excess, blur, and buildup. A counter to clean rational lines.</em>
-      </div>
+      Material
+      <span class="bubble-text">Dense, fuzzy textiles absorb sound and soften hard surfaces.</span>
     </div>
-
     <div class="bubble" onclick="toggleBubble(this)">
-      <div class="term">Texture</div>
-      <div class="full-text">
-        The surfaces range from flossy to dense almost like dryer lint, cotton candy, or matte fleece. Their texture is non-reflective absorbing light rather than bouncing it creating an almost velvety field of spatial quietness. <br><br><em>Texture here is ambiguous. It looks soft but massive, inviting but unreadable like touching something through memory.</em>
-      </div>
+      Texture
+      <span class="bubble-text">Varied pile heights create a sense of touchable depth.</span>
     </div>
-
     <div class="bubble" onclick="toggleBubble(this)">
-      <div class="term">Ambience</div>
-      <div class="full-text">
-        The lighting is hazy and emotional with subtle pinks, lavenders, aquas, and warm white tones bleeding into each other. <br><br><em>The ambiance doesn’t direct. It envelops. There’s no clarity here. Only immersion.</em>
-      </div>
-    </div>
-
-    <button class="continue-btn" onclick="revealChoices()">CONTINUE</button>
-
-    <div class="choices" id="choiceButtons">
-      <button onclick="location.href='fabric.html'">GO TO FABRIC</button>
-      <button onclick="location.href='mesh.html'">GO TO MESH</button>
+      Ambience
+      <span class="bubble-text">Muted acoustics and diffused light produce a cocoon-like calm.</span>
     </div>
   </div>
+</section>
+
 </body>
 </html>

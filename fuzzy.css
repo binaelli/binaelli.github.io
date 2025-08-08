@@ -98,3 +98,22 @@ body, html {
   cursor: pointer;
   backdrop-filter: blur(6px);
 }
+
+.section-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-header p {
+  font-size: 1rem;
+  color: #444;
+  max-width: 600px;
+  margin: 0 auto;
+}
+

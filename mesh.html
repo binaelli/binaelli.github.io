@@ -2,25 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mesh Transition</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    .background {
-      background-image: url('mesh.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 100vh;
-      width: 100vw;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesh Sensory Layer</title>
+  <link rel="stylesheet" href="mesh.css" />
+  <script src="bubbles.js" defer></script>
 </head>
 <body>
-  <div class="background"></div>
+
+<section class="infographic-section">
+  <div class="section-header">
+    <h2>Mesh Sensory Layer</h2>
+    <p>
+      This condition distorts depth through semi-transparent mesh. Light, 
+      shadow, and projection weave together to make space feel unstable. 
+      Click a bubble to learn how perception changes here.
+    </p>
+  </div>
+
+  <div class="bubble-container">
+    <div class="bubble" onclick="toggleBubble(this)">
+      Material
+      <span class="bubble-text">Metallic mesh panels catch and scatter light in unexpected ways.</span>
+    </div>
+    <div class="bubble" onclick="toggleBubble(this)">
+      Texture
+      <span class="bubble-text">Fine and coarse mesh patterns alternate, shifting tactile and visual focus.</span>
+    </div>
+    <div class="bubble" onclick="toggleBubble(this)">
+      Ambience
+      <span class="bubble-text">Projected patterns ripple across the mesh, making surfaces appear to move.</span>
+    </div>
+  </div>
+</section>
+
 </body>
 </html>

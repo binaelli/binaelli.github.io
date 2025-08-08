@@ -1,0 +1,95 @@
+/* General section layout */
+.infographic-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  background-color: #f7faff; /* light fun background */
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Header & description above bubbles */
+.section-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+}
+
+.section-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.section-header p {
+  font-size: 1rem;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Bubble container layout */
+.bubble-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 700px;
+  width: 100%;
+}
+
+/* Individual bubbles */
+.bubble {
+  background-color: #d0e8ff; /* soft blue */
+  color: #333;
+  padding: 1rem 1.2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  text-align: center;
+  min-width: 120px;
+  max-width: 200px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+}
+
+/* Bubble hover effect */
+.bubble:hover {
+  background-color: #b5dbff;
+  transform: scale(1.05);
+}
+
+/* Hidden text inside bubbles */
+.bubble-text {
+  display: none;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #444;
+}
+
+/* Expanded bubble state */
+.bubble.active .bubble-text {
+  display: block;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .bubble {
+    min-width: 100px;
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .section-header p {
+    font-size: 0.9rem;
+  }
+}
