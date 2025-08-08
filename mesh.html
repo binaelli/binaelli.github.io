@@ -4,23 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mesh Sensory Layer</title>
-  <link rel="stylesheet" href="mesh.css?v=7" />
+  <link rel="stylesheet" href="mesh.css?v=8" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
 
-  <!-- Screen 1: Bubbles -->
   <section class="screen screen-bubbles show" aria-label="Mesh Sensory Layer">
-    <div class="bg"></div>
-    <div class="overlay"></div>
-
+    <div class="bg"></div><div class="overlay"></div>
     <div class="inner">
       <header class="section-header">
         <h1>Mesh Sensory Layer</h1>
-        <p>
-          Semi-transparent mesh bends depth and vision. Projection and daylight weave
-          shadows so surfaces feel in flux.
-        </p>
+        <p>Semi-transparent mesh bends depth and vision. Projection and daylight weave shadows so surfaces feel in flux.</p>
       </header>
 
       <div class="bubble-container">
@@ -33,25 +27,17 @@
     </div>
   </section>
 
-  <!-- Screen 2: Choices -->
   <section class="screen screen-choices" aria-label="Where will you wander next?">
-   <div class="choices-header" aria-hidden="true">
-  <h2 class="choices-question">Where will you wander next?</h2>
-</div>
+    <div class="choices-header" aria-hidden="true">
+      <h2 class="choices-question">Where will you wander next?</h2>
+      <div class="choices-or">OR</div>
+    </div>
 
-<!-- keep your two .choice blocks here -->
-
-<!-- Centered between the options, aligned with option text -->
-<div class="choices-or" aria-hidden="true">Or…</div>
-
-
-    <!-- Left → Fuzzy -->
     <div class="choice" data-target="mesh-fuzzy.html" tabindex="0" role="link" aria-label="Return to the Fuzzy space">
       <div class="choice-bg fuzzy"></div><div class="choice-glow"></div>
       <div class="choice-content"><h3 class="choice-title">Return to the Fuzzy space</h3></div>
     </div>
 
-    <!-- Right → Wooden Ceiling -->
     <div class="choice" data-target="mesh-ceiling.html" tabindex="0" role="link" aria-label="Look up at the Wooden Ceiling">
       <div class="choice-bg ceiling"></div><div class="choice-glow"></div>
       <div class="choice-content"><h3 class="choice-title">Look up at the Wooden Ceiling</h3></div>
@@ -64,16 +50,10 @@
     document.addEventListener('click', e => { const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active'); });
     const bubbles = document.querySelector('.screen-bubbles');
     const choices = document.querySelector('.screen-choices');
-    document.querySelector('.continue-btn').addEventListener('click', () => {
-      bubbles.classList.remove('show'); choices.classList.add('show'); window.scrollTo(0,0);
-    });
+    document.querySelector('.continue-btn').addEventListener('click', () => { bubbles.classList.remove('show'); choices.classList.add('show'); window.scrollTo(0,0); });
 
-    const fadeEl = document.querySelector('.screen-fade');
-    const go = u => { fadeEl.classList.add('in'); setTimeout(()=>location.href=u,300); };
-    document.querySelectorAll('.choice').forEach(c=>{
-      c.addEventListener('click', ()=>go(c.dataset.target));
-      c.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });
-    });
+    const fade=document.querySelector('.screen-fade'); const go=u=>{ fade.classList.add('in'); setTimeout(()=>location.href=u,300); };
+    document.querySelectorAll('.choice').forEach(c=>{ c.addEventListener('click',()=>go(c.dataset.target)); c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} }); });
   </script>
 </body>
 </html>
