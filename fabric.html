@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fabric Sensory Layer</title>
-  <link rel="stylesheet" href="fabric.css" />
+  <link rel="stylesheet" href="fabric.css?v=7" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
@@ -35,24 +35,21 @@
 
   <!-- Screen 2: Choices -->
   <section class="screen screen-choices" aria-label="Where will you wander next?">
-    <!-- Left: Mesh -->
-    <div class="choice" data-target="fabric-mesh.html" aria-label="Move through the Mesh environment" role="link" tabindex="0">
-      <div class="choice-bg mesh"></div>
-      <div class="choice-glow"></div>
-      <div class="choice-content">
-        <p class="choice-prompt">Where will you wander next?</p>
-        <h2 class="choice-title">Move through the Mesh environment</h2>
-      </div>
+    <div class="choices-header" aria-hidden="true">
+      <h2 class="choices-question">Where will you wander next?</h2>
+      <div class="choices-or">Or…</div>
     </div>
 
-    <!-- Right: Wooden Ceiling -->
-    <div class="choice" data-target="fabric-ceiling.html" aria-label="Look up at the Wooden Ceiling" role="link" tabindex="0">
-      <div class="choice-bg ceiling"></div>
-      <div class="choice-glow"></div>
-      <div class="choice-content">
-        <p class="choice-prompt">Or…</p>
-        <h2 class="choice-title">Look up at the Wooden Ceiling</h2>
-      </div>
+    <!-- Left → Mesh -->
+    <div class="choice" data-target="fabric-mesh.html" tabindex="0" role="link" aria-label="Move through the Mesh environment">
+      <div class="choice-bg mesh"></div><div class="choice-glow"></div>
+      <div class="choice-content"><h3 class="choice-title">Move through the Mesh environment</h3></div>
+    </div>
+
+    <!-- Right → Wooden Ceiling -->
+    <div class="choice" data-target="fabric-ceiling.html" tabindex="0" role="link" aria-label="Look up at the Wooden Ceiling">
+      <div class="choice-bg ceiling"></div><div class="choice-glow"></div>
+      <div class="choice-content"><h3 class="choice-title">Look up at the Wooden Ceiling</h3></div>
     </div>
   </section>
 
@@ -60,24 +57,28 @@
 
   <script>
     // bubbles open/close
-    document.addEventListener('click', (e) => {
-      const b = e.target.closest('.bubble');
-      if (!b) return;
+    document.addEventListener('click', e => {
+      const b = e.target.closest('.bubble'); if(!b) return;
       b.classList.toggle('active');
     });
 
     // continue
+    const bubbles = document.querySelector('.screen-bubbles');
+    const choices = document.querySelector('.screen-choices');
     document.querySelector('.continue-btn').addEventListener('click', () => {
-      document.querySelector('.screen-bubbles').classList.remove('show');
-      document.querySelector('.screen-choices').classList.add('show');
+      bubbles.classList.remove('show');
+      choices.classList.add('show');
+      window.scrollTo(0,0);
     });
 
-    // choices
+    // choice → fade then navigate
     const fadeEl = document.querySelector('.screen-fade');
-    function go(url){ fadeEl.classList.add('in'); setTimeout(()=>location.href=url,300); }
+    const go = url => { fadeEl.classList.add('in'); setTimeout(()=>location.href=url,300); };
     document.querySelectorAll('.choice').forEach(c=>{
-      c.addEventListener('click',()=>go(c.dataset.target));
-      c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });
+      c.addEventListener('click', ()=>go(c.dataset.target));
+      c.addEventListener('keydown', e=>{
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target); }
+      });
     });
   </script>
 </body>
