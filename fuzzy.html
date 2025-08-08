@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fuzzy Sensory Layer</title>
-  <link rel="stylesheet" href="fuzzy.css" />
+  <link rel="stylesheet" href="fuzzy.css?v=6" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
@@ -42,13 +42,9 @@
     </div>
   </section>
 
-  <!-- Screen 2: Choices (two halves) -->
+  <!-- Screen 2: Choices -->
   <section class="screen screen-choices" aria-label="Where will you wander next?">
-    <!-- Left: Fabric destination -->
-    <div class="choice split-left"
-         data-target="fuzzy-fabric.html"
-         aria-label="Step into the Fabric space"
-         role="link" tabindex="0">
+    <div class="choice" data-target="fuzzy-fabric.html" tabindex="0" role="link" aria-label="Step into the Fabric space">
       <div class="choice-bg fabric"></div>
       <div class="choice-glow"></div>
       <div class="choice-content">
@@ -57,11 +53,7 @@
       </div>
     </div>
 
-    <!-- Right: Mesh destination (so a full path can visit all 4) -->
-    <div class="choice split-right"
-         data-target="fuzzy-mesh.html"
-         aria-label="Move through the Mesh environment"
-         role="link" tabindex="0">
+    <div class="choice" data-target="fuzzy-mesh.html" tabindex="0" role="link" aria-label="Move through the Mesh environment">
       <div class="choice-bg mesh"></div>
       <div class="choice-glow"></div>
       <div class="choice-content">
@@ -71,47 +63,35 @@
     </div>
   </section>
 
-  <!-- Fade overlay for page transitions -->
   <div class="screen-fade" aria-hidden="true"></div>
 
   <script>
     // Bubble expand/collapse
     document.addEventListener('click', (e) => {
-      const b = e.target.closest('.bubble');
-      if (!b) return;
+      const b = e.target.closest('.bubble'); if (!b) return;
       const open = b.classList.contains('active');
       document.querySelectorAll('.bubble.active').forEach(x => {
-        x.classList.remove('active');
-        x.setAttribute('aria-expanded', 'false');
+        x.classList.remove('active'); x.setAttribute('aria-expanded', 'false');
       });
-      if (!open) {
-        b.classList.add('active');
-        b.setAttribute('aria-expanded', 'true');
-      }
+      if (!open) { b.classList.add('active'); b.setAttribute('aria-expanded', 'true'); }
     });
 
     // Continue → show choices
-    const continueBtn = document.querySelector('.continue-btn');
     const bubblesScreen = document.querySelector('.screen-bubbles');
     const choicesScreen = document.querySelector('.screen-choices');
-    continueBtn.addEventListener('click', () => {
+    document.querySelector('.continue-btn').addEventListener('click', () => {
       bubblesScreen.classList.remove('show');
       choicesScreen.classList.add('show');
+      window.scrollTo(0, 0);
     });
 
-    // Choice clicks → fade then navigate
+    // Fade + navigate for choices
     const fadeEl = document.querySelector('.screen-fade');
-    function goWithFade(url) {
-      fadeEl.classList.add('in');
-      setTimeout(() => { window.location.href = url; }, 300);
-    }
-    document.querySelectorAll('.choice').forEach(el => {
-      el.addEventListener('click', () => goWithFade(el.dataset.target));
-      el.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          goWithFade(el.dataset.target);
-        }
+    function go(url){ fadeEl.classList.add('in'); setTimeout(()=>location.href=url, 300); }
+    document.querySelectorAll('.choice').forEach(el=>{
+      el.addEventListener('click', ()=>go(el.dataset.target));
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(el.dataset.target); }
       });
     });
   </script>

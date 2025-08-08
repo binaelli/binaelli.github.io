@@ -3,70 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fabric → Mesh Transition</title>
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: black;
-    }
-
-    .video-container {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: black;
-      overflow: hidden;
-    }
-
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .skip-button, .back-button {
-      position: fixed;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      border: none;
-      text-decoration: none;
-      padding: 0.6rem 1rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .skip-button:hover, .back-button:hover { background: rgba(0, 0, 0, 0.8); }
-
-    .skip-button { bottom: 2rem; right: 2rem; }
-    .back-button { top: 2rem; left: 2rem; }
-  </style>
+  <title>Transition: Fabric → Mesh</title>
+  <link rel="stylesheet" href="transition.css" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
+  <a href="mesh.html" class="skip-button">Skip</a>
 
-  <div class="video-container">
-    <video autoplay muted playsinline>
+  <div class="video-wrap">
+    <video id="vid" autoplay muted playsinline preload="auto" poster="mesh.png">
       <source src="fabric-mesh.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
     </video>
+    <button id="play" class="tap-to-play">Tap to play</button>
   </div>
 
-  <button class="skip-button" onclick="skipVideo()">Skip</button>
-
   <script>
-    const nextPage = 'mesh.html';
-    const video = document.querySelector('video');
+    const dest = 'mesh.html';
+    const v = document.getElementById('vid');
+    const playBtn = document.getElementById('play');
+    const skipBtn = document.querySelector('.skip-button');
 
-    function skipVideo() {
-      window.location.href = nextPage;
-    }
+    setTimeout(() => skipBtn.classList.add('show'), 3000);
 
-    video.addEventListener('ended', skipVideo);
+    v.addEventListener('ended', () => location.href = dest);
+    document.addEventListener('DOMContentLoaded', () =>
+      v.play().catch(() => playBtn.classList.add('show'))
+    );
+    playBtn.addEventListener('click', () => {
+      playBtn.classList.remove('show');
+      v.play().catch(()=>{});
+    });
   </script>
 </body>
 </html>

@@ -4,23 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mesh Sensory Layer</title>
-  <link rel="stylesheet" href="mesh.css" />
+  <link rel="stylesheet" href="mesh.css?v=6" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
 
-  <!-- Screen 1: Bubbles -->
   <section class="screen screen-bubbles show" aria-label="Mesh Sensory Layer">
-    <div class="bg"></div>
-    <div class="overlay"></div>
-
+    <div class="bg"></div><div class="overlay"></div>
     <div class="inner">
       <header class="section-header">
         <h1>Mesh Sensory Layer</h1>
-        <p>
-          Semi-transparent mesh bends depth and vision. Projection and daylight weave shadows
-          so surfaces feel in flux.
-        </p>
+        <p>Semi-transparent mesh bends depth and vision. Projection and daylight weave shadows so surfaces feel in flux.</p>
       </header>
 
       <div class="bubble-container">
@@ -33,41 +27,26 @@
     </div>
   </section>
 
-  <!-- Screen 2: Choices -->
   <section class="screen screen-choices" aria-label="Where will you wander next?">
-    <!-- Left: Fuzzy -->
-    <div class="choice" data-target="mesh-fuzzy.html" aria-label="Return to the Fuzzy space" role="link" tabindex="0">
-      <div class="choice-bg fuzzy"></div>
-      <div class="choice-glow"></div>
-      <div class="choice-content">
-        <p class="choice-prompt">Where will you wander next?</p>
-        <h2 class="choice-title">Return to the Fuzzy space</h2>
-      </div>
+    <div class="choice" data-target="mesh-fuzzy.html" tabindex="0" role="link" aria-label="Return to the Fuzzy space">
+      <div class="choice-bg fuzzy"></div><div class="choice-glow"></div>
+      <div class="choice-content"><p class="choice-prompt">Where will you wander next?</p><h2 class="choice-title">Return to the Fuzzy space</h2></div>
     </div>
-
-    <!-- Right: Wooden Ceiling -->
-    <div class="choice" data-target="mesh-ceiling.html" aria-label="Look up at the Wooden Ceiling" role="link" tabindex="0">
-      <div class="choice-bg ceiling"></div>
-      <div class="choice-glow"></div>
-      <div class="choice-content">
-        <p class="choice-prompt">Or…</p>
-        <h2 class="choice-title">Look up at the Wooden Ceiling</h2>
-      </div>
+    <div class="choice" data-target="mesh-ceiling.html" tabindex="0" role="link" aria-label="Look up at the Wooden Ceiling">
+      <div class="choice-bg ceiling"></div><div class="choice-glow"></div>
+      <div class="choice-content"><p class="choice-prompt">Or…</p><h2 class="choice-title">Look up at the Wooden Ceiling</h2></div>
     </div>
   </section>
 
   <div class="screen-fade" aria-hidden="true"></div>
 
   <script>
-    document.addEventListener('click', (e) => {
-      const b = e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
-    });
-    document.querySelector('.continue-btn').addEventListener('click', () => {
+    document.addEventListener('click', e => { const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active'); });
+    document.querySelector('.continue-btn').addEventListener('click', ()=>{
       document.querySelector('.screen-bubbles').classList.remove('show');
-      document.querySelector('.screen-choices').classList.add('show');
+      document.querySelector('.screen-choices').classList.add('show'); window.scrollTo(0,0);
     });
-    const fadeEl = document.querySelector('.screen-fade');
-    function go(url){ fadeEl.classList.add('in'); setTimeout(()=>location.href=url,300); }
+    const fade=document.querySelector('.screen-fade'); function go(u){fade.classList.add('in'); setTimeout(()=>location.href=u,300);}
     document.querySelectorAll('.choice').forEach(c=>{
       c.addEventListener('click',()=>go(c.dataset.target));
       c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });

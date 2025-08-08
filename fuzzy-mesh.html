@@ -3,35 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Transition: Fuzzy → Fabric</title>
+  <title>Transition: Fuzzy → Mesh</title>
   <link rel="stylesheet" href="transition.css" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
-  <a href="fabric.html" class="skip-button">Skip</a>
+  <a href="mesh.html" class="skip-button">Skip</a>
 
   <div class="video-wrap">
-    <video id="vid" autoplay muted playsinline preload="auto" poster="fabric.png">
-      <source src="fuzzy-fabric.mp4" type="video/mp4" />
+    <video id="vid" autoplay muted playsinline preload="auto" poster="mesh.png">
+      <source src="fuzzy-mesh.mp4" type="video/mp4" />
     </video>
     <button id="play" class="tap-to-play">Tap to play</button>
   </div>
 
   <script>
-    const dest = 'fabric.html';
+    const dest = 'mesh.html';
     const v = document.getElementById('vid');
     const playBtn = document.getElementById('play');
     const skipBtn = document.querySelector('.skip-button');
 
-    // Fade-in Skip after 3s
     setTimeout(() => skipBtn.classList.add('show'), 3000);
 
     v.addEventListener('ended', () => location.href = dest);
-
-    function tryPlay() {
-      v.play().catch(() => { playBtn.classList.add('show'); });
-    }
-    document.addEventListener('DOMContentLoaded', tryPlay);
+    document.addEventListener('DOMContentLoaded', () =>
+      v.play().catch(() => playBtn.classList.add('show'))
+    );
     playBtn.addEventListener('click', () => {
       playBtn.classList.remove('show');
       v.play().catch(()=>{});
