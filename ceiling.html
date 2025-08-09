@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wooden Ceiling Layer</title>
-  <link rel="stylesheet" href="ceiling.css?v=14" />
+  <link rel="stylesheet" href="ceiling.css?v=15" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
@@ -56,83 +56,62 @@
   <div class="screen-fade" aria-hidden="true"></div>
 
   <script>
-    const PAGE_SPACE = 'ceiling';
-    const ALL_SPACES = ['fuzzy','fabric','mesh','ceiling'];
-    const ALLOWED_NEXT = {
-      fuzzy:   ['fabric','mesh'],
-      fabric:  ['fuzzy','mesh'],
-      mesh:    ['fabric','ceiling'],
-      ceiling: ['fuzzy','mesh'],
-    };
-    const LABELS = {
-      fuzzy:   'Return to the Fuzzy space',
-      fabric:  'Step into the Fabric space',
-      mesh:    'Move through the Mesh environment',
-      ceiling: 'Look up at the Wooden Ceiling',
-    };
+    const PAGE='ceiling';
+    const NEXT={ fuzzy:['fabric','mesh'], fabric:['fuzzy','mesh'], mesh:['fabric','ceiling'], ceiling:['fuzzy','mesh'] };
+    const LABEL={ fuzzy:'Return to the Fuzzy space', fabric:'Step into the Fabric space', mesh:'Move through the Mesh environment', ceiling:'Look up at the Wooden Ceiling' };
 
-    const getVisited = () => { try { return JSON.parse(localStorage.getItem('visitedSpaces')||'[]'); } catch { return []; } };
-    const setVisited = (arr) => localStorage.setItem('visitedSpaces', JSON.stringify(Array.from(new Set(arr))));
-    const markVisited = (s) => { const v=getVisited(); if(!v.includes(s)){ v.push(s); setVisited(v); } };
-    markVisited(PAGE_SPACE);
+    const getVisited=()=>{try{return JSON.parse(localStorage.getItem('visitedSpaces')||'[]');}catch{return[];}};
+    const setVisited=(a)=>localStorage.setItem('visitedSpaces',JSON.stringify(Array.from(new Set(a))));
+    const addVisited=(s)=>{const v=getVisited(); if(!v.includes(s)){v.push(s); setVisited(v);}};
 
-    document.addEventListener('click', e => { const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active'); });
+    addVisited(PAGE);
+
+    document.addEventListener('click',e=>{const b=e.target.closest('.bubble'); if(!b)return; b.classList.toggle('active');});
 
     const bubbles=document.querySelector('.screen-bubbles');
     const choices=document.querySelector('.screen-choices');
     const fade=document.querySelector('.screen-fade');
 
-    document.querySelector('.continue-btn').addEventListener('click', () => {
-      const visited = getVisited();
-      if (ALL_SPACES.every(s => visited.includes(s))) { location.href = 'index.html'; return; }
+    document.querySelector('.continue-btn').addEventListener('click',()=>{
       bubbles.classList.remove('show');
       renderChoices();
       choices.classList.add('show');
       window.scrollTo(0,0);
     });
 
-    const go = (url) => { fade.classList.add('in'); setTimeout(()=>location.href=url, 250); };
+    const go=(url)=>{fade.classList.add('in'); setTimeout(()=>location.href=url,250);};
 
-    function setChoice(el, nextSpace){
-      const img = el.querySelector('.choice-img');
-      const text = el.querySelector('.choice-text');
-      el.dataset.space = nextSpace;
-      el.dataset.target = `${PAGE_SPACE}-${nextSpace}.html`;
-      img.src = `${nextSpace}.png`;
-      img.alt = '';
-      text.textContent = LABELS[nextSpace];
-      el.onclick = () => go(el.dataset.target);
-      el.onkeydown = (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(el.dataset.target); } };
+    function wire(el,next){
+      el.querySelector('.choice-img').src=`${next}.png`;
+      el.querySelector('.choice-text').textContent=LABEL[next];
+      el.dataset.target=`${PAGE}-${next}.html`;
+      el.onclick=()=>go(el.dataset.target);
+      el.onkeydown=(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault(); go(el.dataset.target);}};
       el.removeAttribute('hidden');
     }
 
     function renderChoices(){
-      const visited = getVisited();
-      const allowed = ALLOWED_NEXT[PAGE_SPACE];
-      const remaining = allowed.filter(s => !visited.includes(s));
+      const visited=getVisited();
+      let remaining=NEXT[PAGE].filter(s=>!visited.includes(s));
 
-      const left  = document.querySelector('.choice-left');
-      const right = document.querySelector('.choice-right');
-      const orEl  = document.querySelector('.choice-or');
-      const finalWrap = document.querySelector('.final-wrap');
-      const finalImg  = document.querySelector('.final-img');
-      const finalBtn  = document.querySelector('.final-continue');
+      const left=document.querySelector('.choice-left');
+      const right=document.querySelector('.choice-right');
+      const orEl=document.querySelector('.choice-or');
+      const final=document.querySelector('.final-wrap');
+      const fImg=document.querySelector('.final-img');
+      const fBtn=document.querySelector('.final-continue');
 
-      [left,right].forEach(el => el.setAttribute('hidden',''));
+      [left,right].forEach(el=>el.setAttribute('hidden',''));
 
-      if (remaining.length >= 2){
-        setChoice(left, remaining[0]);
-        setChoice(right, remaining[1]);
-        orEl.removeAttribute('hidden');
-        finalWrap.setAttribute('hidden','');
-      } else if (remaining.length === 1){
-        const only = remaining[0];
-        finalImg.src = `${only}.png`;
-        finalBtn.onclick = () => go(`${PAGE_SPACE}-${only}.html`);
-        finalWrap.removeAttribute('hidden');
-        orEl.setAttribute('hidden','');
-      } else {
-        location.href = 'index.html';
+      if(remaining.length>=2){
+        wire(left,remaining[0]); wire(right,remaining[1]);
+        orEl.removeAttribute('hidden'); final.setAttribute('hidden','');
+      }else if(remaining.length===1){
+        fImg.src=`${remaining[0]}.png`;
+        fBtn.onclick=()=>go(`${PAGE}-${remaining[0]}.html`);
+        final.removeAttribute('hidden'); orEl.setAttribute('hidden','');
+      }else{
+        location.href='index.html';
       }
     }
   </script>
