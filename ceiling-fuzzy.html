@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transition — Wooden Ceiling → Fuzzy</title>
+  <link rel="stylesheet" href="transition.css?v=12">
+</head>
+<body>
+  <a href="index.html" class="back-button">← Back</a>
+  <div class="transition-label" aria-hidden="true">Moving from Wooden Ceiling to Fuzzy</div>
+
+  <main class="stage" aria-label="Transition video from Wooden Ceiling to Fuzzy">
+    <video id="vid" src="ceiling-fuzzy.mp4" autoplay playsinline muted></video>
+    <button id="skip" class="skip" type="button">Skip</button>
+    <div id="fade" class="fade" aria-hidden="true"></div>
+  </main>
+
+  <script>
+    const DEST = 'fuzzy.html';
+    const vid = document.getElementById('vid');
+    const skip = document.getElementById('skip');
+    const fade = document.getElementById('fade');
+
+    setTimeout(()=> skip.classList.add('show'), 2500);
+    const go = () => { fade.classList.add('in'); setTimeout(()=>location.href = DEST, 250); };
+
+    vid.addEventListener('ended', go);
+    skip.addEventListener('click', go);
+    vid.addEventListener('error', () => skip.classList.add('show'));
+  </script>
+</body>
+</html>
