@@ -1,94 +1,104 @@
-/* ---------- Transition video shared styles ---------- */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
+/* Reset / base */
 html, body {
-  height: 100%;
   margin: 0;
+  padding: 0;
+  height: 100%;
   background: #000;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   color: #fff;
 }
 
-/* Video fills the viewport */
-.video-wrap {
-  position: fixed;
-  inset: 0;
-  background: #000;
+/* Full-viewport stage */
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
+  background: #000;
 }
-video {
+
+/* Full-bleed video */
+.stage video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  object-position: center center;
   background: #000;
 }
 
-/* Buttons: safe insets from edges */
-.back-button,
-.skip-button {
+/* Top-left back button */
+.back-button {
   position: fixed;
-  z-index: 10;
-  display: inline-block;
-  padding: 0.55rem 0.85rem;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.55);
+  top: calc(12px + env(safe-area-inset-top));
+  left: calc(12px + env(safe-area-inset-left));
+  z-index: 20;
+  background: rgba(0,0,0,.55);
   color: #fff;
   text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
   font-weight: 700;
-  font-size: 0.95rem;
-  backdrop-filter: blur(2px);
-  transition: background 0.2s ease;
+  font-size: clamp(.9rem, 2.3vw, 1rem);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
-.back-button:hover,
-.skip-button:hover { background: rgba(0,0,0,0.75); }
+.back-button:hover { background: rgba(0,0,0,.75); }
 
-.back-button {
-  left: max(1rem, env(safe-area-inset-left));
-  top:  max(1rem, env(safe-area-inset-top));
-}
-.skip-button {
-  right: max(1rem, env(safe-area-inset-right));
-  bottom: max(1rem, env(safe-area-inset-bottom));
+/* Subtle label (optional, non-interactive) */
+.transition-label {
+  position: fixed;
+  top: calc(16px + env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: .35rem .65rem;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: clamp(.85rem, 2.2vw, 1rem);
+  color: #eaf1ff;
+  background: rgba(0,0,0,.35);
+  text-shadow: 0 2px 12px rgba(0,0,0,.45);
+  pointer-events: none;
 }
 
-/* Skip button: hidden initially, then faded in by JS */
-.skip-button {
+/* Skip button (appears later) */
+.skip {
+  position: fixed;
+  right: calc(16px + env(safe-area-inset-right));
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  z-index: 20;
+  background: #111827;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: .7rem 1.1rem;
+  font-weight: 800;
+  font-size: clamp(.95rem, 2.6vw, 1rem);
+  cursor: pointer;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.6s ease;
+  transition: opacity .35s ease;
 }
-.skip-button.show {
+.skip.show {
   opacity: 1;
   pointer-events: auto;
 }
+.skip:hover { background: #0b1220; }
 
-/* Tap-to-play fallback */
-.tap-to-play {
-  position: fixed;
-  left: 50%;
-  top:  50%;
-  transform: translate(-50%, -50%);
-  z-index: 11;
-  padding: 0.8rem 1.2rem;
-  border-radius: 999px;
-  border: 0;
-  font-weight: 800;
-  font-size: 1rem;
-  color: #111;
-  background: #fff;
-  cursor: pointer;
-  display: none;
-}
-.tap-to-play.show { display: inline-block; }
-
-/* Optional subtle vignette for readability */
-.video-wrap::after {
-  content: "";
-  position: absolute;
-  inset: 0;
+/* Black fade on navigation */
+.fade {
+  position: fixed; inset: 0;
+  background: #000;
+  opacity: 0;
   pointer-events: none;
-  background: radial-gradient(120% 120% at 50% 50%, transparent 30%, rgba(0,0,0,.2) 100%);
+  z-index: 50;
+  transition: opacity .28s ease;
+}
+.fade.in { opacity: 1; pointer-events: auto; }
+
+/* Small helper: in case mobile UI shrinks the viewport on scroll */
+@supports (height: 100svh) {
+  .stage { height: 100svh; }
 }

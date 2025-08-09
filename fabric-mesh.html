@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Transition: Fabric → Mesh</title>
-  <link rel="stylesheet" href="transition.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transition — Fabric → Mesh</title>
+  <link rel="stylesheet" href="transition.css?v=12">
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
-  <a href="mesh.html" class="skip-button">Skip</a>
+  <div class="transition-label" aria-hidden="true">Moving from Fabric to Mesh</div>
 
-  <div class="video-wrap">
-    <video id="vid" autoplay muted playsinline preload="auto" poster="mesh.png">
-      <source src="fabric-mesh.mp4" type="video/mp4" />
-    </video>
-    <button id="play" class="tap-to-play">Tap to play</button>
-  </div>
+  <main class="stage" aria-label="Transition video from Fabric to Mesh">
+    <video id="vid" src="fabric-mesh.mp4" autoplay playsinline muted></video>
+    <button id="skip" class="skip" type="button">Skip</button>
+    <div id="fade" class="fade" aria-hidden="true"></div>
+  </main>
 
   <script>
-    const dest = 'mesh.html';
-    const v = document.getElementById('vid');
-    const playBtn = document.getElementById('play');
-    const skipBtn = document.querySelector('.skip-button');
+    const DEST = 'mesh.html';
+    const vid = document.getElementById('vid');
+    const skip = document.getElementById('skip');
+    const fade = document.getElementById('fade');
 
-    setTimeout(() => skipBtn.classList.add('show'), 3000);
-
-    v.addEventListener('ended', () => location.href = dest);
-    document.addEventListener('DOMContentLoaded', () =>
-      v.play().catch(() => playBtn.classList.add('show'))
-    );
-    playBtn.addEventListener('click', () => {
-      playBtn.classList.remove('show');
-      v.play().catch(()=>{});
-    });
+    setTimeout(()=> skip.classList.add('show'), 2500);
+    const go = () => { fade.classList.add('in'); setTimeout(()=>location.href = DEST, 250); };
+    vid.addEventListener('ended', go);
+    skip.addEventListener('click', go);
+    vid.addEventListener('error', () => skip.classList.add('show'));
   </script>
 </body>
 </html>

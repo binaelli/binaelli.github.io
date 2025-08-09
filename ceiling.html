@@ -4,12 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wooden Ceiling Layer</title>
-  <link rel="stylesheet" href="ceiling.css?v=10" />
+  <link rel="stylesheet" href="ceiling.css?v=12" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
 
-  <!-- Screen 1: Bubbles -->
   <section class="screen screen-bubbles show" aria-label="Wooden Ceiling Layer">
     <div class="bg"></div>
     <div class="overlay"></div>
@@ -17,10 +16,7 @@
     <div class="inner">
       <header class="section-header">
         <h1>Wooden Ceiling Layer</h1>
-        <p>
-          Warm timber overhead reframes orientation. Grain, joints, and depth cue movement
-          and soften echo.
-        </p>
+        <p>Warm timber overhead reframes orientation. Grain, joints, and depth cue movement and soften echo.</p>
       </header>
 
       <div class="bubble-container">
@@ -33,45 +29,90 @@
     </div>
   </section>
 
-  <!-- Screen 2: Choices -->
   <section class="screen screen-choices" aria-label="Where will you wander next?">
     <div class="choice-question">Where will you wander next?</div>
 
-    <!-- Left half → Fabric -->
-    <div class="choice" data-target="ceiling-fabric.html" tabindex="0" role="link" aria-label="Step into the Fabric space">
-      <div class="choice-bg fabric"></div>
-      <div class="choice-content">
-        <h3 class="choice-text">Step into the Fabric space</h3>
-      </div>
+    <!-- Ceiling → Fabric / Mesh -->
+    <div class="choice choice-left" data-space="fabric" data-target="ceiling-fabric.html" tabindex="0" role="link" aria-label="Step into the Fabric space">
+      <img class="choice-img" src="fabric.png" alt="" />
+      <div class="choice-content"><h3 class="choice-text">Step into the Fabric space</h3></div>
     </div>
 
-    <!-- Right half → Mesh -->
-    <div class="choice" data-target="ceiling-mesh.html" tabindex="0" role="link" aria-label="Move through the Mesh environment">
-      <div class="choice-bg mesh"></div>
-      <div class="choice-content">
-        <h3 class="choice-text">Move through the Mesh environment</h3>
-      </div>
+    <div class="choice choice-right" data-space="mesh" data-target="ceiling-mesh.html" tabindex="0" role="link" aria-label="Move through the Mesh environment">
+      <img class="choice-img" src="mesh.png" alt="" />
+      <div class="choice-content"><h3 class="choice-text">Move through the Mesh environment</h3></div>
     </div>
 
     <div class="choice-or" aria-hidden="true">OR</div>
+
+    <div class="final-wrap" hidden>
+      <img class="final-img" src="" alt="" />
+      <div class="final-overlay">
+        <h2 class="final-title">You’re almost there—proceed to the final space.</h2>
+        <button class="final-continue" type="button">Continue</button>
+      </div>
+    </div>
   </section>
 
   <div class="screen-fade" aria-hidden="true"></div>
 
   <script>
+    const PAGE_SPACE = 'ceiling';
+    const ALL_SPACES = ['fuzzy','fabric','mesh','ceiling'];
+
+    const getVisited = () => { try { return JSON.parse(localStorage.getItem('visitedSpaces')||'[]'); } catch { return []; } };
+    const setVisited = (arr) => localStorage.setItem('visitedSpaces', JSON.stringify(Array.from(new Set(arr))));
+    const markVisited = (space) => { const v = getVisited(); if(!v.includes(space)){ v.push(space); setVisited(v); } };
+
+    markVisited(PAGE_SPACE);
+
     document.addEventListener('click', e => { const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active'); });
-    const bubbles = document.querySelector('.screen-bubbles');
-    const choices = document.querySelector('.screen-choices');
+
+    const bubbles=document.querySelector('.screen-bubbles');
+    const choices=document.querySelector('.screen-choices');
+    const fade=document.querySelector('.screen-fade');
+
     document.querySelector('.continue-btn').addEventListener('click', () => {
-      bubbles.classList.remove('show'); choices.classList.add('show'); window.scrollTo(0,0);
+      const visited = getVisited();
+      if (ALL_SPACES.every(s => visited.includes(s))) { location.href = 'index.html'; return; }
+      bubbles.classList.remove('show');
+      configureChoices();
+      choices.classList.add('show');
+      window.scrollTo(0,0);
     });
 
-    const fade=document.querySelector('.screen-fade');
-    const go=u=>{ fade.classList.add('in'); setTimeout(()=>location.href=u,300); };
-    document.querySelectorAll('.choice').forEach(c=>{
-      c.addEventListener('click',()=>go(c.dataset.target));
-      c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(c.dataset.target);} });
-    });
+    const go = (url) => { fade.classList.add('in'); setTimeout(()=>location.href=url,300); };
+
+    function configureChoices(){
+      const visited = getVisited();
+      const remaining = ALL_SPACES.filter(s => s !== PAGE_SPACE && !visited.includes(s));
+
+      const left = document.querySelector('.choice-left');
+      const right = document.querySelector('.choice-right');
+      const orEl = document.querySelector('.choice-or');
+      const finalWrap = document.querySelector('.final-wrap');
+      const finalImg = document.querySelector('.final-img');
+      const finalBtn = document.querySelector('.final-continue');
+
+      [left,right].forEach(el => remaining.includes(el.dataset.space) ? el.removeAttribute('hidden') : el.setAttribute('hidden',''));
+      const visible = [left,right].filter(el => !el.hasAttribute('hidden'));
+
+      if (visible.length >= 2){
+        orEl.removeAttribute('hidden'); finalWrap.setAttribute('hidden','');
+        visible.forEach(el=>{
+          el.addEventListener('click', ()=>go(el.dataset.target), { once:true });
+          el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(el.dataset.target);} }, { once:true });
+        });
+      } else if (visible.length === 1){
+        orEl.setAttribute('hidden',''); finalWrap.removeAttribute('hidden');
+        const only = visible[0];
+        finalImg.src = only.querySelector('.choice-img').src;
+        finalBtn.onclick = () => go(only.dataset.target);
+        [left,right].forEach(el => el.setAttribute('hidden',''));
+      } else {
+        location.href = 'index.html';
+      }
+    }
   </script>
 </body>
 </html>
