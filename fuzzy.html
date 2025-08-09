@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fuzzy Sensory Layer</title>
-  <!-- bump the version if the browser caches styles -->
-  <link rel="stylesheet" href="fuzzy.css?v=13" />
+  <link rel="stylesheet" href="fuzzy.css?v=14" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
@@ -47,23 +46,20 @@
   <section class="screen screen-choices" aria-label="Where will you wander next?">
     <div class="choice-question">Where will you wander next?</div>
 
-    <!-- Left → Fabric -->
-    <div class="choice choice-left" data-space="fabric" data-target="fuzzy-fabric.html"
-         tabindex="0" role="link" aria-label="Step into the Fabric space">
-      <img class="choice-img" src="fabric.png" alt="" />
-      <div class="choice-content"><h3 class="choice-text">Step into the Fabric space</h3></div>
+    <!-- Two generic slots we populate dynamically -->
+    <div class="choice choice-left" tabindex="0" role="link">
+      <img class="choice-img" src="" alt="" />
+      <div class="choice-content"><h3 class="choice-text"></h3></div>
     </div>
 
-    <!-- Right → Mesh -->
-    <div class="choice choice-right" data-space="mesh" data-target="fuzzy-mesh.html"
-         tabindex="0" role="link" aria-label="Move through the Mesh environment">
-      <img class="choice-img" src="mesh.png" alt="" />
-      <div class="choice-content"><h3 class="choice-text">Move through the Mesh environment</h3></div>
+    <div class="choice choice-right" tabindex="0" role="link">
+      <img class="choice-img" src="" alt="" />
+      <div class="choice-content"><h3 class="choice-text"></h3></div>
     </div>
 
     <div class="choice-or" aria-hidden="true">OR</div>
 
-    <!-- Single-option state (when only one space is left) -->
+    <!-- Single-option state -->
     <div class="final-wrap" hidden>
       <img class="final-img" src="" alt="" />
       <div class="final-overlay">
@@ -78,31 +74,36 @@
   <script>
     const PAGE_SPACE = 'fuzzy';
     const ALL_SPACES = ['fuzzy','fabric','mesh','ceiling'];
+    const ALLOWED_NEXT = {
+      fuzzy:   ['fabric','mesh'],
+      fabric:  ['fuzzy','mesh'],
+      mesh:    ['fabric','ceiling'],
+      ceiling: ['fuzzy','mesh'],
+    };
+    const LABELS = {
+      fuzzy:   'Return to the Fuzzy space',
+      fabric:  'Step into the Fabric space',
+      mesh:    'Move through the Mesh environment',
+      ceiling: 'Look up at the Wooden Ceiling',
+    };
 
     const getVisited = () => { try { return JSON.parse(localStorage.getItem('visitedSpaces')||'[]'); } catch { return []; } };
     const setVisited = (arr) => localStorage.setItem('visitedSpaces', JSON.stringify(Array.from(new Set(arr))));
-    const markVisited = (space) => {
-      const v = getVisited();
-      if (!v.includes(space)) { v.push(space); setVisited(v); }
-    };
+    const markVisited = (s) => { const v=getVisited(); if(!v.includes(s)){ v.push(s); setVisited(v); } };
 
-    // --- Reset the journey when arriving on Fuzzy (so both options show fresh) ---
-    (function resetIfStarting() {
+    // Start fresh on Fuzzy (so you always see two real options)
+    (function ensureStartOnFuzzy() {
       const v = getVisited();
-      if (v.length === 0 || v[0] !== 'fuzzy') {
-        setVisited(['fuzzy']);   // start a new run at fuzzy
-      }
+      if (v.length === 0 || v[0] !== 'fuzzy') setVisited(['fuzzy']);
     })();
-
-    // Mark fuzzy visited
     markVisited(PAGE_SPACE);
 
-    // Bubble toggle (one open at a time)
+    // Bubble toggles
     document.addEventListener('click', (e) => {
       const b = e.target.closest('.bubble'); if (!b) return;
-      const open = b.classList.contains('active');
-      document.querySelectorAll('.bubble.active').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-expanded','false'); });
-      if (!open) { b.classList.add('active'); b.setAttribute('aria-expanded','true'); }
+      const was = b.classList.contains('active');
+      document.querySelectorAll('.bubble.active').forEach(x=>{ x.classList.remove('active'); x.setAttribute('aria-expanded','false'); });
+      if (!was) { b.classList.add('active'); b.setAttribute('aria-expanded','true'); }
     });
 
     const bubbles = document.querySelector('.screen-bubbles');
@@ -113,16 +114,30 @@
       const visited = getVisited();
       if (ALL_SPACES.every(s => visited.includes(s))) { location.href = 'index.html'; return; }
       bubbles.classList.remove('show');
-      configureChoices();
+      renderChoices();
       choices.classList.add('show');
       window.scrollTo(0,0);
     });
 
-    const go = (url) => { fade && fade.classList.add('in'); setTimeout(()=>location.href=url, 250); };
+    const go = (url) => { fade.classList.add('in'); setTimeout(()=>location.href=url, 250); };
 
-    function configureChoices(){
-      const visited   = getVisited();
-      const remaining = ALL_SPACES.filter(s => s !== PAGE_SPACE && !visited.includes(s));
+    function setChoice(el, nextSpace){
+      const img = el.querySelector('.choice-img');
+      const text = el.querySelector('.choice-text');
+      el.dataset.space = nextSpace;
+      el.dataset.target = `${PAGE_SPACE}-${nextSpace}.html`;
+      img.src = `${nextSpace}.png`;
+      img.alt = '';
+      text.textContent = LABELS[nextSpace];
+      el.onclick = () => go(el.dataset.target);
+      el.onkeydown = (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(el.dataset.target); } };
+      el.removeAttribute('hidden');
+    }
+
+    function renderChoices(){
+      const visited = getVisited();
+      const allowed = ALLOWED_NEXT[PAGE_SPACE];
+      const remaining = allowed.filter(s => !visited.includes(s));
 
       const left  = document.querySelector('.choice-left');
       const right = document.querySelector('.choice-right');
@@ -131,31 +146,23 @@
       const finalImg  = document.querySelector('.final-img');
       const finalBtn  = document.querySelector('.final-continue');
 
-      // Show/hide each half based on what's still unvisited
-      [left,right].forEach(el => remaining.includes(el.dataset.space)
-        ? el.removeAttribute('hidden')
-        : el.setAttribute('hidden',''));
+      // Hide both first
+      [left,right].forEach(el => el.setAttribute('hidden',''));
 
-      const visible = [left,right].filter(el => !el.hasAttribute('hidden'));
-
-      if (visible.length >= 2) {
-        // Normal two-option UI
+      if (remaining.length >= 2){
+        setChoice(left, remaining[0]);
+        setChoice(right, remaining[1]);
         orEl.removeAttribute('hidden');
         finalWrap.setAttribute('hidden','');
-        visible.forEach(el => {
-          el.onclick = () => go(el.dataset.target);
-          el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(el.dataset.target); } };
-        });
-      } else if (visible.length === 1) {
-        // Single-option “proceed” UI
-        orEl.setAttribute('hidden','');
+      } else if (remaining.length === 1){
+        // single-option proceed
+        const only = remaining[0];
+        finalImg.src = `${only}.png`;
+        finalBtn.onclick = () => go(`${PAGE_SPACE}-${only}.html`);
         finalWrap.removeAttribute('hidden');
-        const only = visible[0];
-        finalImg.src = only.querySelector('.choice-img').src;
-        finalBtn.onclick = () => go(only.dataset.target);
-        [left,right].forEach(el => el.setAttribute('hidden',''));
+        orEl.setAttribute('hidden','');
       } else {
-        // Shouldn’t happen on a fresh start, but fail-safe:
+        // no remaining from here → go home
         location.href = 'index.html';
       }
     }
