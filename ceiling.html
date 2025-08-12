@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wooden Ceiling Layer</title>
-  <link rel="stylesheet" href="ceiling.css?v=17" />
+  <link rel="stylesheet" href="ceiling.css?v=18" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
@@ -34,18 +34,39 @@
         </button>
       </div>
 
-      <!-- Change the href here depending on your route -->
-      <button class="continue-btn" type="button" onclick="location.href='ceiling-to-fabric.html'">Continue</button>
+      <!-- Continue is set dynamically via ?next= -->
+      <button id="continueBtn" class="continue-btn" type="button">Continue</button>
     </div>
   </section>
 
   <script>
-    // bubble toggle
+    // Toggle bubbles
     document.addEventListener('click', e => {
-      const b = e.target.closest('.bubble'); 
+      const b = e.target.closest('.bubble');
       if (!b) return;
       b.classList.toggle('active');
     });
+
+    // Decide next from ?next=fabric | mesh
+    const params = new URLSearchParams(location.search);
+    const next = (params.get('next') || '').toLowerCase();
+
+    const map = {
+      fabric: { href: 'ceiling-fabric.html', label: 'Proceed to the Fabric space' },
+      mesh:   { href: 'ceiling-mesh.html',   label: 'Proceed to the Mesh environment' }
+    };
+
+    const cfg = map[next];
+    const btn = document.getElementById('continueBtn');
+
+    if (cfg) {
+      btn.textContent = cfg.label;
+      btn.onclick = () => location.href = cfg.href;
+    } else {
+      // Fallback if no/invalid ?next param
+      btn.textContent = 'Back to Home';
+      btn.onclick = () => location.href = 'index.html';
+    }
   </script>
 </body>
 </html>
