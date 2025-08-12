@@ -38,3 +38,89 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
 @supports(height:100svh){ .background{height:100svh} }
 
 :focus-visible { outline:2px solid #fff; outline-offset:3px; border-radius:12px; }
+
+/* ---- Hero overlay polish ---- */
+
+/* Dim/tint the background slightly for legibility */
+.background::after{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(1400px 700px at 50% 20%, rgba(0,0,0,.15), transparent 55%),
+    linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.35));
+  pointer-events:none;
+}
+
+/* Center block */
+.hero-center{
+  position:absolute; left:50%; top:18%; transform:translateX(-50%);
+  width:min(92vw, 1100px);
+  text-align:center; color:#fff;
+  text-shadow:0 2px 14px rgba(0,0,0,.35);
+}
+.hero-title{
+  margin:0 0 .75rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  font-size:clamp(22px, 4.2vw, 44px);
+}
+.lead{
+  margin:.35rem auto;
+  max-width:85ch;
+  opacity:.95;
+  font-size:clamp(13px, 1.8vw, 16px);
+  line-height:1.5;
+}
+
+/* Use your existing explore styling, but inline here (not absolute) */
+.hero-center .explore-btn{
+  position:static; transform:none;
+  display:inline-flex; align-items:center; justify-content:center;
+  margin-top:1rem;
+  padding:14px 32px;
+  border-radius:999px;
+  color:#fff; text-decoration:none;
+  background:rgba(255,255,255,.25);
+  border:1px solid rgba(255,255,255,.45);
+  backdrop-filter:blur(8px);
+  transition:transform .2s ease, background .2s ease, box-shadow .2s ease;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+@media (hover:hover){
+  .hero-center .explore-btn:hover{
+    transform:translateY(-1px);
+    background:rgba(255,255,255,.35);
+  }
+}
+
+/* Keep your original absolute centering OFF for this page layout */
+.explore-btn{ /* only affects old absolute style if used elsewhere */
+  /* no change needed here; the .hero-center override takes precedence */
+}
+
+/* ---- Footer bar: medium-opacity pink ---- */
+.footer-bar{
+  background:rgba(243,141,146,.55);             /* medium pink */
+  backdrop-filter:blur(8px);
+  border-top:1px solid rgba(255,255,255,.25);
+}
+.footer-bar .left h1{ color:#fff; }             /* white title on pink */
+.footer-bar .left p{ color:rgba(255,255,255,.9);}
+
+/* Make right-side buttons look crisp on the pink bar */
+.footer-bar .right button{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.35);
+  color:#fff;
+  padding:8px 16px;
+  border-radius:999px;
+}
+.footer-bar .right button:hover{
+  background:rgba(255,255,255,.22);
+}
+
+/* Short screens: keep hero visible */
+@media (max-height: 560px){
+  .hero-center{ top: 10%; }
+}

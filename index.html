@@ -3,22 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="An interactive web piece that turns collage into spatial feels—enter, or jump to all scenes.">
   <title>Sabrina Ellison</title>
-  <link rel="stylesheet" href="style.css?v=18" />
+  <link rel="stylesheet" href="style.css?v=21" />
 </head>
 <body>
   <div class="background">
-    <button class="explore-btn" aria-label="Enter the project at Scene 1" onclick="location.href='fuzzy.html'">EXPLORE</button>
 
+    <!-- Centered hero content -->
+    <section class="hero-center">
+      <h2 class="hero-title">AN EXPLORATION OF HOW VISUAL CONSTRUCTS TRANSLATE INTO SENSORY SPACE.</h2>
+
+      <p class="lead">This project explores how 2D visual constructs can translate into sensory spatial conditions.</p>
+      <p class="lead">Built as a click-to-reveal experience, it layers texture, light, and sound to question
+        modernist “clarity.”</p>
+
+      <a class="explore-btn" href="fuzzy.html">EXPLORE</a>
+    </section>
+
+    <!-- Bottom bar (kept) -->
     <footer class="footer-bar">
       <div class="left">
         <h1>Sabrina Ellison</h1>
         <p>Visual Research & Spatial Strategy | SCI-Arc</p>
       </div>
       <div class="right">
-        <button aria-label="Open the About and credits page" onclick="location.href='info.html'">INFO</button>
-        <button aria-label="Open all scenes" onclick="location.href='gallery.html'">ALL SCENES</button>
+        <button onclick="location.href='info.html'">ABOUT</button>
+        <button onclick="location.href='gallery.html'">ALL SCENES</button>
       </div>
     </footer>
   </div>
