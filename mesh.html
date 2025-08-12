@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mesh Sensory Layer</title>
-  <link rel="stylesheet" href="mesh.css?v=17" />
+  <title>Scene · Mesh Maze</title>
+  <meta name="scene-name" content="Mesh Maze" />
+  <link rel="stylesheet" href="css/site.css" />
+  <script defer src="js/ui.js"></script>
 </head>
-<body>
-  <a href="index.html" class="back-button">← Back</a>
+<body class="scene" data-scene="Mesh Maze">
+  <!-- D. First-screen wayfinding breadcrumb (in-scenes only) -->
+  <nav class="crumbs" aria-label="Breadcrumb" data-crumb>
+    <a href="index.html">Home</a>
+    <span aria-hidden="true">•</span>
+    <a href="all-scenes.html">All Scenes</a>
+    <span aria-hidden="true">•</span>
+    <span class="current" aria-current="page">Mesh Maze</span>
+  </nav>
 
-  <section class="screen screen-bubbles show" aria-label="Mesh Sensory Layer">
-    <div class="bg"></div>
-    <div class="overlay"></div>
+  <!-- H. Tiny clarity cue in-corner -->
+  <div class="scene-tag" role="note">Scene 3 · Mesh Maze · 0:30–1:00</div>
 
-    <div class="inner">
-      <header class="section-header">
-        <h1>Mesh Sensory Layer</h1>
-        <p>Semi-transparent mesh bends depth and vision. Projection and daylight weave shadows so surfaces feel in flux.</p>
-      </header>
+  <!-- Main content -->
+  <main class="scene-content">
+    <button class="btn has-hint" data-hint="Tap to reveal texture">Reveal</button>
 
-      <div class="bubble-container">
-        <button class="bubble" type="button"><span class="bubble-label">Material</span><span class="bubble-text">Metal/polymer meshes diffract light at different densities.</span></button>
-        <button class="bubble" type="button"><span class="bubble-label">Texture</span><span class="bubble-text">Fine/coarse grids create moiré as you move.</span></button>
-        <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Layered shadows keep edges unstable.</span></button>
-      </div>
+    <figure class="media">
+      <video src="media/mesh-transition.webm" autoplay muted playsinline loop></video>
+      <figcaption class="caption">Light, shadow, and projection distort perception.</figcaption>
+    </figure>
+  </main>
 
-      <button id="meshContinue" class="continue-btn" type="button">Continue</button>
-    </div>
-  </section>
-
-  <script>
-    document.addEventListener('click', e => {
-      const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
-    });
-
-    const params = new URLSearchParams(location.search);
-    const from = (params.get('from')||'').toLowerCase();
-    const nextHref = (from==='fabric') ? 'mesh-choices.html?only=ceiling' : 'mesh-choices.html';
-    document.getElementById('meshContinue').onclick = () => location.href = nextHref;
-  </script>
+  <nav class="scene-nav" aria-label="Scene navigation">
+    <a class="btn ghost" href="fabric.html">Prev</a>
+    <a class="btn ghost" href="fuzzy.html">Next</a>
+  </nav>
 </body>
 </html>

@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fuzzy Sensory Layer</title>
-  <link rel="stylesheet" href="fuzzy.css?v=17" />
+  <title>Scene · Material</title>
+  <meta name="scene-name" content="Material" />
+  <link rel="stylesheet" href="css/site.css" />
+  <script defer src="js/ui.js"></script>
 </head>
-<body>
-  <a href="index.html" class="back-button">← Back</a>
+<body class="scene" data-scene="Material">
+  <!-- D. First-screen wayfinding breadcrumb (in-scenes only) -->
+  <nav class="crumbs" aria-label="Breadcrumb" data-crumb>
+    <a href="index.html">Home</a>
+    <span aria-hidden="true">•</span>
+    <a href="all-scenes.html">All Scenes</a>
+    <span aria-hidden="true">•</span>
+    <span class="current" aria-current="page">Material</span>
+  </nav>
 
-  <section class="screen screen-bubbles show" aria-label="Fuzzy Sensory Layer">
-    <div class="bg"></div>
-    <div class="overlay"></div>
+  <!-- H. Tiny clarity cue in-corner -->
+  <div class="scene-tag" role="note">Scene 1 · Material · 0:30–1:00</div>
 
-    <div class="inner">
-      <header class="section-header">
-        <h1>Fuzzy Sensory Layer</h1>
-        <p>This condition wraps the body in warmth and softness. Fuzzy forms blur edges,
-          dampen sound, and create a sense of tactile enclosure. Tap a bubble to learn more.</p>
-      </header>
+  <!-- Main content -->
+  <main class="scene-content">
+    <button class="btn has-hint" data-hint="Tap to reveal texture">Reveal</button>
 
-      <div class="bubble-container">
-        <button class="bubble" type="button"><span class="bubble-label">Material</span><span class="bubble-text">Dense, fuzzy textiles absorb sound and soften hard surfaces.</span></button>
-        <button class="bubble" type="button"><span class="bubble-label">Texture</span><span class="bubble-text">Varied pile heights create a sense of touchable depth.</span></button>
-        <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Muted acoustics and diffused light produce a cocoon-like calm.</span></button>
-      </div>
+    <figure class="media">
+      <video src="media/fuzzy-transition.webm" autoplay muted playsinline loop></video>
+      <figcaption class="caption">Layered, soft bodies cling to existing architecture.</figcaption>
+    </figure>
+  </main>
 
-      <button class="continue-btn" type="button" onclick="location.href='fuzzy-choices.html'">Continue</button>
-    </div>
-  </section>
-
-  <script>
-    document.addEventListener('click', e => {
-      const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
-    });
-  </script>
+  <nav class="scene-nav" aria-label="Scene navigation">
+    <a class="btn ghost" href="mesh.html">Prev</a>
+    <a class="btn ghost" href="fabric.html">Next</a>
+  </nav>
 </body>
 </html>
