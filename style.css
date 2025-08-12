@@ -99,14 +99,14 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
   /* no change needed here; the .hero-center override takes precedence */
 }
 
-/* ---- Footer bar: medium-opacity pink ---- */
+/* Footer bar — lighter pink */
 .footer-bar{
-  background:rgba(252, 176, 229, 0.774);             /* medium pink */
-  backdrop-filter:blur(8px);
-  border-top:1px solid rgba(255,255,255,.25);
+  background: rgba(255, 201, 207, 0.45); /* lighter pink, softer opacity */
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255,255,255,.28);
 }
-.footer-bar .left h1{ color:#fff; }             /* white title on pink */
-.footer-bar .left p{ color:rgba(255,255,255,.9);}
+.footer-bar .left h1{ color:#fff; }
+.footer-bar .left p{ color:rgba(255,255,255,.92); }
 
 /* Make right-side buttons look crisp on the pink bar */
 .footer-bar .right button{
