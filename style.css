@@ -101,7 +101,7 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
 
 /* ---- Footer bar: medium-opacity pink ---- */
 .footer-bar{
-  background:rgba(243,141,146,.55);             /* medium pink */
+  background:rgba(252, 176, 229, 0.55);             /* medium pink */
   backdrop-filter:blur(8px);
   border-top:1px solid rgba(255,255,255,.25);
 }
