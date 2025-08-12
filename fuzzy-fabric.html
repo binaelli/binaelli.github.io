@@ -22,18 +22,10 @@
     const skip = document.getElementById('skip');
     const fade = document.getElementById('fade');
 
-    // Show Skip after 2.5s
-    const showDelay = 2500;
-    let timer = setTimeout(()=> skip.classList.add('show'), showDelay);
-
+    setTimeout(()=> skip.classList.add('show'), 2500);
     const go = () => { fade.classList.add('in'); setTimeout(()=>location.href = DEST, 250); };
-
-    // End → advance
     vid.addEventListener('ended', go);
-    // Skip → advance
     skip.addEventListener('click', go);
-
-    // Fallback: if video fails, offer immediate skip
     vid.addEventListener('error', () => skip.classList.add('show'));
   </script>
 </body>
