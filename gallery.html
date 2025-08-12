@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery — Images & Transitions</title>
+  <link rel="stylesheet" href="gallery.css?v=1" />
+</head>
+<body>
+  <!-- Same back button pattern -->
+  <a href="index.html" class="back-button">← Back</a>
+
+  <header class="gallery-header">
+    <h1>Gallery</h1>
+    <p>Swipe to browse. Tap a video to play/pause.</p>
+  </header>
+
+  <!-- Carousel -->
+  <main class="carousel" aria-label="Media Carousel">
+    <button class="nav prev" aria-label="Previous item">‹</button>
+    <div class="track" id="track" tabindex="0">
+      <!-- Slides (images) -->
+      <figure class="slide" data-label="Fuzzy (image)">
+        <img src="fuzzy.png" alt="Fuzzy space" loading="lazy" />
+        <figcaption>Fuzzy — image</figcaption>
+      </figure>
+
+      <figure class="slide" data-label="Fabric (image)">
+        <img src="fabric.png" alt="Fabric space" loading="lazy" />
+        <figcaption>Fabric — image</figcaption>
+      </figure>
+
+      <figure class="slide" data-label="Mesh (image)">
+        <img src="mesh.png" alt="Mesh space" loading="lazy" />
+        <figcaption>Mesh — image</figcaption>
+      </figure>
+
+      <figure class="slide" data-label="Ceiling (image)">
+        <img src="ceiling.png" alt="Wooden ceiling" loading="lazy" />
+        <figcaption>Wooden Ceiling — image</figcaption>
+      </figure>
+
+      <!-- Slides (videos) -->
+      <figure class="slide" data-label="Fuzzy → Fabric">
+        <video playsinline muted loop preload="metadata" poster="fabric.png"></video>
+        <figcaption>Transition — Fuzzy → Fabric</figcaption>
+        <script>document.currentScript.previousElementSibling.src='fuzzy-fabric.mp4';</script>
+      </figure>
+
+      <figure class="slide" data-label="Fuzzy → Mesh">
+        <video playsinline muted loop preload="metadata" poster="mesh.png"></video>
+        <figcaption>Transition — Fuzzy → Mesh</figcaption>
+        <script>document.currentScript.previousElementSibling.src='fuzzy-mesh.mp4';</script>
+      </figure>
+
+      <figure class="slide" data-label="Fabric → Mesh">
+        <video playsinline muted loop preload="metadata" poster="mesh.png"></video>
+        <figcaption>Transition — Fabric → Mesh</figcaption>
+        <script>document.currentScript.previousElementSibling.src='fabric-mesh.mp4';</script>
+      </figure>
+
+      <figure class="slide" data-label="Fabric → Ceiling">
+        <video playsinline muted loop preload="metadata" poster="ceiling.png"></video>
+        <figcaption>Transition — Fabric → Wooden Ceiling</figcaption>
+        <script>document.currentScript.previousElementSibling.src='fabric-ceiling.mp4';</script>
+      </figure>
+
+      <figure class="slide" data-label="Mesh → Fabric">
+        <video playsinline muted loop preload="metadata" poster="fabric.png"></video>
+        <figcaption>Transition — Mesh → Fabric</figcaption>
+        <script>document.currentScript.previousElementSibling.src='mesh-fabric.mp4';</script>
+      </figure>
+
+      <figure class="slide" data-label="Mesh → Ceiling">
+        <video playsinline muted loop preload="metadata" poster="ceiling.png"></video>
+        <figcaption>Transition — Mesh → Wooden Ceiling</figcaption>
+        <script>document.currentScript.previousElementSibling.src='mesh-ceiling.mp4';</script>
+      </figure>
+
+      <figure class="slide" data-label="Ceiling → Fabric">
+        <video playsinline muted loop preload="metadata" poster="fabric.png"></video>
+        <figcaption>Transition — Wooden Ceiling → Fabric</figcaption>
+        <script>document.currentScript.previousElementSibling.src='ceiling-fabric.mp4';</script>
+      </figure>
+
+      <figure class="slide" data-label="Ceiling → Mesh">
+        <video playsinline muted loop preload="metadata" poster="mesh.png"></video>
+        <figcaption>Transition — Wooden Ceiling → Mesh</figcaption>
+        <script>document.currentScript.previousElementSibling.src='ceiling-mesh.mp4';</script>
+      </figure>
+    </div>
+    <button class="nav next" aria-label="Next item">›</button>
+  </main>
+
+  <!-- Dots -->
+  <div class="dots" id="dots" aria-label="Slide navigation"></div>
+
+  <script>
+    // Basic carousel logic: arrows, dots, and active state
+    const track = document.getElementById('track');
+    const slides = Array.from(track.querySelectorAll('.slide'));
+    const prevBtn = document.querySelector('.nav.prev');
+    const nextBtn = document.querySelector('.nav.next');
+    const dots = document.getElementById('dots');
+
+    // Build dots
+    slides.forEach((_, i)=>{
+      const b = document.createElement('button');
+      b.className = 'dot';
+      b.type = 'button';
+      b.setAttribute('aria-label', `Go to item ${i+1}`);
+      b.addEventListener('click', ()=> goTo(i));
+      dots.appendChild(b);
+    });
+
+    const dotEls = Array.from(dots.children);
+
+    function goTo(i){
+      const clamped = Math.max(0, Math.min(i, slides.length-1));
+      track.scrollTo({ left: slides[clamped].offsetLeft, behavior: 'smooth' });
+    }
+
+    // Intersection Observer to keep index in sync
+    let active = 0;
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          active = slides.indexOf(e.target);
+          updateUI();
+        }
+      });
+    }, { root: track, threshold: 0.6 });
+
+    slides.forEach(s=>io.observe(s));
+
+    function updateUI(){
+      dotEls.forEach((d,i)=>d.classList.toggle('active', i===active));
+      prevBtn.disabled = active===0;
+      nextBtn.disabled = active===slides.length-1;
+    }
+    updateUI();
+
+    prevBtn.addEventListener('click', ()=> goTo(active-1));
+    nextBtn.addEventListener('click', ()=> goTo(active+1));
+
+    // Keyboard
+    track.addEventListener('keydown', (e)=>{
+      if(e.key==='ArrowRight') goTo(active+1);
+      if(e.key==='ArrowLeft')  goTo(active-1);
+    });
+
+    // Tap to play/pause videos
+    track.addEventListener('click', (e)=>{
+      const v = e.target.closest('video');
+      if(!v) return;
+      v.paused ? v.play() : v.pause();
+    });
+
+    // Resize snap alignment
+    window.addEventListener('resize', ()=> goTo(active));
+  </script>
+</body>
+</html>
