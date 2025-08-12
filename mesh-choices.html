@@ -3,36 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Choose your path — Mesh</title>
-  <link rel="stylesheet" href="choices.css?v=2" />
+  <title>Choose your path — from Mesh</title>
+  <link rel="stylesheet" href="choices.css?v=3" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
 
-  <section class="screen-choices" aria-label="Choose your next space">
+  <section class="screen-choices" aria-label="Where will you wander next?">
     <div class="choice-question">Where will you wander next?</div>
 
-    <!-- Left: Fabric -->
-    <div class="choice" tabindex="0" role="link" data-target="mesh-fabric.html">
+    <div id="optFabric" class="choice" tabindex="0" role="link" data-target="mesh-fabric.html">
       <img class="choice-img" src="fabric.png" alt="" />
       <div class="choice-content"><h3 class="choice-text">Step into the Fabric space</h3></div>
     </div>
 
-    <!-- Right: Wooden Ceiling -->
-    <div class="choice" tabindex="0" role="link" data-target="mesh-ceiling.html">
+    <div id="optCeiling" class="choice" tabindex="0" role="link" data-target="mesh-ceiling.html">
       <img class="choice-img" src="ceiling.png" alt="" />
       <div class="choice-content"><h3 class="choice-text">Look up at the Wooden Ceiling</h3></div>
     </div>
 
-    <div class="choice-or" aria-hidden="true">OR</div>
+    <div id="orLabel" class="choice-or" aria-hidden="true">OR</div>
+
+    <div id="singleWrap" class="final-wrap" hidden>
+      <img id="singleImg" class="final-img" src="" alt="" />
+      <div class="final-overlay">
+        <h2 id="singleTitle" class="final-title"></h2>
+        <button id="singleGo" class="final-continue" type="button">Continue</button>
+      </div>
+    </div>
   </section>
 
+  <div class="screen-fade" aria-hidden="true"></div>
+
   <script>
+    const fade=document.querySelector('.screen-fade');
+    const go=(url)=>{ fade.classList.add('in'); setTimeout(()=>location.href=url,250); };
+
     document.querySelectorAll('.choice').forEach(el=>{
-      const go=()=>location.href=el.dataset.target;
-      el.addEventListener('click',go);
-      el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+      el.addEventListener('click',()=>go(el.dataset.target));
+      el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();go(el.dataset.target);} });
     });
+
+    const only=(new URLSearchParams(location.search).get('only')||'').toLowerCase();
+    if(only){
+      document.getElementById('optFabric').setAttribute('hidden','');
+      document.getElementById('optCeiling').setAttribute('hidden','');
+      document.getElementById('orLabel').setAttribute('hidden','');
+      const wrap=document.getElementById('singleWrap');
+      const img=document.getElementById('singleImg');
+      const ttl=document.getElementById('singleTitle');
+      const btn=document.getElementById('singleGo');
+      if(only==='fabric'){ img.src='fabric.png'; ttl.textContent='Proceed to the Fabric space'; btn.onclick=()=>go('mesh-fabric.html'); }
+      else{ img.src='ceiling.png'; ttl.textContent='Proceed to the Wooden Ceiling'; btn.onclick=()=>go('mesh-ceiling.html'); }
+      wrap.hidden=false;
+    }
   </script>
 </body>
 </html>

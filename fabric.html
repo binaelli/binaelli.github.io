@@ -16,8 +16,7 @@
     <div class="inner">
       <header class="section-header">
         <h1>Fabric Sensory Layer</h1>
-        <p>Suspended fabrics steer light, airflow, and privacy. Layers billow and settle,
-           creating slow shifts in mood and orientation.</p>
+        <p>Suspended fabrics steer light, airflow, and privacy. Layers billow and settle, creating slow shifts in mood and orientation.</p>
       </header>
 
       <div class="bubble-container">
@@ -26,15 +25,19 @@
         <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Filtered daylight shifts color temperature across the room.</span></button>
       </div>
 
-      <button class="continue-btn" type="button" onclick="location.href='fabric-choices.html'">Continue</button>
+      <button id="fabricContinue" class="continue-btn" type="button">Continue</button>
     </div>
   </section>
 
   <script>
     document.addEventListener('click', e => {
-      const b = e.target.closest('.bubble'); if (!b) return;
-      b.classList.toggle('active');
+      const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
     });
+
+    const params = new URLSearchParams(location.search);
+    const from = (params.get('from')||'').toLowerCase();
+    const nextHref = (from==='mesh') ? 'fabric-choices.html?only=ceiling' : 'fabric-choices.html';
+    document.getElementById('fabricContinue').onclick = () => location.href = nextHref;
   </script>
 </body>
 </html>

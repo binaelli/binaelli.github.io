@@ -25,15 +25,19 @@
         <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Layered shadows keep edges unstable.</span></button>
       </div>
 
-      <button class="continue-btn" type="button" onclick="location.href='mesh-choices.html'">Continue</button>
+      <button id="meshContinue" class="continue-btn" type="button">Continue</button>
     </div>
   </section>
 
   <script>
     document.addEventListener('click', e => {
-      const b = e.target.closest('.bubble'); if (!b) return;
-      b.classList.toggle('active');
+      const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
     });
+
+    const params = new URLSearchParams(location.search);
+    const from = (params.get('from')||'').toLowerCase();
+    const nextHref = (from==='fabric') ? 'mesh-choices.html?only=ceiling' : 'mesh-choices.html';
+    document.getElementById('meshContinue').onclick = () => location.href = nextHref;
   </script>
 </body>
 </html>

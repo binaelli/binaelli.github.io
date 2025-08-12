@@ -17,7 +17,7 @@
       <header class="section-header">
         <h1>Fuzzy Sensory Layer</h1>
         <p>This condition wraps the body in warmth and softness. Fuzzy forms blur edges,
-           dampen sound, and create a sense of tactile enclosure. Tap a bubble to learn more.</p>
+          dampen sound, and create a sense of tactile enclosure. Tap a bubble to learn more.</p>
       </header>
 
       <div class="bubble-container">
@@ -26,16 +26,13 @@
         <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Muted acoustics and diffused light produce a cocoon-like calm.</span></button>
       </div>
 
-      <!-- ALWAYS goes to the two-option page -->
       <button class="continue-btn" type="button" onclick="location.href='fuzzy-choices.html'">Continue</button>
     </div>
   </section>
 
   <script>
-    // bubble toggle
     document.addEventListener('click', e => {
-      const b = e.target.closest('.bubble'); if (!b) return;
-      b.classList.toggle('active');
+      const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
     });
   </script>
 </body>

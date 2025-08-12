@@ -20,53 +20,30 @@
       </header>
 
       <div class="bubble-container">
-        <button class="bubble" type="button">
-          <span class="bubble-label">Material</span>
-          <span class="bubble-text">Laminated wood ribs and panels introduce warmth and acoustic control.</span>
-        </button>
-        <button class="bubble" type="button">
-          <span class="bubble-label">Texture</span>
-          <span class="bubble-text">Grain patterns and joints create rhythmic visual cues.</span>
-        </button>
-        <button class="bubble" type="button">
-          <span class="bubble-label">Ambience</span>
-          <span class="bubble-text">Soft reflections and reduced reverb make the space feel grounded.</span>
-        </button>
+        <button class="bubble" type="button"><span class="bubble-label">Material</span><span class="bubble-text">Laminated wood ribs and panels introduce warmth and acoustic control.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Texture</span><span class="bubble-text">Grain patterns and joints create rhythmic visual cues.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Soft reflections and reduced reverb make the space feel grounded.</span></button>
       </div>
 
-      <!-- Continue is set dynamically via ?next= -->
       <button id="continueBtn" class="continue-btn" type="button">Continue</button>
     </div>
   </section>
 
   <script>
-    // Toggle bubbles
     document.addEventListener('click', e => {
-      const b = e.target.closest('.bubble');
-      if (!b) return;
-      b.classList.toggle('active');
+      const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
     });
 
-    // Decide next from ?next=fabric | mesh
     const params = new URLSearchParams(location.search);
-    const next = (params.get('next') || '').toLowerCase();
-
+    const next = (params.get('next')||'').toLowerCase();
     const map = {
-      fabric: { href: 'ceiling-fabric.html', label: 'Proceed to the Fabric space' },
-      mesh:   { href: 'ceiling-mesh.html',   label: 'Proceed to the Mesh environment' }
+      fabric:{href:'ceiling-fabric.html',label:'Proceed to the Fabric space'},
+      mesh:{href:'ceiling-mesh.html',label:'Proceed to the Mesh environment'}
     };
-
     const cfg = map[next];
     const btn = document.getElementById('continueBtn');
-
-    if (cfg) {
-      btn.textContent = cfg.label;
-      btn.onclick = () => location.href = cfg.href;
-    } else {
-      // Fallback if no/invalid ?next param
-      btn.textContent = 'Back to Home';
-      btn.onclick = () => location.href = 'index.html';
-    }
+    if(cfg){ btn.textContent = cfg.label; btn.onclick = ()=>location.href = cfg.href; }
+    else { btn.textContent='Back to Home'; btn.onclick = ()=>location.href='index.html'; }
   </script>
 </body>
 </html>
