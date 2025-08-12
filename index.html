@@ -1,39 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sabrina Ellison — Visual Research & Spatial Strategy</title>
-  <meta name="description" content="An interactive web piece that turns collage into spatial feels—enter, or jump to all scenes." />
-  <link rel="stylesheet" href="css/site.css" />
-  <script defer src="js/ui.js"></script>
+  <title>Sabrina Ellison</title>
+  <link rel="stylesheet" href="style.css?v=18" />
 </head>
-<body class="home">
-  <a class="visually-hidden" href="#main">Skip to content</a>
-  <header class="site-header" id="main">
-    <h1 class="site-title">Sabrina Ellison</h1>
-    <p class="site-subtitle">Visual Research & Spatial Strategy | SCI-Arc</p>
+<body>
+  <div class="background">
+    <button class="explore-btn" onclick="location.href='fuzzy.html'">EXPLORE</button>
 
-    <!-- B. One-line explainer -->
-    <p class="site-explainer">An interactive web piece that turns collage into spatial feels—enter, or jump to all scenes.</p>
+    <footer class="footer-bar">
+      <div class="left">
+        <h1>Sabrina Ellison</h1>
+        <p>Visual Research & Spatial Strategy | SCI-Arc</p>
 
-    <nav class="primary-ctas" aria-label="Primary">
-      <!-- A. Renamed buttons; C. Micro-prompts via .has-hint -->
-      <a class="btn has-hint" href="fuzzy.html" data-hint="Start at Scene 1 (2–3 min)" aria-describedby="enter-hint">Enter the Project</a>
-      <span id="enter-hint" class="visually-hidden">Start at Scene 1 (two to three minutes)</span>
+        <!-- Landing explainer -->
+        <p class="site-explainer">
+          An interactive web piece that turns collage into spatial “feels”—click to enter, or jump to all scenes.
+        </p>
 
-      <a class="btn ghost has-hint" href="all-scenes.html" data-hint="Jump to any vignette" aria-describedby="scenes-hint">All Scenes</a>
-      <span id="scenes-hint" class="visually-hidden">Jump to any vignette</span>
-
-      <a class="link has-hint" href="about.html" data-hint="Project context & credits" aria-describedby="about-hint">About / Credits</a>
-      <span id="about-hint" class="visually-hidden">Project context and credits</span>
-    </nav>
-  </header>
-
-  <!-- Optional hero/media could go here -->
-
-  <footer class="site-footer">
-    <small>© Sabrina Ellison</small>
-  </footer>
+        <!-- Two-line about blurb (also on homepage) -->
+        <div class="about-blurb">
+          <p>This project explores how 2D visual constructs can translate into sensory spatial conditions.</p>
+          <p>Built as a click-to-reveal experience, it layers texture, light, and sound to question modernist “clarity.”</p>
+        </div>
+      </div>
+      <div class="right">
+        <button onclick="location.href='info.html'">INFO</button>
+        <button onclick="location.href='gallery.html'">INDEX</button>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>

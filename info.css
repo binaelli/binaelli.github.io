@@ -72,3 +72,16 @@ html,body{margin:0;padding:0;height:100%;background:#07060a;color:var(--ink);fon
 
 /* mobile tweaks */
 @supports(height:100svh){ .hero{ height:72svh } }
+
+/* Two-line about blurb styles (matches overlay look) */
+.about-blurb {
+  margin-top: 0.5rem;
+  max-width: 65ch;
+  color: inherit;       /* use overlay text color */
+  opacity: 0.95;
+}
+.about-blurb p {
+  margin: 0 0 0.5rem;
+  line-height: 1.35;
+  font-size: clamp(12px, 2.4vw, 14px);
+}

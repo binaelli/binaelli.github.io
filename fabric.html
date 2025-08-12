@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Scene · Texture</title>
-  <meta name="scene-name" content="Texture" />
-  <link rel="stylesheet" href="css/site.css" />
-  <script defer src="js/ui.js"></script>
+  <title>Fabric Sensory Layer</title>
+  <link rel="stylesheet" href="fabric.css?v=17" />
 </head>
-<body class="scene" data-scene="Texture">
-  <!-- D. First-screen wayfinding breadcrumb (in-scenes only) -->
-  <nav class="crumbs" aria-label="Breadcrumb" data-crumb>
-    <a href="index.html">Home</a>
-    <span aria-hidden="true">•</span>
-    <a href="all-scenes.html">All Scenes</a>
-    <span aria-hidden="true">•</span>
-    <span class="current" aria-current="page">Texture</span>
-  </nav>
+<body>
+  <a href="index.html" class="back-button">← Back</a>
 
-  <!-- H. Tiny clarity cue in-corner -->
-  <div class="scene-tag" role="note">Scene 2 · Texture · 0:30–1:00</div>
+  <section class="screen screen-bubbles show" aria-label="Fabric Sensory Layer">
+    <div class="bg"></div>
+    <div class="overlay"></div>
 
-  <!-- Main content -->
-  <main class="scene-content">
-    <button class="btn has-hint" data-hint="Tap to reveal texture">Reveal</button>
+    <div class="inner">
+      <header class="section-header">
+        <h1>Fabric Sensory Layer</h1>
+        <p>Suspended fabrics steer light, airflow, and privacy. Layers billow and settle, creating slow shifts in mood and orientation.</p>
+      </header>
 
-    <figure class="media">
-      <video src="media/fabric-transition.webm" autoplay muted playsinline loop></video>
-      <figcaption class="caption">Reflective vinyl, silhouettes, and portals of light create depth deception.</figcaption>
-    </figure>
-  </main>
+      <div class="bubble-container">
+        <button class="bubble" type="button"><span class="bubble-label">Material</span><span class="bubble-text">Sheers, meshes, and heavy drapes tune openness and sound.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Texture</span><span class="bubble-text">From smooth to ribbed to pleated—touch and light scatter differently.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Filtered daylight shifts color temperature across the room.</span></button>
+      </div>
 
-  <nav class="scene-nav" aria-label="Scene navigation">
-    <a class="btn ghost" href="fuzzy.html">Prev</a>
-    <a class="btn ghost" href="mesh.html">Next</a>
-  </nav>
+      <button id="fabricContinue" class="continue-btn" type="button">Continue</button>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('click', e => {
+      const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
+    });
+
+      const params = new URLSearchParams(location.search);
+  const final = params.has('final');        // came here as the 3rd space
+  const from  = (params.get('from')||'').toLowerCase();
+
+  const btn = document.getElementById('fabricContinue');
+  if (final) {
+    btn.textContent = 'Finish';
+    btn.onclick = () => location.href = 'index.html';
+  } else {
+    const nextHref = (from==='mesh') ? 'fabric-choices.html?only=ceiling' : 'fabric-choices.html';
+    btn.onclick = () => location.href = nextHref;
+  }
+</script>
 </body>
 </html>
