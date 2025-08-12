@@ -4,29 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Transition — Fuzzy → Mesh</title>
-  <link rel="stylesheet" href="transition.css?v=12">
+  <link rel="stylesheet" href="transition.css?v=18">
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
   <div class="transition-label" aria-hidden="true">Moving from Fuzzy to Mesh</div>
 
   <main class="stage" aria-label="Transition video from Fuzzy to Mesh">
-    <video id="vid" src="fuzzy-mesh.mp4" autoplay playsinline muted></video>
+    <video id="vid" src="fuzzy-mesh.mp4" autoplay playsinline muted preload="auto"></video>
+
+    <div id="loader" class="loader" role="status" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <span class="visually-hidden">Loading video…</span>
+    </div>
+
     <button id="skip" class="skip" type="button">Skip</button>
     <div id="fade" class="fade" aria-hidden="true"></div>
   </main>
 
   <script>
     const DEST = 'mesh.html';
-    const vid = document.getElementById('vid');
+    const vid  = document.getElementById('vid');
     const skip = document.getElementById('skip');
     const fade = document.getElementById('fade');
+    const loader = document.getElementById('loader');
+    const hideLoader = () => loader.classList.add('hidden');
 
     setTimeout(()=> skip.classList.add('show'), 2500);
     const go = () => { fade.classList.add('in'); setTimeout(()=>location.href = DEST, 250); };
+
+    vid.addEventListener('canplaythrough', hideLoader, { once: true });
+    vid.addEventListener('playing', hideLoader, { once: true });
+    setTimeout(hideLoader, 4000);
+
     vid.addEventListener('ended', go);
     skip.addEventListener('click', go);
-    vid.addEventListener('error', () => skip.classList.add('show'));
+    vid.addEventListener('error', () => { hideLoader(); skip.classList.add('show'); });
   </script>
 </body>
 </html>
