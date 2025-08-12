@@ -32,3 +32,39 @@ html,body{margin:0;padding:0;height:100%;background:#000;font-family:system-ui,-
 
 /* Hide the center seam whenever a choices screen is in single-option mode */
 .screen-choices.single::after { display: none; }
+
+/* SINGLE-OPTION MODE FIXES */
+.screen-choices.single .choice-or {
+  display: none !important; /* hide OR completely */
+}
+
+.screen-choices.single .final-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
+
+.screen-choices.single .final-title {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.screen-choices.single .final-continue {
+  font-size: clamp(1rem, 3.5vw, 1.25rem);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Make sure background image still covers entire view */
+.screen-choices.single {
+  background-size: cover;
+  background-position: center;
+}
