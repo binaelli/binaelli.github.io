@@ -17,14 +17,13 @@
   </main>
 
   <script>
-    const DEST = 'fabric.html';
+    const DEST = 'mesh-then-fabric.html'; // updated destination
     const vid = document.getElementById('vid');
     const skip = document.getElementById('skip');
     const fade = document.getElementById('fade');
 
     setTimeout(()=> skip.classList.add('show'), 2500);
     const go = () => { fade.classList.add('in'); setTimeout(()=>location.href = DEST, 250); };
-
     vid.addEventListener('ended', go);
     skip.addEventListener('click', go);
     vid.addEventListener('error', () => skip.classList.add('show'));

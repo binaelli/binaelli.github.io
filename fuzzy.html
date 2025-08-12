@@ -9,7 +9,6 @@
 <body>
   <a href="index.html" class="back-button">← Back</a>
 
-  <!-- Screen 1: Bubbles -->
   <section class="screen screen-bubbles show" aria-label="Fuzzy Sensory Layer">
     <div class="bg"></div>
     <div class="overlay"></div>
@@ -17,142 +16,27 @@
     <div class="inner">
       <header class="section-header">
         <h1>Fuzzy Sensory Layer</h1>
-        <p>
-          This condition wraps the body in warmth and softness. Fuzzy forms blur edges,
-          dampen sound, and create a sense of tactile enclosure. Tap a bubble to learn more.
-        </p>
+        <p>This condition wraps the body in warmth and softness. Fuzzy forms blur edges,
+           dampen sound, and create a sense of tactile enclosure. Tap a bubble to learn more.</p>
       </header>
 
       <div class="bubble-container">
-        <button class="bubble" type="button" aria-expanded="false">
-          <span class="bubble-label">Material</span>
-          <span class="bubble-text">Dense, fuzzy textiles absorb sound and soften hard surfaces.</span>
-        </button>
-        <button class="bubble" type="button" aria-expanded="false">
-          <span class="bubble-label">Texture</span>
-          <span class="bubble-text">Varied pile heights create a sense of touchable depth.</span>
-        </button>
-        <button class="bubble" type="button" aria-expanded="false">
-          <span class="bubble-label">Ambience</span>
-          <span class="bubble-text">Muted acoustics and diffused light produce a cocoon-like calm.</span>
-        </button>
+        <button class="bubble" type="button"><span class="bubble-label">Material</span><span class="bubble-text">Dense, fuzzy textiles absorb sound and soften hard surfaces.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Texture</span><span class="bubble-text">Varied pile heights create a sense of touchable depth.</span></button>
+        <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Muted acoustics and diffused light produce a cocoon-like calm.</span></button>
       </div>
 
-      <button class="continue-btn" type="button">Continue</button>
+      <!-- Just go to the dedicated choices page -->
+      <button class="continue-btn" type="button" onclick="location.href='fuzzy-choices.html'">Continue</button>
     </div>
   </section>
-
-  <!-- Screen 2: Two choices with PNGs as backgrounds -->
-  <section class="screen screen-choices" aria-label="Where will you wander next?">
-    <div class="choice-question">Where will you wander next?</div>
-
-    <div class="choice choice-left" tabindex="0" role="link" hidden>
-      <div class="choice-bg"></div>
-      <div class="choice-content"><h3 class="choice-text"></h3></div>
-    </div>
-
-    <div class="choice choice-right" tabindex="0" role="link" hidden>
-      <div class="choice-bg"></div>
-      <div class="choice-content"><h3 class="choice-text"></h3></div>
-    </div>
-
-    <div class="choice-or" aria-hidden="true">OR</div>
-
-    <div class="final-wrap" hidden>
-      <img class="final-img" src="" alt="" />
-      <div class="final-overlay">
-        <h2 class="final-title">You’re almost there—proceed to the final space.</h2>
-        <button class="final-continue" type="button">Continue</button>
-      </div>
-    </div>
-  </section>
-
-  <div class="screen-fade" aria-hidden="true"></div>
 
   <script>
-    const PAGE = 'fuzzy';
-    const NEXT = { fuzzy:['fabric','mesh'], fabric:['fuzzy','mesh'], mesh:['fabric','ceiling'], ceiling:['fuzzy','mesh'] };
-    const LABEL = {
-      fuzzy:'Return to the Fuzzy space',
-      fabric:'Step into the Fabric space',
-      mesh:'Move through the Mesh environment',
-      ceiling:'Look up at the Wooden Ceiling'
-    };
-
-    // visit helpers
-    const getVisited = () => { try { return JSON.parse(localStorage.getItem('visitedSpaces')||'[]'); } catch { return []; } };
-    const setVisited = (arr) => localStorage.setItem('visitedSpaces', JSON.stringify(Array.from(new Set(arr))));
-    const addVisited = (space) => { const v=getVisited(); if(!v.includes(space)){ v.push(space); setVisited(v); } };
-
-    // Start a brand-new run the first time you open Fuzzy in this tab.
-    if (!sessionStorage.getItem('journeyActive')) {
-      sessionStorage.setItem('journeyActive','1');
-      setVisited(['fuzzy']);
-    }
-    addVisited('fuzzy');
-
-    // bubble toggle (single-open)
-    document.addEventListener('click', e => {
-      const b = e.target.closest('.bubble'); if (!b) return;
-      const open = b.classList.contains('active');
-      document.querySelectorAll('.bubble.active').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-expanded','false'); });
-      if (!open) { b.classList.add('active'); b.setAttribute('aria-expanded','true'); }
+    // Bubble toggle (unchanged)
+    document.addEventListener('click',e=>{
+      const b=e.target.closest('.bubble'); if(!b)return;
+      b.classList.toggle('active');
     });
-
-    const bubbles  = document.querySelector('.screen-bubbles');
-    const choices  = document.querySelector('.screen-choices');
-    const fade     = document.querySelector('.screen-fade');
-
-    document.querySelector('.continue-btn').addEventListener('click', () => {
-      // guarantee a fresh first choice
-      setVisited(['fuzzy']);
-      bubbles.classList.remove('show');
-      renderChoices();
-      choices.classList.add('show');
-      window.scrollTo(0,0);
-    });
-
-    const go = (url) => { fade.classList.add('in'); setTimeout(()=>location.href=url, 250); };
-
-    function wireChoice(el, nextSpace) {
-      el.querySelector('.choice-bg').style.backgroundImage = `url(${nextSpace}.png)`;
-      el.querySelector('.choice-text').textContent = LABEL[nextSpace];
-      el.dataset.target = `${PAGE}-${nextSpace}.html`;
-      el.onclick = () => go(el.dataset.target);
-      el.onkeydown = (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(el.dataset.target); } };
-      el.removeAttribute('hidden');
-    }
-
-    function renderChoices(){
-      const visited = getVisited().slice();
-      let remaining = NEXT[PAGE].filter(s => !visited.includes(s));
-      if (visited.length === 1 && visited[0] === 'fuzzy') {
-        remaining = NEXT[PAGE].slice();
-      }
-
-      const left  = document.querySelector('.choice-left');
-      const right = document.querySelector('.choice-right');
-      const orEl  = document.querySelector('.choice-or');
-      const final = document.querySelector('.final-wrap');
-      const fImg  = document.querySelector('.final-img');
-      const fBtn  = document.querySelector('.final-continue');
-
-      [left,right].forEach(el=>el.setAttribute('hidden',''));
-
-      if (remaining.length >= 2){
-        wireChoice(left, remaining[0]);
-        wireChoice(right, remaining[1]);
-        orEl.removeAttribute('hidden');
-        final.setAttribute('hidden','');
-      } else if (remaining.length === 1){
-        fImg.src = `${remaining[0]}.png`;
-        fBtn.onclick = () => go(`${PAGE}-${remaining[0]}.html`);
-        final.removeAttribute('hidden');
-        orEl.setAttribute('hidden','');
-      } else {
-        location.href = 'index.html';
-      }
-    }
   </script>
 </body>
 </html>

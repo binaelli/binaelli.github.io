@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Next step — Ceiling → Fabric</title>
+  <link rel="stylesheet" href="choices.css?v=2" />
+</head>
+<body>
+  <a href="index.html" class="back-button">← Back</a>
+
+  <section class="screen-choices single" aria-label="One path remains">
+    <div class="choice-question">Keep going → final space</div>
+
+    <!-- Only remaining: Fabric -->
+    <div class="choice" tabindex="0" role="link" data-target="ceiling-fabric.html" style="max-width: 100vw;">
+      <img class="choice-img" src="fabric.png" alt="" />
+      <div class="choice-content"><h3 class="choice-text">Proceed to the Fabric space</h3></div>
+    </div>
+  </section>
+
+  <script>
+    const el=document.querySelector('.choice'); 
+    const go=()=>location.href=el.dataset.target;
+    el.addEventListener('click',go);
+    el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+  </script>
+</body>
+</html>

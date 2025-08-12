@@ -25,95 +25,15 @@
         <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Filtered daylight shifts color temperature across the room.</span></button>
       </div>
 
-      <button class="continue-btn" type="button">Continue</button>
+      <button class="continue-btn" type="button" onclick="location.href='fabric-choices.html'">Continue</button>
     </div>
   </section>
-
-  <section class="screen screen-choices" aria-label="Where will you wander next?">
-    <div class="choice-question">Where will you wander next?</div>
-
-    <div class="choice choice-left" tabindex="0" role="link" hidden>
-      <div class="choice-bg"></div>
-      <div class="choice-content"><h3 class="choice-text"></h3></div>
-    </div>
-
-    <div class="choice choice-right" tabindex="0" role="link" hidden>
-      <div class="choice-bg"></div>
-      <div class="choice-content"><h3 class="choice-text"></h3></div>
-    </div>
-
-    <div class="choice-or" aria-hidden="true">OR</div>
-
-    <div class="final-wrap" hidden>
-      <img class="final-img" src="" alt="" />
-      <div class="final-overlay">
-        <h2 class="final-title">You’re almost there—proceed to the final space.</h2>
-        <button class="final-continue" type="button">Continue</button>
-      </div>
-    </div>
-  </section>
-
-  <div class="screen-fade" aria-hidden="true"></div>
 
   <script>
-    const PAGE='fabric';
-    const NEXT={ fuzzy:['fabric','mesh'], fabric:['fuzzy','mesh'], mesh:['fabric','ceiling'], ceiling:['fuzzy','mesh'] };
-    const LABEL={ fuzzy:'Return to the Fuzzy space', fabric:'Step into the Fabric space', mesh:'Move through the Mesh environment', ceiling:'Look up at the Wooden Ceiling' };
-
-    const getVisited=()=>{try{return JSON.parse(localStorage.getItem('visitedSpaces')||'[]');}catch{return[];}}
-    const setVisited=(a)=>localStorage.setItem('visitedSpaces',JSON.stringify(Array.from(new Set(a))));
-    const addVisited=(s)=>{const v=getVisited(); if(!v.includes(s)){v.push(s); setVisited(v);}};
-
-    addVisited(PAGE);
-
-    document.addEventListener('click',e=>{const b=e.target.closest('.bubble'); if(!b)return; b.classList.toggle('active');});
-
-    const bubbles=document.querySelector('.screen-bubbles');
-    const choices=document.querySelector('.screen-choices');
-    const fade=document.querySelector('.screen-fade');
-
-    document.querySelector('.continue-btn').addEventListener('click',()=>{
-      bubbles.classList.remove('show');
-      renderChoices();
-      choices.classList.add('show');
-      window.scrollTo(0,0);
+    document.addEventListener('click',e=>{
+      const b=e.target.closest('.bubble'); if(!b)return;
+      b.classList.toggle('active');
     });
-
-    const go=(url)=>{fade.classList.add('in'); setTimeout(()=>location.href=url,250);};
-
-    function wire(el,next){
-      el.querySelector('.choice-bg').style.backgroundImage = `url(${next}.png)`;
-      el.querySelector('.choice-text').textContent=LABEL[next];
-      el.dataset.target=`${PAGE}-${next}.html`;
-      el.onclick=()=>go(el.dataset.target);
-      el.onkeydown=(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault(); go(el.dataset.target);}};
-      el.removeAttribute('hidden');
-    }
-
-    function renderChoices(){
-      const visited=getVisited();
-      let remaining=NEXT[PAGE].filter(s=>!visited.includes(s));
-
-      const left=document.querySelector('.choice-left');
-      const right=document.querySelector('.choice-right');
-      const orEl=document.querySelector('.choice-or');
-      const final=document.querySelector('.final-wrap');
-      const fImg=document.querySelector('.final-img');
-      const fBtn=document.querySelector('.final-continue');
-
-      [left,right].forEach(el=>el.setAttribute('hidden',''));
-
-      if(remaining.length>=2){
-        wire(left,remaining[0]); wire(right,remaining[1]);
-        orEl.removeAttribute('hidden'); final.setAttribute('hidden','');
-      }else if(remaining.length===1){
-        fImg.src=`${remaining[0]}.png`;
-        fBtn.onclick=()=>go(`${PAGE}-${remaining[0]}.html`);
-        final.removeAttribute('hidden'); orEl.setAttribute('hidden','');
-      }else{
-        location.href='index.html';
-      }
-    }
   </script>
 </body>
 </html>
