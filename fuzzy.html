@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fuzzy Sensory Layer</title>
-  <link rel="stylesheet" href="fuzzy.css?v=16" />
+  <link rel="stylesheet" href="fuzzy.css?v=17" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
@@ -26,15 +26,15 @@
         <button class="bubble" type="button"><span class="bubble-label">Ambience</span><span class="bubble-text">Muted acoustics and diffused light produce a cocoon-like calm.</span></button>
       </div>
 
-      <!-- Just go to the dedicated choices page -->
+      <!-- ALWAYS goes to the two-option page -->
       <button class="continue-btn" type="button" onclick="location.href='fuzzy-choices.html'">Continue</button>
     </div>
   </section>
 
   <script>
-    // Bubble toggle (unchanged)
-    document.addEventListener('click',e=>{
-      const b=e.target.closest('.bubble'); if(!b)return;
+    // bubble toggle
+    document.addEventListener('click', e => {
+      const b = e.target.closest('.bubble'); if (!b) return;
       b.classList.toggle('active');
     });
   </script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wooden Ceiling Layer</title>
+  <link rel="stylesheet" href="ceiling.css?v=17" />
+</head>
+<body>
+  <a href="index.html" class="back-button">← Back</a>
+
+  <section class="screen screen-bubbles show" aria-label="Wooden Ceiling Layer">
+    <div class="bg"></div>
+    <div class="overlay"></div>
+
+    <div class="inner">
+      <header class="section-header">
+        <h1>Wooden Ceiling Layer</h1>
+        <p>Warm timber overhead reframes orientation. Grain, joints, and depth cue movement and soften echo.</p>
+      </header>
+
+      <div class="bubble-container">
+        <button class="bubble" type="button">
+          <span class="bubble-label">Material</span>
+          <span class="bubble-text">Laminated wood ribs and panels introduce warmth and acoustic control.</span>
+        </button>
+        <button class="bubble" type="button">
+          <span class="bubble-label">Texture</span>
+          <span class="bubble-text">Grain patterns and joints create rhythmic visual cues.</span>
+        </button>
+        <button class="bubble" type="button">
+          <span class="bubble-label">Ambience</span>
+          <span class="bubble-text">Soft reflections and reduced reverb make the space feel grounded.</span>
+        </button>
+      </div>
+
+      <!-- Change the href here depending on your route -->
+      <button class="continue-btn" type="button" onclick="location.href='ceiling-to-fabric.html'">Continue</button>
+    </div>
+  </section>
+
+  <script>
+    // bubble toggle
+    document.addEventListener('click', e => {
+      const b = e.target.closest('.bubble'); 
+      if (!b) return;
+      b.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
