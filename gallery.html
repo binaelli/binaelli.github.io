@@ -10,9 +10,10 @@
   <a href="index.html" class="back-button">← Back</a>
 
   <header class="gallery-header">
-    <h1>Gallery</h1>
-    <p>Swipe to browse. Videos auto‑play silently when in view, tap to pause/play.</p>
-  </header>
+  <h1>All Scenes</h1>
+  <p>Use ← / → or swipe. Videos auto-play silently when in view; tap to pause.</p>
+  <p class="counter" id="counter" aria-live="polite">1 of 12</p>
+</header>
 
   <main class="carousel" aria-label="Media Carousel">
     <button class="nav prev" aria-label="Previous item">‹</button>
@@ -87,70 +88,98 @@
   <div class="dots" id="dots" aria-label="Slide navigation"></div>
 
   <script>
-    const track = document.getElementById('track');
-    const slides = Array.from(track.querySelectorAll('.slide'));
-    const prevBtn = document.querySelector('.nav.prev');
-    const nextBtn = document.querySelector('.nav.next');
-    const dotsWrap = document.getElementById('dots');
+  const track = document.getElementById('track');
+  const slides = Array.from(track.querySelectorAll('.slide'));
+  const prevBtn = document.querySelector('.nav.prev');
+  const nextBtn = document.querySelector('.nav.next');
+  const dotsWrap = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const total = slides.length;
 
-    // dots
-    slides.forEach((_, i) => {
-      const b = document.createElement('button');
-      b.className = 'dot'; b.type = 'button';
-      b.setAttribute('aria-label', `Go to item ${i+1}`);
-      b.addEventListener('click', () => goTo(i));
-      dotsWrap.appendChild(b);
+  // Give slides stable ids for a11y connections
+  slides.forEach((s, i) => { s.id = `slide-${i+1}`; });
+
+  // Dots: accessible tablist
+  dotsWrap.setAttribute('role', 'tablist');
+  const dots = slides.map((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot';
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-controls', `slide-${i+1}`);
+    b.setAttribute('aria-label', `Go to item ${i+1} of ${total}`);
+    b.addEventListener('click', () => goTo(i));
+    b.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(i); }
+      if (e.key === 'ArrowRight') goTo(Math.min(i+1, total-1));
+      if (e.key === 'ArrowLeft')  goTo(Math.max(i-1, 0));
     });
-    const dots = Array.from(dotsWrap.children);
+    dotsWrap.appendChild(b);
+    return b;
+  });
 
-    function goTo(i){
-      const idx = Math.max(0, Math.min(i, slides.length-1));
-      track.scrollTo({ left: slides[idx].offsetLeft, behavior: 'smooth' });
-    }
+  function goTo(i){
+    const idx = Math.max(0, Math.min(i, slides.length-1));
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    track.scrollTo({ left: slides[idx].offsetLeft, behavior });
+  }
 
-    // keep UI in sync + video auto play/pause
-    let active = 0;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          active = slides.indexOf(e.target);
-          updateUI();
-          // play the video on this slide if any
-          const v = e.target.querySelector('video');
-          if (v) { try { v.play(); } catch(_){} }
-        } else {
-          // pause videos when slide leaves view
-          const v = e.target.querySelector('video');
-          if (v) { try { v.pause(); } catch(_){} }
+  // Keep UI in sync + video auto play/pause
+  let active = 0;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const i = slides.indexOf(e.target);
+      if (e.isIntersecting) {
+        active = i;
+        updateUI();
+        const v = e.target.querySelector('video');
+        if (v && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          try { v.play(); } catch(_) {}
         }
-      });
-    }, { root: track, threshold: 0.6 });
+      } else {
+        const v = e.target.querySelector('video');
+        if (v) { try { v.pause(); } catch(_) {} }
+      }
+    });
+  }, { root: track, threshold: 0.6 });
+  slides.forEach(s => io.observe(s));
 
-    slides.forEach(s => observer.observe(s));
+  function updateUI(){
+    dots.forEach((d,i)=>{
+      const on = i===active;
+      d.classList.toggle('active', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+      if (on) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+    });
+    prevBtn.disabled = active===0;
+    nextBtn.disabled = active===slides.length-1;
+    if (counter) counter.textContent = `${active+1} of ${total}`;
+  }
+  updateUI();
 
-    function updateUI(){
-      dots.forEach((d,i)=>d.classList.toggle('active', i===active));
-      prevBtn.disabled = active===0;
-      nextBtn.disabled = active===slides.length-1;
+  // Nav + keyboard on track
+  prevBtn.addEventListener('click', () => goTo(active-1));
+  nextBtn.addEventListener('click', () => goTo(active+1));
+  track.addEventListener('keydown', (e)=>{
+    if(e.key==='ArrowRight') goTo(active+1);
+    if(e.key==='ArrowLeft')  goTo(active-1);
+    if(e.key==='Home')       goTo(0);
+    if(e.key==='End')        goTo(total-1);
+    if(e.key===' '){ // space toggles current video
+      const v = slides[active].querySelector('video');
+      if (v){ e.preventDefault(); v.paused ? v.play() : v.pause(); }
     }
-    updateUI();
+  });
 
-    // nav + keyboard
-    prevBtn.addEventListener('click', () => goTo(active-1));
-    nextBtn.addEventListener('click', () => goTo(active+1));
-    track.addEventListener('keydown', (e)=>{
-      if(e.key==='ArrowRight') goTo(active+1);
-      if(e.key==='ArrowLeft')  goTo(active-1);
-    });
+  // Tap to toggle a video
+  track.addEventListener('click', (e)=>{
+    const v = e.target.closest('video'); if(!v) return;
+    v.paused ? v.play() : v.pause();
+  });
 
-    // tap to toggle a video
-    track.addEventListener('click', (e)=>{
-      const v = e.target.closest('video'); if(!v) return;
-      v.paused ? v.play() : v.pause();
-    });
+  // Keep snap aligned on resize
+  addEventListener('resize', ()=> goTo(active));
+</script>
 
-    // keep snap aligned on resize
-    addEventListener('resize', ()=> goTo(active));
-  </script>
 </body>
 </html>

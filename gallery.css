@@ -86,3 +86,15 @@ figcaption{
   .track{ margin:10px 44px; }
   .nav{ width:42px; height:42px; font-size:26px }
 }
+
+/* slide counter + disabled nav state */
+.gallery-header .counter { opacity: .9; margin-top: .35rem; }
+
+.nav[disabled]{ opacity:.4; cursor:not-allowed; }
+
+/* optional: dots size/state (keep if you already have styles) */
+.dots .dot{
+  width:10px; height:10px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.6); background:transparent;
+}
+.dots .dot.active{ background:rgba(255,255,255,.9); }
