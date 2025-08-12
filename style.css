@@ -36,3 +36,5 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
 
 /* Mobile safe area */
 @supports(height:100svh){ .background{height:100svh} }
+
+:focus-visible { outline:2px solid #fff; outline-offset:3px; border-radius:12px; }
