@@ -11,7 +11,7 @@
   <button id="skip" class="skip" type="button">Skip</button><div id="fade" class="fade" aria-hidden="true"></div>
 </main>
 <script>
-const DEST='ceiling.html?next=mesh';
+const DEST = 'ceiling.html?final=1';
 const vid=document.getElementById('vid'),skip=document.getElementById('skip'),fade=document.getElementById('fade'),loader=document.getElementById('loader');
 const hideLoader=()=>loader.classList.add('hidden'); setTimeout(()=>skip.classList.add('show'),2500);
 const go=()=>{fade.classList.add('in');setTimeout(()=>location.href=DEST,250);}

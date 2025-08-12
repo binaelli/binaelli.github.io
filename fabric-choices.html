@@ -36,27 +36,42 @@
   <div class="screen-fade" aria-hidden="true"></div>
 
   <script>
-    const fade=document.querySelector('.screen-fade');
-    const go=(url)=>{ fade.classList.add('in'); setTimeout(()=>location.href=url,250); };
+  const fade = document.querySelector('.screen-fade');
+  const go = (url) => { fade.classList.add('in'); setTimeout(()=>location.href=url, 250); };
 
-    document.querySelectorAll('.choice').forEach(el=>{
-      el.addEventListener('click',()=>go(el.dataset.target));
-      el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();go(el.dataset.target);} });
-    });
+  document.querySelectorAll('.choice').forEach(el=>{
+    el.addEventListener('click',()=>go(el.dataset.target));
+    el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();go(el.dataset.target);} });
+  });
 
-    const only=(new URLSearchParams(location.search).get('only')||'').toLowerCase();
-    if(only){
-      document.getElementById('optMesh').setAttribute('hidden','');
-      document.getElementById('optCeiling').setAttribute('hidden','');
-      document.getElementById('orLabel').setAttribute('hidden','');
-      const wrap=document.getElementById('singleWrap');
-      const img=document.getElementById('singleImg');
-      const ttl=document.getElementById('singleTitle');
-      const btn=document.getElementById('singleGo');
-      if(only==='mesh'){ img.src='mesh.png'; ttl.textContent='Proceed to the Mesh environment'; btn.onclick=()=>go('fabric-mesh.html'); }
-      else{ img.src='ceiling.png'; ttl.textContent='Proceed to the Wooden Ceiling'; btn.onclick=()=>go('fabric-ceiling.html'); }
-      wrap.hidden=false;
+  // Single-option mode via ?only=mesh|ceiling
+  const params = new URLSearchParams(location.search);
+  const only = (params.get('only') || '').toLowerCase();
+
+  if (only) {
+    document.querySelector('.screen-choices').classList.add('single');
+
+    document.getElementById('optMesh').setAttribute('hidden','');
+    document.getElementById('optCeiling').setAttribute('hidden','');
+    document.getElementById('orLabel').setAttribute('hidden','');
+
+    const wrap = document.getElementById('singleWrap');
+    const img  = document.getElementById('singleImg');
+    const ttl  = document.getElementById('singleTitle');
+    const btn  = document.getElementById('singleGo');
+
+    if (only === 'mesh') {
+      img.src = 'mesh.png';
+      ttl.textContent = 'Proceed to the Mesh environment';
+      btn.onclick = ()=> go('fabric-mesh.html');                 // not final
+    } else { // only === 'ceiling'  → FINAL hop
+      img.src = 'ceiling.png';
+      ttl.textContent = 'Proceed to the Wooden Ceiling';
+      btn.onclick = ()=> go('fabric-ceiling.html?final=1');      // tell transition this is final
     }
-  </script>
+    wrap.hidden = false;
+  }
+</script>
+
 </body>
 </html>

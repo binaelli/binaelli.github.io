@@ -11,10 +11,25 @@
   <button id="skip" class="skip" type="button">Skip</button><div id="fade" class="fade" aria-hidden="true"></div>
 </main>
 <script>
-const DEST='ceiling.html?next=fabric';
-const vid=document.getElementById('vid'),skip=document.getElementById('skip'),fade=document.getElementById('fade'),loader=document.getElementById('loader');
-const hideLoader=()=>loader.classList.add('hidden'); setTimeout(()=>skip.classList.add('show'),2500);
-const go=()=>{fade.classList.add('in');setTimeout(()=>location.href=DEST,250);}
-vid.addEventListener('canplaythrough',hideLoader,{once:true}); vid.addEventListener('playing',hideLoader,{once:true}); setTimeout(hideLoader,4000);
-vid.addEventListener('ended',go); skip.addEventListener('click',go); vid.addEventListener('error',()=>{hideLoader();skip.classList.add('show');});
-</script></body></html>
+  const params = new URLSearchParams(location.search);
+  const isFinal = params.has('final');
+  const DEST = isFinal ? 'ceiling.html?final=1' : 'ceiling.html?next=fabric';
+
+  const vid = document.getElementById('vid');
+  const skip = document.getElementById('skip');
+  const fade = document.getElementById('fade');
+
+  setTimeout(()=> skip.classList.add('show'), 2500);
+  const go = () => { fade.classList.add('in'); setTimeout(()=>location.href = DEST, 250); };
+
+  const loader = document.getElementById('loader');
+  const hideLoader = () => loader.classList.add('hidden');
+  vid.addEventListener('canplaythrough', hideLoader, { once:true });
+  vid.addEventListener('playing', hideLoader, { once:true });
+  setTimeout(hideLoader, 4000);
+
+  vid.addEventListener('ended', go);
+  skip.addEventListener('click', go);
+  vid.addEventListener('error', () => { hideLoader(); skip.classList.add('show'); });
+</script>
+</body></html>

@@ -34,10 +34,18 @@
       const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
     });
 
-    const params = new URLSearchParams(location.search);
-    const from = (params.get('from')||'').toLowerCase();
+      const params = new URLSearchParams(location.search);
+  const final = params.has('final');        // came here as the 3rd space
+  const from  = (params.get('from')||'').toLowerCase();
+
+  const btn = document.getElementById('fabricContinue');
+  if (final) {
+    btn.textContent = 'Finish';
+    btn.onclick = () => location.href = 'index.html';
+  } else {
     const nextHref = (from==='mesh') ? 'fabric-choices.html?only=ceiling' : 'fabric-choices.html';
-    document.getElementById('fabricContinue').onclick = () => location.href = nextHref;
-  </script>
+    btn.onclick = () => location.href = nextHref;
+  }
+</script>
 </body>
 </html>

@@ -29,3 +29,6 @@ html,body{margin:0;padding:0;height:100%;background:#000;font-family:system-ui,-
   .screen-choices{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
   .choice-or{top:50%;transform:translate(-50%,-50%)}
 }
+
+/* Hide the center seam whenever a choices screen is in single-option mode */
+.screen-choices.single::after { display: none; }

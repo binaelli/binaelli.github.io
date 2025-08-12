@@ -29,21 +29,33 @@
     </div>
   </section>
 
-  <script>
-    document.addEventListener('click', e => {
-      const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
-    });
+<script>
+  document.addEventListener('click', e => {
+    const b=e.target.closest('.bubble'); if(!b) return; b.classList.toggle('active');
+  });
 
-    const params = new URLSearchParams(location.search);
-    const next = (params.get('next')||'').toLowerCase();
-    const map = {
-      fabric:{href:'ceiling-fabric.html',label:'Proceed to the Fabric space'},
-      mesh:{href:'ceiling-mesh.html',label:'Proceed to the Mesh environment'}
-    };
-    const cfg = map[next];
-    const btn = document.getElementById('continueBtn');
-    if(cfg){ btn.textContent = cfg.label; btn.onclick = ()=>location.href = cfg.href; }
-    else { btn.textContent='Back to Home'; btn.onclick = ()=>location.href='index.html'; }
-  </script>
+  const params = new URLSearchParams(location.search);
+  const final = params.has('final');                // if ?final=1 exists → finish after this
+  const next  = (params.get('next')||'').toLowerCase();
+
+  const map = {
+    fabric: { href:'ceiling-fabric.html', label:'Proceed to the Fabric space' },
+    mesh:   { href:'ceiling-mesh.html',   label:'Proceed to the Mesh environment' }
+  };
+
+  const btn = document.getElementById('continueBtn');
+
+  if (final) {
+    btn.textContent = 'Finish';
+    btn.onclick = () => location.href = 'index.html';
+  } else if (map[next]) {
+    btn.textContent = map[next].label;
+    btn.onclick = () => location.href = map[next].href;
+  } else {
+    btn.textContent = 'Back to Home';
+    btn.onclick = () => location.href = 'index.html';
+  }
+</script>
+
 </body>
 </html>
