@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Felt Image — Info</title>
+  <link rel="stylesheet" href="info.css?v=1" />
+</head>
+<body>
+  <!-- Back like the other pages -->
+  <a href="index.html" class="back-button">← Back</a>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-media">
+      <!-- four-image crossfade (uses your existing PNGs) -->
+      <img src="fuzzy.png"   alt="" class="frame f1" />
+      <img src="fabric.png"  alt="" class="frame f2" />
+      <img src="mesh.png"    alt="" class="frame f3" />
+      <img src="ceiling.png" alt="" class="frame f4" />
+    </div>
+    <div class="hero-overlay">
+      <h1 class="title">The Felt Image</h1>
+      <p class="subtitle">An exploration of how visual constructs translate into sensory space.</p>
+      <div class="meta">
+        <span><strong>Sabrina Ellison</strong></span>
+        <span>Advisor: Jackilin Bloom</span>
+        <span>M.Arch 2</span>
+      </div>
+      <div class="links">
+        <a href="https://www.instagram.com/bina.elli" target="_blank" rel="noopener">IG: @bina.elli</a>
+        <span class="dot">•</span>
+        <a href="https://sabrinaellison.myportfolio.com" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="wrap">
+    <section class="card reveal">
+      <h2>Thesis</h2>
+      <p>
+        This thesis explores how two‑dimensional visual constructs can act as sensory translators that
+        shift and skew spatial perception. It asks how public and semi‑public environments might be
+        reimagined through layered, material‑driven interventions that rethink how space is seen, touched,
+        and understood. The project uses a neutral warehouse as its container, not as an architectural
+        type to be celebrated, but as a blank shell to be reoccupied with conflicting sensory logics.
+      </p>
+    </section>
+
+    <section class="card reveal">
+      <h2>Process</h2>
+      <p>
+        The design process begins with the author’s personal perception of space as someone with
+        synesthesia, an experience where senses overlap and blend. Early work involved creating
+        dissolving, layered collages to externalize this perceptual multiplicity. These collages were
+        then digitally transformed using Midjourney AI—not to produce architectural renderings, but to
+        investigate how different material atmospheres could alter the same structural container. Through
+        iterative blending, each image proposed a distinct material effect (porous, reflective, fuzzy,
+        translucent) with its own sensory implications.
+      </p>
+    </section>
+
+    <section class="card reveal">
+      <h2>Translation</h2>
+      <p>
+        From these blended images, the project isolates and translates specific material effects into
+        vignettes. Each vignette is a prototype that tests the tension between what is seen and what is
+        felt, between surface and depth, between clarity and confusion. The work draws from Mies van der
+        Rohe’s collage techniques, using them not to assert perspectival control but to introduce friction
+        and misalignment. It also references immersive art and architecture practices—Olafur Eliasson,
+        James Turrell, Yayoi Kusama, and Philip Beesley—engaging the body through atmosphere, light,
+        repetition, and interaction.
+      </p>
+    </section>
+
+    <section class="card callout reveal">
+      <h2>Proposal</h2>
+      <p>
+        The final model reoccupies the warehouse shell with overlapping, conflicting material systems.
+        Rather than a single, unified reading, it proposes architecture as a layered, unstable field—one
+        that resists resolution and invites multiple modes of sensing. <em>The Felt Image</em> asks how
+        architecture can be designed not only to be seen, but to be felt.
+      </p>
+    </section>
+  </main>
+
+  <!-- Footer CTA -->
+  <footer class="foot reveal">
+    <button class="cta" onclick="location.href='gallery.html'">View Gallery</button>
+    <button class="cta outline" onclick="location.href='fuzzy.html'">Begin Journey</button>
+  </footer>
+
+  <!-- tiny scroll-reveal + parallax -->
+  <script>
+    // Parallax on hero
+    const hero = document.querySelector('.hero');
+    window.addEventListener('scroll', () => {
+      const y = Math.min(1, window.scrollY / (window.innerHeight * 0.8));
+      hero.style.setProperty('--blur', (y * 6) + 'px');
+      hero.style.setProperty('--dim',  String(0.25 + y * 0.25));
+      hero.style.setProperty('--shift', (y * 14) + 'px');
+    });
+
+    // Reveal cards on scroll
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('in');
+      });
+    }, { threshold: 0.22 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
