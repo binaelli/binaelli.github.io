@@ -124,3 +124,29 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
 @media (max-height: 560px){
   .hero-center{ top: 10%; }
 }
+
+/* Match "The Felt Image" title style */
+.hero-title{
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+
+  /* gradient text */
+  background: linear-gradient(90deg, #f6aebd 0%, #bfd3ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  /* a little lift over busy backgrounds */
+  text-shadow: 0 2px 10px rgba(0,0,0,.20);
+}
+
+/* High-contrast / Windows fallback */
+@media (forced-colors: active){
+  .hero-title{
+    -webkit-text-fill-color: ButtonText;
+    color: ButtonText;
+    text-shadow: none;
+  }
+}
