@@ -150,3 +150,13 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
     text-shadow: none;
   }
 }
+
+/* Force gradient headline on homepage */
+.hero-title{
+  background: linear-gradient(90deg, #f6aebd 0%, #bfd3ff 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
