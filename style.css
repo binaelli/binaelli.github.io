@@ -70,3 +70,118 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
   font-size:clamp(12px, 2.6vw, 14px);
   line-height:1.35;
 }
+
+/* ===== Visual polish pack ===== */
+
+/* Palette & tokens */
+:root{
+  --brand:#F38D92;          /* your pink */
+  --brand-2:#FFD4CC;        /* soft companion */
+  --ink:#fff;
+  --ink-dim:rgba(255,255,255,.85);
+  --glass:rgba(18,18,18,.35);
+  --line:rgba(255,255,255,.10);
+  --shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+/* 1) Subtle vignette + tint over the hero */
+.background::before{
+  content:"";
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(1200px 600px at 50% 20%, rgba(243,141,146,.12), transparent 60%),
+    radial-gradient(1200px 800px at 50% 120%, rgba(0,0,0,.55), rgba(0,0,0,.25) 48%, transparent 80%);
+  mix-blend-mode:screen;
+}
+
+/* 2) Make the hero copy pop a bit more */
+.hero-copy{ text-shadow:0 2px 18px rgba(0,0,0,.35); }
+.site-explainer{
+  color:var(--ink);
+  font-size:clamp(13px,2.6vw,16px);
+  line-height:1.45;
+}
+.about-blurb{
+  color:var(--ink-dim);
+  opacity:1;
+}
+.about-blurb p{
+  margin:0 0 .6rem;
+  font-size:clamp(12px,2.4vw,15px);
+  line-height:1.45;
+}
+
+/* Decorative underline for the first sentence */
+.site-explainer::after{
+  content:"";
+  display:block; height:2px; width:92px; margin:.6rem auto 0;
+  background:linear-gradient(90deg, transparent, var(--brand), transparent);
+  opacity:.85;
+}
+
+/* 3) EXPLORE button: glass + glow + gentle float */
+.explore-btn{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:16px 36px; border-radius:999px; letter-spacing:.06em;
+  color:var(--ink); text-decoration:none;
+  background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.10));
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(8px);
+  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+  animation:floaty 7s ease-in-out infinite;
+}
+.explore-btn::before{
+  content:"";
+  position:absolute; inset:-2px; border-radius:inherit; z-index:-1;
+  background:conic-gradient(from 180deg, rgba(243,141,146,.45), rgba(255,212,204,.35), rgba(255,255,255,.15), rgba(243,141,146,.45));
+  filter:blur(18px); opacity:.25; transition:opacity .25s ease, transform .25s ease;
+}
+@keyframes floaty{
+  0%,100%{ transform:translate(-50%,-50%) translateY(0); }
+  50%{    transform:translate(-50%,-50%) translateY(-6px); }
+}
+@media (hover:hover){
+  .explore-btn:hover{
+    transform:translate(-50%,-50%) scale(1.03);
+    box-shadow:0 16px 40px rgba(0,0,0,.35);
+  }
+  .explore-btn:hover::before{ opacity:.45; transform:rotate(6deg); }
+}
+
+/* 4) Footer: cleaner “glass” look + crisper type */
+.footer-bar{
+  background:linear-gradient(180deg, rgba(10,10,10,.02), rgba(10,10,10,.55));
+  backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);
+  box-shadow:0 -8px 30px rgba(0,0,0,.25) inset;
+}
+.footer-bar .left h1{ color:var(--brand); letter-spacing:.02em; }
+.footer-bar .left p{ color:var(--ink-dim); }
+
+/* If your nav are <a>, make them pretty */
+.nav-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:6px 14px; border-radius:12px; text-decoration:none;
+  color:var(--ink); border:1px solid rgba(255,255,255,.35);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  transition:background .2s ease, transform .2s ease;
+}
+.nav-btn:hover{ background:rgba(255,255,255,.18); transform:translateY(-1px); }
+
+/* 5) Focus styles (keyboard) */
+:focus-visible{
+  outline:2px solid var(--brand-2);
+  outline-offset:3px; border-radius:14px;
+}
+
+/* 6) Short screens: keep hero text visible */
+@media (max-height: 560px){
+  .hero-copy.above{ top: 16px; transform:translateX(-50%); }
+}
+
+/* 7) Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .explore-btn{ animation:none; transition:none; }
+}
