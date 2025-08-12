@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fuzzy Sensory Layer</title>
-  <link rel="stylesheet" href="fuzzy.css?v=15" />
+  <link rel="stylesheet" href="fuzzy.css?v=16" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
@@ -42,17 +42,17 @@
     </div>
   </section>
 
-  <!-- Screen 2: Choices -->
+  <!-- Screen 2: Two choices with PNGs as backgrounds -->
   <section class="screen screen-choices" aria-label="Where will you wander next?">
     <div class="choice-question">Where will you wander next?</div>
 
-    <div class="choice choice-left" tabindex="0" role="link">
-      <img class="choice-img" src="" alt="" />
+    <div class="choice choice-left" tabindex="0" role="link" hidden>
+      <div class="choice-bg"></div>
       <div class="choice-content"><h3 class="choice-text"></h3></div>
     </div>
 
-    <div class="choice choice-right" tabindex="0" role="link">
-      <img class="choice-img" src="" alt="" />
+    <div class="choice choice-right" tabindex="0" role="link" hidden>
+      <div class="choice-bg"></div>
       <div class="choice-content"><h3 class="choice-text"></h3></div>
     </div>
 
@@ -71,21 +71,15 @@
 
   <script>
     const PAGE = 'fuzzy';
-    const ORDER = ['fuzzy','fabric','mesh','ceiling']; // just for sanity
-    const NEXT = {
-      fuzzy:   ['fabric','mesh'],
-      fabric:  ['fuzzy','mesh'],
-      mesh:    ['fabric','ceiling'],
-      ceiling: ['fuzzy','mesh'],
-    };
+    const NEXT = { fuzzy:['fabric','mesh'], fabric:['fuzzy','mesh'], mesh:['fabric','ceiling'], ceiling:['fuzzy','mesh'] };
     const LABEL = {
-      fuzzy:   'Return to the Fuzzy space',
-      fabric:  'Step into the Fabric space',
-      mesh:    'Move through the Mesh environment',
-      ceiling: 'Look up at the Wooden Ceiling',
+      fuzzy:'Return to the Fuzzy space',
+      fabric:'Step into the Fabric space',
+      mesh:'Move through the Mesh environment',
+      ceiling:'Look up at the Wooden Ceiling'
     };
 
-    // Storage helpers
+    // visit helpers
     const getVisited = () => { try { return JSON.parse(localStorage.getItem('visitedSpaces')||'[]'); } catch { return []; } };
     const setVisited = (arr) => localStorage.setItem('visitedSpaces', JSON.stringify(Array.from(new Set(arr))));
     const addVisited = (space) => { const v=getVisited(); if(!v.includes(space)){ v.push(space); setVisited(v); } };
@@ -93,12 +87,11 @@
     // Start a brand-new run the first time you open Fuzzy in this tab.
     if (!sessionStorage.getItem('journeyActive')) {
       sessionStorage.setItem('journeyActive','1');
-      setVisited(['fuzzy']); // brand new path
+      setVisited(['fuzzy']);
     }
-    // Make sure Fuzzy is marked
     addVisited('fuzzy');
 
-    // Bubble toggle
+    // bubble toggle (single-open)
     document.addEventListener('click', e => {
       const b = e.target.closest('.bubble'); if (!b) return;
       const open = b.classList.contains('active');
@@ -111,9 +104,8 @@
     const fade     = document.querySelector('.screen-fade');
 
     document.querySelector('.continue-btn').addEventListener('click', () => {
-      // One more defensive reset to guarantee a fresh first choice
+      // guarantee a fresh first choice
       setVisited(['fuzzy']);
-
       bubbles.classList.remove('show');
       renderChoices();
       choices.classList.add('show');
@@ -123,11 +115,8 @@
     const go = (url) => { fade.classList.add('in'); setTimeout(()=>location.href=url, 250); };
 
     function wireChoice(el, nextSpace) {
-      const img = el.querySelector('.choice-img');
-      const txt = el.querySelector('.choice-text');
-      img.src = `${nextSpace}.png`;
-      img.alt = '';
-      txt.textContent = LABEL[nextSpace];
+      el.querySelector('.choice-bg').style.backgroundImage = `url(${nextSpace}.png)`;
+      el.querySelector('.choice-text').textContent = LABEL[nextSpace];
       el.dataset.target = `${PAGE}-${nextSpace}.html`;
       el.onclick = () => go(el.dataset.target);
       el.onkeydown = (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(el.dataset.target); } };
@@ -135,11 +124,8 @@
     }
 
     function renderChoices(){
-      const visited = getVisited().slice(); // copy
-      // Compute remaining choices from allowed next
+      const visited = getVisited().slice();
       let remaining = NEXT[PAGE].filter(s => !visited.includes(s));
-
-      // Guard: on the very first choice, always show both Fabric & Mesh
       if (visited.length === 1 && visited[0] === 'fuzzy') {
         remaining = NEXT[PAGE].slice();
       }
@@ -159,13 +145,11 @@
         orEl.removeAttribute('hidden');
         final.setAttribute('hidden','');
       } else if (remaining.length === 1){
-        // This only happens later in the path. Proceed UI:
         fImg.src = `${remaining[0]}.png`;
         fBtn.onclick = () => go(`${PAGE}-${remaining[0]}.html`);
         final.removeAttribute('hidden');
         orEl.setAttribute('hidden','');
       } else {
-        // Fall back home if somehow nothing remains
         location.href = 'index.html';
       }
     }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wooden Ceiling Layer</title>
-  <link rel="stylesheet" href="ceiling.css?v=15" />
+  <link rel="stylesheet" href="ceiling.css?v=16" />
 </head>
 <body>
   <a href="index.html" class="back-button">← Back</a>
@@ -32,13 +32,13 @@
   <section class="screen screen-choices" aria-label="Where will you wander next?">
     <div class="choice-question">Where will you wander next?</div>
 
-    <div class="choice choice-left" tabindex="0" role="link">
-      <img class="choice-img" src="" alt="" />
+    <div class="choice choice-left" tabindex="0" role="link" hidden>
+      <div class="choice-bg"></div>
       <div class="choice-content"><h3 class="choice-text"></h3></div>
     </div>
 
-    <div class="choice choice-right" tabindex="0" role="link">
-      <img class="choice-img" src="" alt="" />
+    <div class="choice choice-right" tabindex="0" role="link" hidden>
+      <div class="choice-bg"></div>
       <div class="choice-content"><h3 class="choice-text"></h3></div>
     </div>
 
@@ -60,7 +60,7 @@
     const NEXT={ fuzzy:['fabric','mesh'], fabric:['fuzzy','mesh'], mesh:['fabric','ceiling'], ceiling:['fuzzy','mesh'] };
     const LABEL={ fuzzy:'Return to the Fuzzy space', fabric:'Step into the Fabric space', mesh:'Move through the Mesh environment', ceiling:'Look up at the Wooden Ceiling' };
 
-    const getVisited=()=>{try{return JSON.parse(localStorage.getItem('visitedSpaces')||'[]');}catch{return[];}};
+    const getVisited=()=>{try{return JSON.parse(localStorage.getItem('visitedSpaces')||'[]');}catch{return[];}}
     const setVisited=(a)=>localStorage.setItem('visitedSpaces',JSON.stringify(Array.from(new Set(a))));
     const addVisited=(s)=>{const v=getVisited(); if(!v.includes(s)){v.push(s); setVisited(v);}};
 
@@ -82,7 +82,7 @@
     const go=(url)=>{fade.classList.add('in'); setTimeout(()=>location.href=url,250);};
 
     function wire(el,next){
-      el.querySelector('.choice-img').src=`${next}.png`;
+      el.querySelector('.choice-bg').style.backgroundImage = `url(${next}.png)`;
       el.querySelector('.choice-text').textContent=LABEL[next];
       el.dataset.target=`${PAGE}-${next}.html`;
       el.onclick=()=>go(el.dataset.target);
