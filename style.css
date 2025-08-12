@@ -37,3 +37,36 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
 
 /* Mobile safe area */
 @supports(height:100svh){ .background{height:100svh} }
+
+/* Position and style hero copy near EXPLORE */
+.hero-copy{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(92vw, 720px);
+  text-align:center;
+  z-index:5;
+  text-shadow: 0 1px 12px rgba(0,0,0,.25);
+}
+.hero-copy.below{ top: calc(50% + clamp(56px, 8vw, 88px)); }
+.hero-copy.above{ top: calc(50% - clamp(180px, 20vw, 260px)); }
+
+/* Typography */
+.site-explainer{
+  margin-top:6px;
+  max-width:60ch;
+  color:#eee;
+  font-size:clamp(12px, 2.6vw, 14px);
+  line-height:1.35;
+}
+.about-blurb{
+  margin-top:8px;
+  max-width:65ch;
+  color:#eee;
+  opacity:.95;
+}
+.about-blurb p{
+  margin:0 0 6px;
+  font-size:clamp(12px, 2.6vw, 14px);
+  line-height:1.35;
+}
