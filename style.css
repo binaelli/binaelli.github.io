@@ -160,3 +160,22 @@ html,body{height:100%;font-family:'Helvetica Neue',system-ui,-apple-system,Segoe
   -webkit-text-fill-color: transparent !important;
 }
 
+/* Brighter gradient + glow for the homepage headline */
+.hero-title{
+  /* lighter, brighter gradient */
+  background: linear-gradient(90deg, #ffd1dc 0%, #e6efff 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+
+  /* pop it off the background */
+  -webkit-text-stroke: 0.6px rgba(255,255,255,.28);
+  text-shadow:
+    0 3px 22px rgba(255,255,255,.36),
+    0 2px 14px rgba(0,0,0,.24);
+
+  /* a touch more punch */
+  filter: saturate(115%) brightness(1.18);
+}
+

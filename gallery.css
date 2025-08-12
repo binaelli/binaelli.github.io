@@ -1,7 +1,8 @@
-/* Cute + airy gallery theme to match fuzzy.png */
+/* Cute, airy, full-page gallery that matches fuzzy.png */
 :root{
-  --brand:#F38D92;     /* pink */
-  --lav:#BFD3FF;       /* soft lavender */
+  --pink:#F7C9D6;        /* airy pink */
+  --pink-2:#FFDDE6;      /* very light */
+  --lav:#C9D9FF;         /* soft lavender */
   --ink:#fff;
   --ink-dim:rgba(255,255,255,.92);
   --glass:rgba(255,255,255,.10);
@@ -9,62 +10,106 @@
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:#000;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 
-/* back link pill */
-.back-button{position:fixed;left:14px;top:14px;z-index:30;color:#fff;text-decoration:none;padding:.5rem .75rem;background:var(--glass);border:1px solid var(--line);border-radius:999px;backdrop-filter:blur(8px)}
+/* Full-viewport layout */
+html,body{height:100%; margin:0; background:#0b0b0b; color:var(--ink);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+.gallery-page{
+  min-height:100%; display:flex; flex-direction:column; gap:0;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(247,201,214,.28), transparent 60%),
+    radial-gradient(1100px 700px at 50% 120%, rgba(255,221,230,.20), rgba(0,0,0,.55) 70%);
+}
+
+/* Back pill */
+.back-button{position:fixed;left:14px;top:14px;z-index:30;color:#fff;text-decoration:none;
+  padding:.55rem .8rem; background:var(--glass); border:1px solid var(--line);
+  border-radius:999px; backdrop-filter:blur(8px)}
 .back-button:focus-visible{outline:2px solid #fff;outline-offset:3px}
 
-/* header */
-.gallery-header{text-align:center;padding:48px 16px 12px;position:relative;z-index:2}
+/* Header (auto height) */
+.gallery-header{flex:none; text-align:center; padding:32px 16px 10px; position:relative; z-index:2}
 .gallery-header h1{
-  margin:0 0 6px;font-weight:800;letter-spacing:.02em;
-  background:linear-gradient(90deg,#f6aebd,#bfd3ff);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  margin:0 0 6px; font-weight:800; letter-spacing:.02em;
+  background:linear-gradient(90deg, #ffd1dc, #cfe0ff); -webkit-background-clip:text; background-clip:text;
+  color:transparent; -webkit-text-fill-color:transparent;
   text-shadow:0 2px 12px rgba(0,0,0,.22);
-  font-size:clamp(20px,4.6vw,40px)
+  font-size:clamp(22px, 4.6vw, 44px)
 }
-.gallery-header p{margin:.25rem 0;opacity:.95}
-.gallery-header .counter{opacity:.9;font-size:.95rem}
+.gallery-header p{margin:.25rem 0; opacity:.95}
+.gallery-header .counter{opacity:.9; font-size:.95rem}
 
-/* carousel */
-.carousel{position:relative;padding:6px 0 24px}
-.nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--glass);color:#fff;backdrop-filter:blur(8px);cursor:pointer}
-.nav.prev{left:8px} .nav.next{right:8px}
-.nav[disabled]{opacity:.4;cursor:not-allowed}
-@media (hover:hover){ .nav:hover{background:rgba(255,255,255,.18)} }
+/* Carousel fills the rest of the viewport */
+.carousel{position:relative; flex:1; min-height:0; padding:6px 0 24px}
 
-.track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:16px;padding:0 16px;scrollbar-width:thin}
+/* Pink glass arrows */
+.nav{position:absolute; top:50%; transform:translateY(-50%); z-index:5;
+  width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,.45);
+  background:linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.08));
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  color:#fff; backdrop-filter:blur(10px); cursor:pointer}
+.nav.prev{left:10px} .nav.next{right:10px}
+.nav[disabled]{opacity:.45; cursor:not-allowed}
+@media (hover:hover){ .nav:hover{ background:rgba(255,255,255,.28) } }
+
+/* Track occupies full height; hide default scrollbar */
+.track{
+  height:100%;
+  display:flex; align-items:center; gap:20px;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory; scroll-padding:10vw;
+  padding:0 6vw;
+  scrollbar-width:none;                    /* Firefox */
+}
+.track::-webkit-scrollbar{ display:none }  /* WebKit */
+
+/* Slides scale to viewport */
 .slide{
-  scroll-snap-align:center;position:relative;flex:0 0 auto;width:min(90vw,560px);
-  border-radius:28px;overflow:hidden;border:1px solid var(--line);
-  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));
-  box-shadow:0 10px 30px rgba(0,0,0,.25)
+  scroll-snap-align:center; position:relative; flex:0 0 auto;
+  width:min(90vw, 1100px);
+  height:min(78vh, 680px);
+  border-radius:28px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.28);
+  background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+  box-shadow:0 18px 40px rgba(0,0,0,.30);
 }
-.slide img,.slide video{display:block;width:100%;height:auto}
-.slide .vid{aspect-ratio:16/9;object-fit:cover}
+.slide img, .slide video{width:100%; height:100%; object-fit:cover; display:block}
+.slide .vid{object-position:center}
 
-/* captions: glassy pill */
+/* Caption: pink glass pill */
 figcaption{
-  position:absolute;left:12px;bottom:12px;right:12px;
-  display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;
-  padding:.5rem .75rem;border-radius:999px;
-  background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(8px);
-  font-size:clamp(12px,2.4vw,14px)
+  position:absolute; left:14px; right:14px; bottom:14px;
+  display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap;
+  padding:.6rem .9rem; border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,209,220,.32), rgba(255,209,220,.14));
+  border:1px solid rgba(255,255,255,.45);
+  backdrop-filter:blur(10px);
+  font-size:clamp(12px, 2.2vw, 15px);
+  color:var(--ink)
 }
 figcaption .sep{opacity:.6}
+
+/* Open-link chip */
 .open-link{
-  display:inline-flex;align-items:center;gap:.25rem;
-  padding:.35rem .6rem;border-radius:999px;text-decoration:none;color:#fff;
-  border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.10)
+  display:inline-flex; align-items:center; gap:.25rem;
+  padding:.35rem .7rem; border-radius:999px; text-decoration:none; color:#fff;
+  border:1px solid rgba(255,255,255,.55);
+  background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
+  backdrop-filter:blur(8px);
+  transition:transform .2s ease, background .2s ease;
 }
-@media (hover:hover){ .open-link:hover{background:rgba(255,255,255,.20)} }
+@media (hover:hover){ .open-link:hover{ transform:translateY(-1px); background:rgba(255,255,255,.24) } }
+.open-link:focus-visible{ outline:2px solid #fff; outline-offset:3px; border-radius:999px }
 
-/* dots */
-.dots{display:flex;gap:10px;justify-content:center;margin:12px 0 4px}
-.dots .dot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:transparent}
-.dots .dot.active{background:rgba(255,255,255,.9)}
-.dots .dot:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:50%}
+/* Dots: airy pink */
+.dots{position:absolute; left:0; right:0; bottom:8px; display:flex; gap:10px; justify-content:center; pointer-events:auto}
+.dots .dot{width:10px; height:10px; border-radius:50%; border:1px solid rgba(255,255,255,.55); background:transparent}
+.dots .dot.active{ background:rgba(255,255,255,.95) }
+.dots .dot:focus-visible{ outline:2px solid #fff; outline-offset:3px; border-radius:50% }
 
-/* accessibility */
-:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:12px}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Accessibility + motion */
+:focus-visible{ outline:2px solid #fff; outline-offset:3px; border-radius:12px }
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+}
